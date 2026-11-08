@@ -35449,11 +35449,11 @@ case"staging":return B.va
 case"production":return B.a45
 case"development":return B.a44
 default:return B.va}},
-bzI(){var s="https://ping.fifth-llc.com"
+bzI(){var s="https://api-staging.pingitnow.co"
 return s},
-bzH(){var s="https://ping.fifth-llc.com/attachments"
+bzH(){var s="https://api-staging.pingitnow.co/attachments"
 return s},
-bcb(){return"P30pLP6dHBV11SG7I5D9kHatX3Lm"},
+bcb(){return"P36wXejlzkBBvHSQweTg4i1QZu4Y"},
 bj8(a){var s
 if(B.c.bu(a,"http"))return a
 s=B.c.bu(a,"/")?B.c.bY(a,1):a
@@ -40236,7 +40236,7 @@ if($.a5==null)A.be3()
 q=$.a5
 q.toString
 $.bcl=q;++q.fy$
-$.bj7=A.bzG("development")
+$.bj7=A.bzG("staging")
 if(A.bcb().length===0)A.X(A.ae("Release build missing DESCOPE_PROJECT_ID. Use --dart-define-from-file with your env JSON."))
 $.jN="client"
 i.N("AppConfig initialized appType=client")
