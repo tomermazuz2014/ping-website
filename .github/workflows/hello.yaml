@@ -1,0 +1,11 @@
+name: Hello Test
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/hello.yaml']
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello from CI"
