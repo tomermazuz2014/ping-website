@@ -387,20 +387,25 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 /* ---------- discover ---------- */
 .cat-marquee{overflow:hidden;direction:ltr;margin-bottom:26px;
   mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.cat-track{display:flex;gap:12px;width:max-content;animation:slide 44s linear infinite}
+.cat-track{display:flex;gap:18px;padding:6px 0;width:max-content;animation:slide 44s linear infinite}
 .cat-track:hover{animation-play-state:paused}
-.cat{direction:rtl;display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);
-  border-radius:var(--r-pill);padding:12px 22px;font-weight:700;font-size:16.5px;white-space:nowrap}
-.cat em{font-style:normal;width:10px;height:10px;border-radius:50%;background:var(--tiffany)}
-.biz-row{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,300px);gap:18px;overflow-x:auto;
-  scroll-snap-type:x mandatory;padding:6px 4px 22px;scrollbar-width:none}
+.cat{direction:rtl;display:grid;justify-items:center;gap:9px;width:104px;flex:none}
+.cat-ring{position:relative;width:92px;height:92px;border-radius:50%;padding:3px;
+  background:conic-gradient(from 210deg,var(--tiffany),#BFE9E4,var(--tiffany-deep),var(--tiffany));
+  box-shadow:0 10px 24px -14px rgba(14,26,26,.45);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.cat-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;border:3px solid var(--porcelain)}
+.cat b{font-size:14.5px;font-weight:700;white-space:nowrap;color:var(--ink)}
+.cat:hover .cat-ring{transform:translateY(-4px) scale(1.04)}
+.biz-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:6px 0 22px}
 .biz-row::-webkit-scrollbar{display:none}
 .biz{scroll-snap-align:start;background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);
   overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
 .biz:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft)}
-.biz-thumb{height:168px;display:grid;place-items:center;position:relative;color:rgba(246,244,239,.85)}
+.biz-thumb{height:180px;display:grid;place-items:center;position:relative;color:rgba(246,244,239,.85);overflow:hidden;background:var(--wash)}
+.biz-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.biz:hover .biz-thumb img{transform:scale(1.05)}
 .biz-thumb b{font-size:92px;font-weight:900;line-height:1}
-.biz-thumb .b-cat{position:absolute;top:12px;inset-inline-start:12px;background:rgba(14,26,26,.5);
+.biz-thumb .b-cat{position:absolute;z-index:1;top:12px;inset-inline-start:12px;background:rgba(14,26,26,.5);
   color:#fff;font-size:12.5px;font-weight:600;border-radius:var(--r-pill);padding:4px 12px;backdrop-filter:blur(6px)}
 .biz-thumb .bm{transform:scale(1.5)}
 .biz-in{padding:16px 18px 18px;display:grid;gap:6px}
@@ -545,6 +550,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .ap-med{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:rgba(246,244,239,.92);flex:none;
   box-shadow:0 0 0 2px var(--white),0 0 0 4px var(--tiffany-soft)}
 .ap-med svg{width:20px;height:20px}
+.ap-med img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
 .appt header b{font-size:16.5px;display:block;line-height:1.2}
 .appt header small{color:var(--ink-3);font-size:13px}
 .ap-when{display:flex;gap:8px;align-items:center;color:var(--ink-2);font-size:14px;font-weight:600;
@@ -738,6 +744,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .appts{grid-template-columns:repeat(2,1fr)}
+  .biz-row{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero .phone{--pw:300px}
 }
 @media (max-width:920px){
@@ -779,7 +786,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   .frag .fi{width:28px;height:28px}
   .frag-chip{font-size:12.5px;padding:8px 14px}
   .appts{grid-template-columns:1fr}
-  .biz-row{grid-auto-columns:76vw}
+  .biz-row{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:76vw;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-inline:4px}
   .dash-stats{gap:7px}
   .ds b{font-size:17px}
   .ft-grid{grid-template-columns:1fr}
@@ -1133,18 +1140,18 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   </div>
   <div class="cat-marquee">
     <div class="cat-track">
-      <span class="cat"><em></em>כושר ואימונים</span><span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
-      <span class="cat"><em></em>כושר ואימונים</span><span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
+      <span class="cat"><span class="cat-ring"><img src="img/cat/fitness.jpg" alt="" loading="lazy" width="92" height="92"></span><b>כושר ואימונים</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/tan.jpg" alt="" loading="lazy" width="92" height="92"></span><b>שיזוף</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/hair.jpg" alt="" loading="lazy" width="92" height="92"></span><b>שיער</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/nails.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ציפורניים</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/beauty.jpg" alt="" loading="lazy" width="92" height="92"></span><b>טיפוח</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/health.jpg" alt="" loading="lazy" width="92" height="92"></span><b>בריאות</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/massage.jpg" alt="" loading="lazy" width="92" height="92"></span><b>עיסוי</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/cosmetics.jpg" alt="" loading="lazy" width="92" height="92"></span><b>קוסמטיקה</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/barber.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ברברים</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/makeup.jpg" alt="" loading="lazy" width="92" height="92"></span><b>איפור</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/spa.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ספא</b></span><span class="cat"><span class="cat-ring"><img src="img/cat/brows.jpg" alt="" loading="lazy" width="92" height="92"></span><b>גבות</b></span>
+      <span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/fitness.jpg" alt="" loading="lazy" width="92" height="92"></span><b>כושר ואימונים</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/tan.jpg" alt="" loading="lazy" width="92" height="92"></span><b>שיזוף</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/hair.jpg" alt="" loading="lazy" width="92" height="92"></span><b>שיער</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/nails.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ציפורניים</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/beauty.jpg" alt="" loading="lazy" width="92" height="92"></span><b>טיפוח</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/health.jpg" alt="" loading="lazy" width="92" height="92"></span><b>בריאות</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/massage.jpg" alt="" loading="lazy" width="92" height="92"></span><b>עיסוי</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/cosmetics.jpg" alt="" loading="lazy" width="92" height="92"></span><b>קוסמטיקה</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/barber.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ברברים</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/makeup.jpg" alt="" loading="lazy" width="92" height="92"></span><b>איפור</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/spa.jpg" alt="" loading="lazy" width="92" height="92"></span><b>ספא</b></span><span class="cat" aria-hidden="true"><span class="cat-ring"><img src="img/cat/brows.jpg" alt="" loading="lazy" width="92" height="92"></span><b>גבות</b></span>
     </div>
   </div>
   <div class="wrap">
     <div class="biz-row" aria-label="עסקים לדוגמה">
-      <article class="biz"><div class="biz-thumb gw"><span class="brandmark bm"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg><b style="font-size:16px">TOMER SUN</b><small style="font-size:7px">TANNING STUDIO</small></span><span class="b-cat">כושר ואימונים</span></div><div class="biz-in"><b>Tomer Sun</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>לב תל־אביב · 2.4 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g2"><b>ה</b><span class="b-cat">ברברים</span></div><div class="biz-in"><b>מספרת העיר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.7</span><span>פלורנטין · 900 מ׳</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g3"><b>ל</b><span class="b-cat">ציפורניים</span></div><div class="biz-in"><b>לאק בר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>דיזנגוף · 1.2 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g4"><b>פ</b><span class="b-cat">כושר</span></div><div class="biz-in"><b>פיט האוס</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>הצפון הישן · 2 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g5"><b>ג</b><span class="b-cat">טיפוח</span></div><div class="biz-in"><b>גלואו קליניק</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.9</span><span>שרונה · 1.8 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g6"><b>ס</b><span class="b-cat">ספא</span></div><div class="biz-in"><b>ספא הנמל</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>נמל ת״א · 3 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/tomer-sun.jpg" alt="Tomer Sun" loading="lazy" width="640" height="360"><span class="b-cat">כושר ואימונים</span></div><div class="biz-in"><b>Tomer Sun</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>לב תל־אביב · 2.4 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/city-barber.jpg" alt="מספרת העיר" loading="lazy" width="640" height="360"><span class="b-cat">ברברים</span></div><div class="biz-in"><b>מספרת העיר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.7</span><span>פלורנטין · 900 מ׳</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/lak-bar.jpg" alt="לאק בר" loading="lazy" width="640" height="360"><span class="b-cat">ציפורניים</span></div><div class="biz-in"><b>לאק בר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>דיזנגוף · 1.2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/fit-house.jpg" alt="פיט האוס" loading="lazy" width="640" height="360"><span class="b-cat">כושר</span></div><div class="biz-in"><b>פיט האוס</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>הצפון הישן · 2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/glow.jpg" alt="גלואו קליניק" loading="lazy" width="640" height="360"><span class="b-cat">טיפוח</span></div><div class="biz-in"><b>גלואו קליניק</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.9</span><span>שרונה · 1.8 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb"><img src="img/biz/port-spa.jpg" alt="ספא הנמל" loading="lazy" width="640" height="360"><span class="b-cat">ספא</span></div><div class="biz-in"><b>ספא הנמל</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>נמל ת״א · 3 ק״מ</span></div></div></article>
     </div>
     <div class="discover-foot">
       <span class="demo-tag">חלק משמות העסקים להמחשה</span>
@@ -1401,22 +1408,22 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     <div class="appts">
       <article class="appt">
         <span class="pill pill-ok"><i></i>מאושר</span>
-        <header><span class="ap-med gw"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span><span><b>Tomer Sun</b><small>שיזוף · 45 דק׳</small></span></header>
+        <header><span class="ap-med"><img src="img/biz/tomer-sun-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>Tomer Sun</b><small>שיזוף · 45 דק׳</small></span></header>
         <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום א׳ <span class="num">8.11 · 10:15</span></div>
       </article>
       <article class="appt">
         <span class="pill pill-pend"><i></i>ממתין לאישור</span>
-        <header><span class="ap-med g3"><b style="font-weight:900;font-size:18px">ל</b></span><span><b>לאק בר</b><small>לק ג׳ל</small></span></header>
+        <header><span class="ap-med"><img src="img/biz/lak-bar-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>לאק בר</b><small>לק ג׳ל</small></span></header>
         <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום א׳ <span class="num">15.11 · 11:00</span></div>
       </article>
       <article class="appt">
         <span class="pill pill-wait"><i></i>רשימת המתנה</span>
-        <header><span class="ap-med g4"><b style="font-weight:900;font-size:18px">פ</b></span><span><b>פיט האוס</b><small>אימון אישי</small></span></header>
+        <header><span class="ap-med"><img src="img/biz/fit-house-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>פיט האוס</b><small>אימון אישי</small></span></header>
         <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg><span class="num">16:00–18:00</span> · השבוע</div>
       </article>
       <article class="appt">
         <span class="pill pill-no"><i></i>נדחה</span>
-        <header><span class="ap-med g2"><b style="font-weight:900;font-size:18px">ה</b></span><span><b>מספרת העיר</b><small>תספורת גבר</small></span></header>
+        <header><span class="ap-med"><img src="img/biz/city-barber-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>מספרת העיר</b><small>תספורת גבר</small></span></header>
         <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום ו׳ <span class="num">13.11 · 09:00</span></div>
       </article>
     </div>
@@ -1515,32 +1522,32 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   </div>
   <div class="gal">
     <div class="gal-track">
-      <span class="gt"><span class="ap-med gw" style="font-size:13px">☀</span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
-      <span class="gt"><span class="ap-med g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-med g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-med g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-med g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
-      <span class="gt"><span class="ap-med g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
-      <span class="gt"><span class="ap-med gw" style="font-size:13px">☀</span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
-      <span class="gt"><span class="ap-med g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-med g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-med g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-med g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
-      <span class="gt"><span class="ap-med g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/tomer-sun-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/lak-bar-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/city-barber-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/fit-house-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/glow-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/port-spa-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/tomer-sun-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/lak-bar-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/city-barber-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/fit-house-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/glow-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/port-spa-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>ספא הנמל</b><small>ספא</small></span></span>
     </div>
     <div class="gal-track rev">
-      <span class="gt"><span class="ap-med g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-med g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
-      <span class="gt"><span class="ap-med g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
-      <span class="gt"><span class="ap-med g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-med g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
-      <span class="gt"><span class="ap-med g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-med g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-med g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
-      <span class="gt"><span class="ap-med g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
-      <span class="gt"><span class="ap-med g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-med g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
-      <span class="gt"><span class="ap-med g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/manicure-tlv-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/balance-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/retreat-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/cut-house-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/or-cosmetics-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/strong-gym-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/manicure-tlv-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/balance-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/retreat-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/cut-house-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/or-cosmetics-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-med"><img src="img/biz/strong-gym-sq.jpg" alt="" loading="lazy" width="80" height="80"></span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
     </div>
   </div>
 </section>
