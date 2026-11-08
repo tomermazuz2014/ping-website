@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אתר PING</title>
+<meta name="description" content="PING — מוצאים עסק, בוחרים שעה וקובעים תור. בלי טלפונים, בלי לחכות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ PING design tokens ============
+   layout idea: editorial RTL split-compositions; the phone is a physical
+   object traveling down the page; sonar "ping" rings as the brand motif. */
+:root{
+  --tiffany:#81D8D0;
+  --tiffany-deep:#17655E;
+  --tiffany-soft:#BFE9E4;
+  --wash:#E9F4F1;
+  --porcelain:#F6F4EF;
+  --white:#FFFFFF;
+  --ink:#0E1A1A;
+  --ink-2:#3A4A48;
+  --ink-3:#64736F;
+  --line:rgba(14,26,26,.10);
+  --ok:#1F9E7E;
+  --pend:#D9942B;
+  --no:#D95A4E;
+  --font:'Ploni','Rubik',-apple-system,'Segoe UI',Arial,sans-serif;
+  --r-card:22px;
+  --r-pill:999px;
+  --shadow-soft:0 10px 34px -16px rgba(14,26,26,.22);
+  --shadow-deep:0 34px 80px -30px rgba(14,26,26,.45);
+  --wrap:1180px;
+  --hd-h:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{color-scheme:light;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--font);
+  background:var(--porcelain);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+section[id],footer[id]{scroll-margin-top:calc(var(--hd-h) + 14px)}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid rgba(129,216,208,.95);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(18px,4vw,32px)}
+.skip{position:absolute;inset-inline-start:-999px;top:10px;background:var(--ink);color:var(--porcelain);padding:10px 18px;border-radius:var(--r-pill);z-index:200}
+.skip:focus{inset-inline-start:10px}
+
+h1,h2,h3{line-height:1.08;font-weight:800;text-wrap:balance}
+.h-display{font-size:clamp(42px,5.6vw,84px);font-weight:900;letter-spacing:-.015em}
+.h-sec{font-size:clamp(32px,4.6vw,60px);font-weight:900;letter-spacing:-.01em}
+.lede{font-size:clamp(17px,1.8vw,21px);color:var(--ink-2);max-width:34ch}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(28px,5vw,54px)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:var(--r-pill);
+  font-weight:700;font-size:17px;padding:15px 28px;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background .25s;white-space:nowrap}
+.btn-tiffany{background:var(--tiffany);color:var(--ink);box-shadow:0 10px 26px -12px rgba(129,216,208,.9)}
+.btn-tiffany:hover{transform:translateY(-2px);background:#8FE0D8}
+.btn-ink{background:var(--ink);color:var(--porcelain)}
+.btn-ink:hover{transform:translateY(-2px)}
+.btn-ghost{border:1.5px solid var(--line);background:var(--white);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-link{font-weight:700;color:var(--tiffany-deep);display:inline-flex;align-items:center;gap:6px}
+.btn-link:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* ---------- store pills ---------- */
+.stores{display:flex;gap:10px;flex-wrap:wrap}
+.store{display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--porcelain);
+  border-radius:14px;padding:9px 16px;line-height:1.15;transition:transform .25s}
+.store:hover{transform:translateY(-2px)}
+.store small{display:block;font-size:11px;opacity:.72;font-weight:400}
+.store b{font-size:15px;font-weight:700}
+.store svg{width:20px;height:20px;flex:none}
+.stores .soon{font-size:12px;color:var(--ink-3);align-self:center}
+
+/* ---------- demo tag ---------- */
+.demo-tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink-3);
+  border:1px dashed rgba(14,26,26,.25);border-radius:var(--r-pill);padding:4px 12px;width:fit-content}
+
+/* ---------- header ---------- */
+.hd{position:fixed;inset-inline:0;top:0;z-index:100;height:var(--hd-h);display:flex;align-items:center;
+  transition:background .35s,box-shadow .35s,backdrop-filter .35s}
+.hd.is-solid{background:rgba(246,244,239,.86);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.hd-in{display:flex;align-items:center;gap:28px;width:100%}
+.logo{display:flex;align-items:center;gap:9px;font-weight:900;font-size:24px;letter-spacing:.02em}
+.logo svg{width:28px;height:28px}
+.hd-nav{display:flex;gap:26px;margin-inline-start:auto;font-weight:600;font-size:15.5px}
+.hd-nav a{opacity:.85;transition:opacity .2s}
+.hd-nav a:hover{opacity:1;color:var(--tiffany-deep)}
+.hd-cta{margin-inline-start:6px}
+.hd .btn{padding:11px 22px;font-size:15px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:12px;position:relative;z-index:130}
+.menu-btn span{position:absolute;inset-inline:11px;height:2.4px;border-radius:2px;background:var(--ink);transition:transform .3s,top .3s,opacity .3s}
+.menu-btn span:nth-child(1){top:16px}
+.menu-btn span:nth-child(2){top:26px}
+body.menu-open .menu-btn span:nth-child(1){top:21px;transform:rotate(45deg)}
+body.menu-open .menu-btn span:nth-child(2){top:21px;transform:rotate(-45deg)}
+.m-menu{position:fixed;inset:0;z-index:120;background:var(--porcelain);display:none;flex-direction:column;
+  padding:calc(var(--hd-h) + 20px) 26px 34px;gap:8px}
+body.menu-open .m-menu{display:flex}
+body.menu-open{overflow:hidden}
+body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-filter:none}
+.m-menu a{font-size:30px;font-weight:800;padding:12px 4px;border-bottom:1px solid var(--line)}
+.m-menu .btn{margin-top:auto;justify-content:center;font-size:18px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:calc(var(--hd-h) + clamp(30px,6vh,70px)) 0 clamp(40px,7vh,90px);overflow:clip}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(24px,4vw,60px);position:relative}
+.hero-copy{display:grid;gap:clamp(18px,2.6vw,28px);position:relative;z-index:3}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero-stage{position:relative;display:flex;justify-content:center;min-height:540px}
+.hero .rings{position:absolute;width:680px;height:680px;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none}
+.rings i{position:absolute;inset:0;border:1.5px solid var(--tiffany);border-radius:50%;opacity:0;animation:ping 5.5s ease-out infinite}
+.rings i:nth-child(2){animation-delay:1.8s}
+.rings i:nth-child(3){animation-delay:3.6s}
+@keyframes ping{0%{transform:scale(.42);opacity:.5}80%{opacity:.08}100%{transform:scale(1.15);opacity:0}}
+.hero-blob{position:absolute;width:62vw;max-width:860px;aspect-ratio:1;border-radius:50%;z-index:0;
+  background:radial-gradient(circle at 42% 40%,rgba(129,216,208,.34),rgba(129,216,208,0) 62%);
+  top:-18%;inset-inline-start:48%;filter:blur(8px);animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-4%,5%) scale(1.06)}}
+
+/* floating fragments */
+.frag{position:absolute;z-index:4;background:var(--white);border:1px solid var(--line);border-radius:18px;
+  box-shadow:var(--shadow-soft);padding:12px 16px;display:flex;gap:11px;align-items:center;
+  animation:float 7s ease-in-out infinite}
+.frag .fi{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;background:var(--wash);color:var(--tiffany-deep)}
+.frag .fi svg{width:18px;height:18px}
+.frag b{font-size:14.5px;display:block;line-height:1.2}
+.frag small{font-size:12.5px;color:var(--ink-3)}
+.frag-ok .fi{background:var(--tiffany);color:var(--ink)}
+.frag-chip{padding:10px 18px;font-weight:700;font-size:14.5px;border-radius:var(--r-pill)}
+.frag-time{padding:10px 16px;font-weight:800;font-size:16px;border-radius:14px;background:var(--ink);color:var(--tiffany);border:0}
+@keyframes float{50%{transform:translateY(-9px)}}
+.f1{top:7%;inset-inline-end:-2%}
+.f2{bottom:20%;inset-inline-end:-6%;animation-delay:1.3s}
+.f3{top:22%;inset-inline-start:-7%;animation-delay:2.1s}
+.f4{bottom:7%;inset-inline-start:0;animation-delay:3s}
+
+/* ---------- phone ---------- */
+.phone{--pw:330px;width:var(--pw);aspect-ratio:390/826;position:relative;flex:none;
+  background:linear-gradient(160deg,#2A3434,#0B1414 38%,#141F1F 80%);
+  border-radius:17.5cqi;border-radius:clamp(40px,calc(var(--pw)/7),58px);
+  box-shadow:var(--shadow-deep),inset 0 0 0 2px rgba(255,255,255,.14),inset 0 0 0 6px #0B1414;
+  padding:calc(var(--pw)/46);container-type:inline-size;z-index:2}
+.phone::before,.phone::after{content:"";position:absolute;background:#243030;border-radius:3px;z-index:0}
+.phone::before{width:3px;height:12%;inset-inline-end:-3px;top:22%}
+.phone::after{width:3px;height:7%;inset-inline-start:-3px;top:18%}
+.scr-area{position:absolute;inset:calc(var(--pw)/46);background:var(--porcelain);overflow:hidden;
+  border-radius:clamp(32px,calc(var(--pw)/8.6),48px)}
+.island{position:absolute;top:2.1%;left:50%;transform:translateX(-50%);width:27%;height:3%;background:#0B1414;border-radius:999px;z-index:9}
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:3.5cqi 7cqi 0;font-size:3.6cqi;font-weight:700}
+.statusbar .sb-ic{display:flex;gap:1.4cqi;align-items:center}
+.statusbar svg{width:4.4cqi;height:4.4cqi}
+
+/* app UI inside phones (sizes in cqi = % of phone width) */
+.app{position:absolute;inset:0;display:flex;flex-direction:column;font-size:3.7cqi}
+.app-body{flex:1;padding:4cqi 6cqi 0;display:flex;flex-direction:column;gap:4.4cqi;overflow:hidden}
+.a-greet b{font-size:5.6cqi;font-weight:800;display:block}
+.a-greet small{color:var(--ink-3);font-size:3.4cqi}
+.a-search{display:flex;align-items:center;gap:2.6cqi;background:var(--white);border:1px solid var(--line);
+  border-radius:999px;padding:3cqi 4.4cqi;color:var(--ink-3);font-size:3.6cqi}
+.a-search svg{width:4.2cqi;height:4.2cqi}
+.a-chips{display:flex;gap:2.2cqi;overflow:hidden}
+.a-chip{flex:none;background:var(--white);border:1px solid var(--line);border-radius:999px;
+  padding:2.2cqi 4.2cqi;font-size:3.4cqi;font-weight:600}
+.a-chip.on{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
+.a-label{font-weight:800;font-size:4.2cqi;display:flex;justify-content:space-between;align-items:baseline}
+.a-label small{font-weight:600;color:var(--tiffany-deep);font-size:3.2cqi}
+.a-cards{display:flex;gap:3cqi}
+.a-biz{flex:1;background:var(--white);border:1px solid var(--line);border-radius:4.6cqi;overflow:hidden}
+.a-thumb{height:17cqi;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:9cqi}
+.t1{background:linear-gradient(135deg,#17655E,#81D8D0)}
+.t2{background:linear-gradient(135deg,#0E1A1A,#3E6F6A)}
+.t3{background:linear-gradient(135deg,#2C8077,#BFE9E4)}
+.a-biz-in{padding:2.6cqi 3.4cqi 3.2cqi;display:grid;gap:.8cqi}
+.a-biz b{font-size:3.6cqi}
+.a-biz small{font-size:3cqi;color:var(--ink-3)}
+.a-next{background:var(--ink);color:var(--porcelain);border-radius:4.6cqi;padding:3.4cqi 4.4cqi;
+  display:flex;align-items:center;gap:3cqi}
+.a-next .ok{width:7cqi;height:7cqi;border-radius:50%;background:var(--tiffany);color:var(--ink);display:grid;place-items:center;flex:none}
+.a-next .ok svg{width:3.8cqi;height:3.8cqi}
+.a-next b{font-size:3.6cqi;display:block}
+.a-next small{font-size:3cqi;opacity:.75}
+.tabbar{display:flex;justify-content:space-around;align-items:center;padding:2.8cqi 6cqi 5cqi;
+  background:var(--white);border-top:1px solid var(--line);margin-top:auto}
+.tabbar span{display:grid;place-items:center;gap:.6cqi;color:var(--ink-3);font-size:2.7cqi;font-weight:600}
+.tabbar svg{width:5.4cqi;height:5.4cqi}
+.tabbar .on{color:var(--tiffany-deep)}
+
+/* ---------- ticker ---------- */
+.ticker{background:var(--ink);color:var(--porcelain);padding:16px 0;overflow:hidden;direction:ltr}
+.ticker-track{display:flex;gap:46px;width:max-content;animation:slide 36s linear infinite}
+.ticker span{direction:rtl;display:flex;align-items:center;gap:46px;font-weight:700;font-size:17px;white-space:nowrap}
+.ticker i{width:9px;height:9px;border-radius:50%;background:var(--tiffany);flex:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- sections base ---------- */
+.sec{padding:clamp(64px,10vw,130px) 0;position:relative}
+.sec-white{background:var(--white)}
+.sec-ink{background:var(--ink);color:var(--porcelain)}
+.sec-ink .lede{color:rgba(246,244,239,.75)}
+.sec-wash{background:var(--wash)}
+.sec-tiffany{background:var(--tiffany)}
+
+/* ---------- discover ---------- */
+.cat-marquee{overflow:hidden;direction:ltr;margin-bottom:26px;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.cat-track{display:flex;gap:12px;width:max-content;animation:slide 44s linear infinite}
+.cat-track:hover{animation-play-state:paused}
+.cat{direction:rtl;display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:12px 22px;font-weight:700;font-size:16.5px;white-space:nowrap}
+.cat em{font-style:normal;width:10px;height:10px;border-radius:50%;background:var(--tiffany)}
+.biz-row{display:grid;grid-auto-flow:column;grid-auto-columns:min(78vw,300px);gap:18px;overflow-x:auto;
+  scroll-snap-type:x mandatory;padding:6px 4px 22px;scrollbar-width:none}
+.biz-row::-webkit-scrollbar{display:none}
+.biz{scroll-snap-align:start;background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);
+  overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.biz:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft)}
+.biz-thumb{height:168px;display:grid;place-items:center;position:relative;color:rgba(246,244,239,.85)}
+.biz-thumb b{font-size:92px;font-weight:900;line-height:1}
+.biz-thumb .b-cat{position:absolute;top:12px;inset-inline-start:12px;background:rgba(14,26,26,.5);
+  color:#fff;font-size:12.5px;font-weight:600;border-radius:var(--r-pill);padding:4px 12px;backdrop-filter:blur(6px)}
+.biz-in{padding:16px 18px 18px;display:grid;gap:6px}
+.biz-in b{font-size:18px}
+.biz-meta{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:14px}
+.biz-meta .star{color:var(--pend);display:inline-flex;align-items:center;gap:3px;font-weight:700;color:var(--ink)}
+.biz-meta .star svg{width:14px;height:14px;fill:#EFB643;stroke:none}
+.g1{background:linear-gradient(140deg,#17655E,#81D8D0)}
+.g2{background:linear-gradient(140deg,#0E1A1A,#41736D)}
+.g3{background:linear-gradient(140deg,#2C8077,#BFE9E4)}
+.g4{background:linear-gradient(140deg,#123B38,#81D8D0)}
+.g5{background:linear-gradient(140deg,#355E5A,#D7EFEB)}
+.g6{background:linear-gradient(140deg,#0E1A1A,#17655E)}
+.discover-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+
+/* ---------- profile ---------- */
+.profile-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:center}
+.profile-copy{display:grid;gap:18px}
+.profile-feats{display:grid;gap:12px;margin-top:6px}
+.pf{display:flex;gap:12px;align-items:center;font-weight:600;font-size:16.5px}
+.pf i{width:34px;height:34px;flex:none;border-radius:11px;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
+.pf i svg{width:17px;height:17px}
+.profile-card{background:var(--porcelain);border:1px solid var(--line);border-radius:28px;overflow:hidden;
+  box-shadow:var(--shadow-deep);max-width:520px;justify-self:start}
+.pc-media{height:230px;position:relative;overflow:hidden;
+  background:linear-gradient(130deg,#0E1A1A 10%,#17655E 55%,#81D8D0 120%)}
+.pc-media::before{content:"";position:absolute;inset:-40%;
+  background:radial-gradient(circle at 30% 30%,rgba(191,233,228,.5),transparent 42%);
+  animation:drift 12s ease-in-out infinite alternate}
+.pc-media .b-cat{position:absolute;top:16px;inset-inline-start:16px;background:rgba(14,26,26,.45);color:#fff;
+  font-size:13px;font-weight:600;border-radius:var(--r-pill);padding:5px 14px;backdrop-filter:blur(6px)}
+.pc-media .demo-tag{position:absolute;bottom:14px;inset-inline-end:14px;background:rgba(246,244,239,.85);border-color:transparent}
+.pc-head{display:flex;gap:14px;align-items:center;padding:0 22px;margin-top:-30px;position:relative}
+.pc-ava{width:64px;height:64px;border-radius:20px;background:var(--ink);color:var(--tiffany);display:grid;place-items:center;
+  font-weight:900;font-size:26px;border:3px solid var(--porcelain);flex:none}
+.pc-tit{padding-top:30px}
+.pc-tit b{font-size:21px;display:block}
+.pc-tit small{color:var(--ink-3);font-size:14px}
+.pc-rate{margin-inline-start:auto;padding-top:30px;display:flex;align-items:center;gap:5px;font-weight:800;font-size:16px}
+.pc-rate svg{width:16px;height:16px;fill:#EFB643}
+.pc-rate small{color:var(--ink-3);font-weight:500}
+.pc-servs{padding:16px 22px 6px;display:grid;gap:0}
+.pc-serv{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.pc-serv:last-child{border-bottom:0}
+.pc-serv b{font-size:15.5px}
+.pc-serv small{display:block;color:var(--ink-3);font-size:13px}
+.pc-price{margin-inline-start:auto;font-weight:800;font-size:16px}
+.pc-foot{display:flex;gap:10px;padding:10px 22px 22px}
+.pc-foot .btn{flex:1;justify-content:center;padding:13px 10px;font-size:15.5px}
+.pc-foot .btn-ghost{flex:0 0 auto;width:50px;padding:13px 0;justify-content:center}
+.pc-foot .btn-ghost svg{width:18px;height:18px}
+
+/* ---------- booking ---------- */
+.book-rail{position:relative;height:430vh}
+.book-sticky{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;overflow:clip}
+.book-grid{display:grid;grid-template-columns:auto auto;justify-content:center;gap:clamp(60px,12vw,180px);align-items:center;width:100%}
+.book-steps{display:grid;gap:clamp(14px,2.6vh,26px);position:relative;padding-inline-start:34px}
+.book-steps::before{content:"";position:absolute;inset-block:10px;inset-inline-start:11px;width:2px;background:var(--line)}
+.bstep{position:relative;opacity:.32;transition:opacity .45s;max-width:40ch}
+.bstep::before{content:"";position:absolute;inset-inline-start:-30px;top:8px;width:12px;height:12px;border-radius:50%;
+  background:var(--porcelain);border:2.5px solid var(--ink-3);transition:background .4s,border-color .4s,box-shadow .4s}
+.bstep b{font-size:clamp(19px,2.2vw,26px);font-weight:800;display:block;margin-bottom:2px}
+.bstep p{color:var(--ink-2);font-size:15.5px}
+.book-rail[data-step="0"] .bstep:nth-child(1),
+.book-rail[data-step="1"] .bstep:nth-child(2),
+.book-rail[data-step="2"] .bstep:nth-child(3),
+.book-rail[data-step="3"] .bstep:nth-child(4),
+.book-rail[data-step="4"] .bstep:nth-child(5){opacity:1}
+.book-rail[data-step="0"] .bstep:nth-child(1)::before,
+.book-rail[data-step="1"] .bstep:nth-child(2)::before,
+.book-rail[data-step="2"] .bstep:nth-child(3)::before,
+.book-rail[data-step="3"] .bstep:nth-child(4)::before,
+.book-rail[data-step="4"] .bstep:nth-child(5)::before{background:var(--tiffany);border-color:var(--tiffany-deep);box-shadow:0 0 0 6px rgba(129,216,208,.3)}
+.book-phone-wrap{position:relative;display:flex;justify-content:center}
+.book-phone-wrap .rings{position:absolute;width:520px;height:520px;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0}
+.scr{position:absolute;inset:12cqi 0 0 0;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.book-rail[data-step="0"] .scr[data-s="0"],
+.book-rail[data-step="1"] .scr[data-s="1"],
+.book-rail[data-step="2"] .scr[data-s="2"],
+.book-rail[data-step="3"] .scr[data-s="3"],
+.book-rail[data-step="4"] .scr[data-s="4"]{opacity:1;transform:none}
+.scr-head{font-weight:800;font-size:5cqi;padding:2cqi 7cqi 0}
+.scr-sub{color:var(--ink-3);font-size:3.3cqi;padding:0 7cqi}
+.pick-list{display:grid;gap:2.6cqi;padding:4cqi 6cqi}
+.pick{display:flex;align-items:center;gap:3cqi;background:var(--white);border:1.5px solid var(--line);
+  border-radius:4.4cqi;padding:3.2cqi 3.6cqi}
+.pick .pava{width:10cqi;height:10cqi;border-radius:3.4cqi;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:4.6cqi;flex:none}
+.pick b{font-size:3.7cqi;display:block}
+.pick small{font-size:3cqi;color:var(--ink-3)}
+.pick .pchk{margin-inline-start:auto;width:6cqi;height:6cqi;border-radius:50%;border:1.6px solid var(--line);flex:none;display:grid;place-items:center}
+.pick.sel{border-color:var(--tiffany-deep);background:#F0FAF8}
+.pick.sel .pchk{background:var(--tiffany);border-color:var(--tiffany);color:var(--ink)}
+.pick.sel .pchk svg{width:3.4cqi;height:3.4cqi}
+.cal{padding:4cqi 6cqi;display:grid;gap:2.4cqi}
+.cal-top{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:4cqi}
+.cal-top span{color:var(--ink-3);font-weight:600;font-size:3.2cqi}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2cqi;text-align:center;font-size:3.3cqi}
+.cal-grid .dow{color:var(--ink-3);font-size:2.9cqi;font-weight:600;padding:1cqi 0}
+.cal-grid .d{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;font-weight:600}
+.cal-grid .d.off{color:rgba(14,26,26,.28)}
+.cal-grid .d.sel{background:var(--ink);color:var(--tiffany);font-weight:800}
+.cal-grid .d.dot{position:relative}
+.cal-grid .d.dot::after{content:"";position:absolute;bottom:.8cqi;width:1.2cqi;height:1.2cqi;border-radius:50%;background:var(--tiffany-deep)}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqi;padding:4cqi 6cqi}
+.slot{background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:2.6cqi 0;text-align:center;
+  font-weight:700;font-size:3.6cqi}
+.slot.sel{background:var(--ink);border-color:var(--ink);color:var(--tiffany)}
+.slot.dis{opacity:.35;text-decoration:line-through}
+.confirm{display:grid;place-items:center;gap:3.4cqi;padding:8cqi 7cqi;text-align:center}
+.conf-ok{width:20cqi;height:20cqi;border-radius:50%;background:var(--tiffany);display:grid;place-items:center;color:var(--ink);position:relative}
+.conf-ok svg{width:9cqi;height:9cqi}
+.conf-ok::after{content:"";position:absolute;inset:-3cqi;border-radius:50%;border:1.5px solid var(--tiffany);animation:ping 2.4s ease-out infinite}
+.confirm h4{font-size:5.4cqi;font-weight:900}
+.conf-card{background:var(--white);border:1px solid var(--line);border-radius:4.4cqi;padding:3.6cqi 5cqi;display:grid;gap:1cqi;width:100%}
+.conf-card b{font-size:3.8cqi}
+.conf-card small{color:var(--ink-3);font-size:3.2cqi}
+.conf-btns{display:flex;gap:2.4cqi;width:100%}
+.conf-btns span{flex:1;text-align:center;border-radius:999px;padding:2.8cqi 0;font-weight:700;font-size:3.4cqi}
+.conf-btns .cb1{background:var(--ink);color:var(--porcelain)}
+.conf-btns .cb2{border:1.5px solid var(--line);background:var(--white)}
+.book-dots{display:none;gap:8px;justify-content:center;margin-top:18px}
+.book-dots i{width:8px;height:8px;border-radius:50%;background:rgba(14,26,26,.2);transition:background .3s,width .3s}
+.book-rail[data-step="0"] .book-dots i:nth-child(1),
+.book-rail[data-step="1"] .book-dots i:nth-child(2),
+.book-rail[data-step="2"] .book-dots i:nth-child(3),
+.book-rail[data-step="3"] .book-dots i:nth-child(4),
+.book-rail[data-step="4"] .book-dots i:nth-child(5){background:var(--tiffany-deep);width:22px;border-radius:99px}
+.bstep-mobile{display:none;text-align:center;margin-top:16px;min-height:74px}
+.bstep-mobile b{font-size:20px;display:block}
+.bstep-mobile p{color:var(--ink-2);font-size:15px}
+
+/* ---------- waitlist ---------- */
+.wait-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,80px);align-items:center}
+.wait-copy{display:grid;gap:18px}
+.wait-stage{position:relative;display:grid;gap:16px;max-width:440px;justify-self:center;width:100%}
+.wait-card{background:rgba(246,244,239,.06);border:1px solid rgba(246,244,239,.16);border-radius:24px;padding:24px;display:grid;gap:16px;backdrop-filter:blur(4px)}
+.wait-card header{display:flex;align-items:center;gap:12px}
+.wc-ping{width:46px;height:46px;border-radius:50%;background:rgba(129,216,208,.15);display:grid;place-items:center;position:relative;flex:none}
+.wc-ping::before{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--tiffany);animation:ping 3s ease-out infinite}
+.wc-dot{width:12px;height:12px;border-radius:50%;background:var(--tiffany)}
+.wait-card b{font-size:18px}
+.wait-card small{color:rgba(246,244,239,.6);font-size:14px}
+.wc-hours{display:flex;gap:8px;flex-wrap:wrap}
+.wc-hours span{border:1px solid rgba(246,244,239,.25);border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600}
+.wc-hours .on{background:var(--tiffany);color:var(--ink);border-color:var(--tiffany);font-weight:700}
+.wait-toast{background:var(--porcelain);color:var(--ink);border-radius:20px;padding:18px 20px;display:flex;gap:14px;align-items:center;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.55);animation:toast 7.5s cubic-bezier(.2,.7,.2,1) infinite}
+.wait-toast .fi{width:42px;height:42px;border-radius:14px;background:var(--tiffany);display:grid;place-items:center;flex:none}
+.wait-toast .fi svg{width:20px;height:20px}
+.wait-toast b{display:block;font-size:16px}
+.wait-toast small{color:var(--ink-3);font-size:13.5px}
+.wait-toast .btn{margin-inline-start:auto;padding:10px 20px;font-size:14.5px;flex:none}
+@keyframes toast{0%,42%{opacity:0;transform:translateY(18px) scale(.97)}54%,94%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
+
+/* ---------- appointments ---------- */
+.appts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.appt{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:20px;display:grid;gap:12px;
+  position:relative;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.appt:hover{transform:translateY(-6px) rotate(0deg)!important;box-shadow:var(--shadow-soft)}
+.appt:nth-child(1){transform:rotate(-1.2deg)}
+.appt:nth-child(2){transform:rotate(.8deg)}
+.appt:nth-child(3){transform:rotate(-.7deg)}
+.appt:nth-child(4){transform:rotate(1.1deg)}
+.appt header{display:flex;align-items:center;gap:10px}
+.ap-ava{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:18px;flex:none}
+.appt header b{font-size:16.5px;display:block;line-height:1.2}
+.appt header small{color:var(--ink-3);font-size:13px}
+.ap-when{display:flex;gap:8px;align-items:center;color:var(--ink-2);font-size:14.5px;font-weight:600;border-top:1px dashed var(--line);padding-top:12px}
+.ap-when svg{width:15px;height:15px;color:var(--ink-3)}
+.pill{border-radius:999px;font-size:13px;font-weight:700;padding:5px 13px;width:fit-content;display:inline-flex;align-items:center;gap:6px}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill-ok{background:rgba(31,158,126,.13);color:#116A53}
+.pill-pend{background:rgba(217,148,43,.14);color:#92610F}
+.pill-no{background:rgba(217,90,78,.12);color:#A8352B}
+.pill-wait{background:rgba(129,216,208,.25);color:var(--tiffany-deep)}
+
+/* ---------- notifications ---------- */
+.notifs{display:grid;gap:14px;max-width:480px;margin-inline:auto;width:100%}
+.notif{background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);
+  border-radius:20px;padding:16px 18px;display:flex;gap:13px;box-shadow:0 14px 34px -18px rgba(14,26,26,.3)}
+.notif .ni{width:42px;height:42px;border-radius:13px;background:var(--ink);display:grid;place-items:center;flex:none}
+.notif .ni svg{width:22px;height:22px}
+.notif-body{flex:1;min-width:0}
+.notif-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.notif-top b{font-size:15.5px}
+.notif-top small{color:var(--ink-3);font-size:12.5px;flex:none}
+.notif p{font-size:14.5px;color:var(--ink-2);line-height:1.4}
+.notif-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:center}
+
+/* ---------- business ---------- */
+.biz-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,5vw,80px);align-items:center}
+.biz-copy{display:grid;gap:20px}
+.biz-feats{display:grid;gap:14px}
+.bf{display:flex;gap:14px;align-items:flex-start}
+.bf i{width:40px;height:40px;flex:none;border-radius:13px;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
+.bf i svg{width:19px;height:19px}
+.bf b{font-size:17px;display:block}
+.bf small{color:var(--ink-2);font-size:14.5px}
+.biz-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.dash{background:var(--porcelain);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-deep);
+  padding:22px;display:grid;gap:16px;max-width:560px;width:100%;justify-self:start}
+.dash-top{display:flex;align-items:center;gap:12px}
+.dash-top .pc-ava{width:46px;height:46px;font-size:19px;border:0;border-radius:15px}
+.dash-top b{display:block;font-size:17px}
+.dash-top small{color:var(--ink-3);font-size:13.5px}
+.dash-top .pill{margin-inline-start:auto}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ds{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.ds b{font-size:22px;font-weight:900;display:block;line-height:1.1}
+.ds small{color:var(--ink-3);font-size:12.5px}
+.dash-sched{display:grid;gap:8px}
+.dr{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:14px}
+.dr time{font-weight:800;font-variant-numeric:tabular-nums;flex:none;width:44px}
+.dr i{width:4px;height:26px;border-radius:4px;flex:none}
+.dr b{font-weight:600}
+.dr small{color:var(--ink-3);margin-inline-start:auto;flex:none}
+.dash-req{background:var(--ink);color:var(--porcelain);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.dash-req b{font-size:14.5px;display:block}
+.dash-req small{opacity:.7;font-size:12.5px}
+.dash-req .dr-btns{margin-inline-start:auto;display:flex;gap:8px}
+.dr-btns span{border-radius:999px;padding:8px 18px;font-size:13.5px;font-weight:700}
+.dr-ok{background:var(--tiffany);color:var(--ink)}
+.dr-no{border:1px solid rgba(246,244,239,.3)}
+
+/* ---------- marquee gallery ---------- */
+.gal{overflow:hidden;direction:ltr;display:grid;gap:14px;
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.gal-track{display:flex;gap:14px;width:max-content;animation:slide 52s linear infinite}
+.gal-track.rev{animation-direction:reverse;animation-duration:60s}
+.gal-track:hover{animation-play-state:paused}
+.gt{direction:rtl;display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);
+  border-radius:18px;padding:12px 20px 12px 26px;white-space:nowrap}
+.gt .ap-ava{width:38px;height:38px;font-size:16px;border-radius:12px}
+.gt b{font-size:15.5px;display:block;line-height:1.25}
+.gt small{color:var(--ink-3);font-size:13px}
+
+/* ---------- how ---------- */
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,54px)}
+.how-col{background:var(--porcelain);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,3.4vw,44px)}
+.how-col.pro{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
+.how-col h3{font-size:19px;font-weight:700;color:var(--tiffany-deep);margin-bottom:22px}
+.how-col.pro h3{color:var(--tiffany)}
+.how-steps{display:grid;gap:4px}
+.hs{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.how-col.pro .hs{border-color:rgba(246,244,239,.14)}
+.hs:last-child{border-bottom:0}
+.hs em{font-style:normal;font-weight:800;font-size:15px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.how-col.pro .hs em{color:rgba(246,244,239,.5)}
+.hs b{font-size:clamp(30px,3.6vw,46px);font-weight:900;letter-spacing:-.01em}
+.hs small{font-size:15px;color:var(--ink-2);margin-inline-start:auto;text-align:start;max-width:18ch}
+.how-col.pro .hs small{color:rgba(246,244,239,.65)}
+
+/* ---------- about ---------- */
+.about-in{display:grid;gap:18px;max-width:880px}
+.about-in p{font-size:clamp(20px,2.6vw,30px);font-weight:600;line-height:1.5;color:rgba(246,244,239,.92)}
+.about-in .logo{color:var(--porcelain)}
+
+/* ---------- FAQ ---------- */
+.faq-wrap{max-width:760px;margin-inline:auto}
+.faq{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;align-items:center;gap:16px;list-style:none;cursor:pointer;padding:22px 2px;
+  font-size:clamp(17px,2vw,21px);font-weight:700}
+.faq summary::-webkit-details-marker{display:none}
+.faq .chev{margin-inline-start:auto;width:34px;height:34px;flex:none;border-radius:50%;border:1.5px solid var(--line);
+  display:grid;place-items:center;transition:transform .35s,background .35s}
+.faq .chev svg{width:15px;height:15px}
+.faq[open] .chev{transform:rotate(180deg);background:var(--tiffany);border-color:var(--tiffany)}
+.faq-a{padding:0 2px 22px;color:var(--ink-2);font-size:16.5px;max-width:60ch}
+
+/* ---------- final CTA ---------- */
+.final{overflow:clip;position:relative;padding-bottom:0}
+.final .rings i{border-color:var(--ink);opacity:0}
+.final-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(20px,4vw,60px);align-items:end}
+.final-copy{display:grid;gap:24px;padding-bottom:clamp(60px,9vw,120px)}
+.final h2{font-size:clamp(40px,6vw,84px);font-weight:900;letter-spacing:-.015em}
+.final .store{background:var(--ink)}
+.final-phone{display:flex;justify-content:center;align-items:flex-end;position:relative}
+.final-phone .phone{--pw:300px;margin-bottom:-26%;}
+.final .btn-link{color:var(--ink);font-weight:800}
+
+/* ---------- footer ---------- */
+.ft{background:var(--ink);color:var(--porcelain);padding:clamp(54px,7vw,90px) 0 34px}
+.ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:clamp(24px,4vw,60px);margin-bottom:46px}
+.ft-brand{display:grid;gap:16px;align-content:start}
+.ft-brand p{color:rgba(246,244,239,.6);font-size:15px;max-width:26ch}
+.ft h4{font-size:14.5px;font-weight:700;color:rgba(246,244,239,.5);margin-bottom:14px}
+.ft-col ul{display:grid;gap:10px;font-size:15.5px}
+.ft-col a{opacity:.9;transition:color .2s}
+.ft-col a:hover{color:var(--tiffany)}
+.ft-bottom{border-top:1px solid rgba(246,244,239,.12);padding-top:22px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;
+  color:rgba(246,244,239,.55);font-size:13.5px}
+.ft .stores{margin-top:4px}
+.ft .store{background:rgba(246,244,239,.08);border:1px solid rgba(246,244,239,.16)}
+
+/* ---------- reveal ---------- */
+.will-reveal{opacity:0;transform:translateY(26px)}
+.revealed{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .appts{grid-template-columns:repeat(2,1fr)}
+  .hero .phone{--pw:300px}
+}
+@media (max-width:920px){
+  .hd-nav,.hd-cta{display:none}
+  .menu-btn{display:block}
+  .hd-in{justify-content:space-between}
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .hero-copy{text-align:center;justify-items:center}
+  .lede{margin-inline:auto}
+  .hero-stage{min-height:0;margin-top:10px}
+  .f1{inset-inline-end:2%}
+  .f3{inset-inline-start:0}
+  .f2{inset-inline-end:0;bottom:12%}
+  .f4{display:none}
+  .profile-grid,.wait-grid,.biz-grid,.notif-grid{grid-template-columns:1fr}
+  .profile-card,.dash{justify-self:center;max-width:520px}
+  .how-grid{grid-template-columns:1fr}
+  .final-grid{grid-template-columns:1fr;gap:10px}
+  .final-copy{text-align:center;justify-items:center;padding-bottom:40px}
+  .final-phone .phone{margin-bottom:-34%}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .book-grid{grid-template-columns:1fr;justify-items:center;gap:0}
+  .book-steps{display:none}
+  .bstep-mobile{display:block}
+  .book-dots{display:flex}
+  .book-rail{height:380vh}
+  .book-sticky{align-items:flex-start;padding-top:calc(var(--hd-h) + 8px)}
+  .phone--book{--pw:min(62vw,250px)}
+  .wait-stage{max-width:400px}
+}
+@media (max-width:560px){
+  :root{--hd-h:62px}
+  .h-display{font-size:clamp(38px,11vw,46px)}
+  .h-sec{font-size:clamp(29px,8.4vw,36px)}
+  .hero .phone{--pw:min(66vw,260px)}
+  .frag{padding:9px 12px;border-radius:14px}
+  .frag b{font-size:12.5px}
+  .frag small{font-size:11px}
+  .frag .fi{width:28px;height:28px;border-radius:9px}
+  .frag-chip{font-size:12.5px;padding:8px 14px}
+  .appts{grid-template-columns:1fr}
+  .appt{transform:none!important}
+  .appt:hover{transform:translateY(-4px)!important}
+  .biz-row{grid-auto-columns:76vw}
+  .dash-stats{grid-template-columns:repeat(3,1fr);gap:7px}
+  .ds b{font-size:18px}
+  .ft-grid{grid-template-columns:1fr}
+  .hs small{display:none}
+  .wait-toast .btn{margin-inline-start:0}
+  .pc-foot{flex-wrap:wrap}
+  .final-phone .phone{--pw:min(58vw,230px)}
+  .stores{justify-content:center}
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  .ticker-track,.cat-track,.gal-track{animation:none;width:auto;flex-wrap:wrap}
+  .wait-toast{opacity:1;transform:none}
+  .will-reveal{opacity:1;transform:none}
+  .rings{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+
+<!-- ================= HEADER ================= -->
+<header class="hd" id="top">
+  <div class="wrap hd-in">
+    <a class="logo" href="#top" aria-label="PING — לראש העמוד">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="12" cy="20" r="5.5" fill="#81D8D0"/>
+        <path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/>
+      </svg>
+      PING
+    </a>
+    <nav class="hd-nav" aria-label="ניווט ראשי">
+      <a href="#how">איך זה עובד</a>
+      <a href="#business">לעסקים</a>
+      <a href="#about">עלינו</a>
+      <a href="#faq">שאלות נפוצות</a>
+    </nav>
+    <a class="btn btn-tiffany hd-cta" href="#download">מורידים את PING</a>
+    <button class="menu-btn" aria-label="תפריט" aria-expanded="false" aria-controls="mmenu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="m-menu" id="mmenu" aria-label="תפריט נייד">
+  <a href="#how">איך זה עובד</a>
+  <a href="#business">לעסקים</a>
+  <a href="#about">עלינו</a>
+  <a href="#faq">שאלות נפוצות</a>
+  <a class="btn btn-tiffany" href="#download">מורידים את PING</a>
+</nav>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-blob" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 class="h-display">התור הבא שלך.<br>בדיוק כשנוח לך.</h1>
+      <p class="lede">מוצאים עסק, בוחרים שעה וקובעים.<br>בלי טלפונים, בלי לחכות.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-tiffany" href="#download">מורידים את PING</a>
+        <a class="btn-link" href="#business">יש לכם עסק?</a>
+      </div>
+      <div class="stores" id="download">
+        <a class="store" href="#download" aria-label="App Store — בקרוב">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
+          <span><small>בקרוב ב־</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="#download" aria-label="Google Play — בקרוב">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
+          <span><small>בקרוב ב־</small><b>Google Play</b></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-stage">
+      <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
+
+      <div class="phone" role="img" aria-label="מסך הבית של אפליקציית PING">
+        <div class="scr-area">
+          <div class="island"></div>
+          <div class="app">
+            <div class="statusbar"><span class="num">9:41</span>
+              <span class="sb-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="17" height="9" rx="2.5"/><path d="M21 11v3" stroke-linecap="round"/><rect x="4" y="10" width="11" height="5" rx="1" fill="currentColor" stroke="none"/></svg>
+              </span>
+            </div>
+            <div class="app-body">
+              <div class="a-greet"><small>בוקר טוב 👋</small><b>נועה</b></div>
+              <div class="a-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                מה מחפשים היום?
+              </div>
+              <div class="a-chips">
+                <span class="a-chip on">הכול</span><span class="a-chip">שיער</span><span class="a-chip">ציפורניים</span><span class="a-chip">טיפוח</span><span class="a-chip">כושר</span>
+              </div>
+              <div class="a-label">קרוב אליך <small>הצגת הכול</small></div>
+              <div class="a-cards">
+                <div class="a-biz"><div class="a-thumb t1">ג</div><div class="a-biz-in"><b>סטודיו גלי</b><small>שיער · 4.9 ★ · 350 מ׳</small></div></div>
+                <div class="a-biz"><div class="a-thumb t3">ל</div><div class="a-biz-in"><b>לאק בר</b><small>ציפורניים · 4.8 ★ · 1.2 ק״מ</small></div></div>
+              </div>
+              <div class="a-next">
+                <span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span><b>התור הקרוב שלך</b><small>מחר · 14:30 · סטודיו גלי</small></span>
+              </div>
+            </div>
+            <div class="tabbar" aria-hidden="true">
+              <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20z"/></svg>בית</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>חיפוש</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>התורים שלי</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5" stroke-linecap="round"/></svg>פרופיל</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="frag frag-ok f1" aria-hidden="true">
+        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+        <span><b>התור אושר</b><small>יום ה׳ · 14:30</small></span>
+      </div>
+      <div class="frag f2" aria-hidden="true">
+        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+        <span><b>התפנה מקום!</b><small>היום · 16:00</small></span>
+      </div>
+      <div class="frag frag-chip f3" aria-hidden="true">ציפורניים</div>
+      <div class="frag frag-time f4 num" aria-hidden="true">14:30</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>בלי טלפונים<i></i>בלי המתנה על הקו<i></i>בלי ״נחזור אליך״<i></i>התור בכיס<i></i>עדכונים בזמן אמת<i></i>חינם ללקוחות<i></i></span>
+    <span>בלי טלפונים<i></i>בלי המתנה על הקו<i></i>בלי ״נחזור אליך״<i></i>התור בכיס<i></i>עדכונים בזמן אמת<i></i>חינם ללקוחות<i></i></span>
+  </div>
+</div>
+
+<!-- ================= DISCOVER ================= -->
+<section class="sec" id="discover">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h-sec">כל מה שחיפשתם,<br>קרוב אליכם.</h2>
+      <p class="lede">מהמספרה השכונתית ועד הסטודיו שכולם מדברים עליו — מגלים, משווים ובוחרים.</p>
+    </div>
+  </div>
+  <div class="cat-marquee">
+    <div class="cat-track">
+      <span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>כושר</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
+      <span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>כושר</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="biz-row" aria-label="עסקים לדוגמה">
+      <article class="biz"><div class="biz-thumb g1"><b>ג</b><span class="b-cat">שיער</span></div><div class="biz-in"><b>סטודיו גלי</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9</span><span>רמת החייל · 350 מ׳</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g2"><b>ה</b><span class="b-cat">ברברים</span></div><div class="biz-in"><b>מספרת העיר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.7</span><span>פלורנטין · 900 מ׳</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g3"><b>ל</b><span class="b-cat">ציפורניים</span></div><div class="biz-in"><b>לאק בר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.8</span><span>דיזנגוף · 1.2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g4"><b>פ</b><span class="b-cat">כושר</span></div><div class="biz-in"><b>פיט האוס</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>5.0</span><span>הצפון הישן · 2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g5"><b>ג</b><span class="b-cat">טיפוח</span></div><div class="biz-in"><b>גלואו קליניק</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9</span><span>שרונה · 1.8 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g6"><b>ס</b><span class="b-cat">ספא</span></div><div class="biz-in"><b>ספא הנמל</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.8</span><span>נמל ת״א · 3 ק״מ</span></div></div></article>
+    </div>
+    <div class="discover-foot">
+      <span class="demo-tag">שמות העסקים להמחשה בלבד</span>
+      <a class="btn-link" href="#book">איך קובעים תור?</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUSINESS PROFILE ================= -->
+<section class="sec sec-white" id="profile">
+  <div class="wrap profile-grid">
+    <div class="profile-copy">
+      <h2 class="h-sec">רואים. בוחרים.<br>קובעים.</h2>
+      <p class="lede">כל מה שצריך לדעת על העסק — במקום אחד.</p>
+      <div class="profile-feats">
+        <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M10 9l5 2.5L10 14z" fill="currentColor" stroke="none"/></svg></i>גלריה וסרטונים מתוך העסק</div>
+        <div class="pf"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></i>דירוגים וביקורות אמיתיות</div>
+        <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7" stroke-linecap="round"/></svg></i>שירותים, מחירים וזמנים ברורים</div>
+        <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg></i>קביעת תור ישירות מהפרופיל</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="pc-media">
+        <span class="b-cat">שיער · רמת החייל</span>
+        <span class="demo-tag">תוכן להמחשה</span>
+      </div>
+      <div class="pc-head">
+        <span class="pc-ava">ג</span>
+        <span class="pc-tit"><b>סטודיו גלי</b><small>פתוח עכשיו · עד 19:00</small></span>
+        <span class="pc-rate"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9 <small class="num">(312)</small></span>
+      </div>
+      <div class="pc-servs">
+        <div class="pc-serv"><span><b>תספורת + פן</b><small>45 דק׳</small></span><span class="pc-price num">₪120</span></div>
+        <div class="pc-serv"><span><b>צבע שורש</b><small>90 דק׳</small></span><span class="pc-price num">₪240</span></div>
+        <div class="pc-serv"><span><b>טיפול קרטין</b><small>120 דק׳</small></span><span class="pc-price num">₪450</span></div>
+      </div>
+      <div class="pc-foot">
+        <span class="btn btn-tiffany">קביעת תור</span>
+        <span class="btn btn-ghost" role="img" aria-label="שיתוף"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M12 3L7.5 7.5M12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOOKING FLOW ================= -->
+<section class="sec" id="book" style="padding-bottom:0">
+  <div class="wrap sec-head" style="margin-bottom:0">
+    <h2 class="h-sec">כמה שניות,<br>ויש לך תור.</h2>
+    <p class="lede">מסע הזמנה אחד רציף: גוללים — והתור נסגר.</p>
+  </div>
+  <div class="book-rail" data-step="0">
+    <div class="book-sticky">
+      <div class="wrap book-grid">
+        <ol class="book-steps">
+          <li class="bstep"><b>בוחרים עסק</b><p>לפי קרבה, דירוג או המלצות.</p></li>
+          <li class="bstep"><b>בוחרים שירות</b><p>עם משך ומחיר ברורים מראש.</p></li>
+          <li class="bstep"><b>בוחרים תאריך</b><p>רואים רק ימים עם זמינות אמיתית.</p></li>
+          <li class="bstep"><b>בוחרים שעה</b><p>השעות הפנויות — בלחיצה אחת.</p></li>
+          <li class="bstep"><b>וזהו. התור נקבע</b><p>אישור, תזכורת והוספה ליומן.</p></li>
+        </ol>
+        <div>
+        <div class="book-phone-wrap">
+          <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="phone phone--book" role="img" aria-label="תהליך קביעת תור באפליקציה">
+            <div class="scr-area">
+              <div class="island"></div>
+              <div class="statusbar"><span class="num">9:41</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
+
+              <div class="scr" data-s="0">
+                <div class="scr-head">בוחרים עסק</div>
+                <div class="scr-sub">קרוב אליך עכשיו</div>
+                <div class="pick-list">
+                  <div class="pick sel"><span class="pava t1">ג</span><span><b>סטודיו גלי</b><small>שיער · 4.9 ★ · 350 מ׳</small></span><span class="pchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></div>
+                  <div class="pick"><span class="pava t3">ל</span><span><b>לאק בר</b><small>ציפורניים · 4.8 ★</small></span><span class="pchk"></span></div>
+                  <div class="pick"><span class="pava t2">ה</span><span><b>מספרת העיר</b><small>ברברים · 4.7 ★</small></span><span class="pchk"></span></div>
+                </div>
+              </div>
+
+              <div class="scr" data-s="1">
+                <div class="scr-head">בוחרים שירות</div>
+                <div class="scr-sub">סטודיו גלי</div>
+                <div class="pick-list">
+                  <div class="pick sel"><span><b>תספורת + פן</b><small>45 דק׳ · ₪120</small></span><span class="pchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></div>
+                  <div class="pick"><span><b>צבע שורש</b><small>90 דק׳ · ₪240</small></span><span class="pchk"></span></div>
+                  <div class="pick"><span><b>טיפול קרטין</b><small>120 דק׳ · ₪450</small></span><span class="pchk"></span></div>
+                </div>
+              </div>
+
+              <div class="scr" data-s="2">
+                <div class="scr-head">בוחרים תאריך</div>
+                <div class="cal">
+                  <div class="cal-top">נובמבר 2026<span>תספורת + פן</span></div>
+                  <div class="cal-grid num">
+                    <span class="dow">א</span><span class="dow">ב</span><span class="dow">ג</span><span class="dow">ד</span><span class="dow">ה</span><span class="dow">ו</span><span class="dow">ש</span>
+                    <span class="d off">1</span><span class="d off">2</span><span class="d off">3</span><span class="d off">4</span><span class="d off">5</span><span class="d off">6</span><span class="d off">7</span>
+                    <span class="d off">8</span><span class="d dot">9</span><span class="d">10</span><span class="d">11</span><span class="d sel">12</span><span class="d">13</span><span class="d off">14</span>
+                    <span class="d">15</span><span class="d">16</span><span class="d dot">17</span><span class="d">18</span><span class="d">19</span><span class="d">20</span><span class="d off">21</span>
+                    <span class="d">22</span><span class="d">23</span><span class="d">24</span><span class="d dot">25</span><span class="d">26</span><span class="d">27</span><span class="d off">28</span>
+                    <span class="d">29</span><span class="d">30</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="scr" data-s="3">
+                <div class="scr-head">בוחרים שעה</div>
+                <div class="scr-sub">יום ה׳, 12 בנובמבר</div>
+                <div class="slots num">
+                  <span class="slot">09:30</span><span class="slot">10:15</span><span class="slot dis">11:00</span>
+                  <span class="slot">12:30</span><span class="slot sel">14:30</span><span class="slot">16:00</span>
+                  <span class="slot">17:45</span><span class="slot dis">19:00</span><span class="slot">19:45</span>
+                </div>
+              </div>
+
+              <div class="scr" data-s="4">
+                <div class="confirm">
+                  <span class="conf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                  <h4>התור נקבע!</h4>
+                  <div class="conf-card"><b>סטודיו גלי · תספורת + פן</b><small>יום ה׳ 12.11 · 14:30</small></div>
+                  <div class="conf-btns"><span class="cb1">הוספה ליומן</span><span class="cb2">שיתוף</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="bstep-mobile" aria-live="polite">
+          <b data-bm="0">בוחרים עסק</b>
+          <p data-bm="0">לפי קרבה, דירוג או המלצות.</p>
+        </div>
+        <div class="book-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WAITLIST ================= -->
+<section class="sec sec-ink" id="waitlist">
+  <div class="wrap wait-grid">
+    <div class="wait-copy">
+      <h2 class="h-sec">אין מקום?<br>PING מחכה בשבילך.</h2>
+      <p class="lede">נרשמים לשעות שנוחות לכם, וממשיכים בחיים. ברגע שמתפנה מקום — אתם הראשונים לדעת, ותופסים אותו בלחיצה.</p>
+      <a class="btn btn-tiffany" href="#download" style="width:fit-content">מורידים את PING</a>
+    </div>
+    <div class="wait-stage">
+      <div class="wait-card">
+        <header>
+          <span class="wc-ping"><span class="wc-dot"></span></span>
+          <span><b>רשימת המתנה · סטודיו גלי</b><br><small>נעדכן ברגע שמתפנה מקום</small></span>
+        </header>
+        <div class="wc-hours num">
+          <span>בוקר</span><span class="on">צהריים</span><span class="on">16:00–18:00</span><span>ערב</span>
+        </div>
+      </div>
+      <div class="wait-toast">
+        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 4a6 6 0 0 1 6 6c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10a6 6 0 0 1 6-6zM10 20a2.2 2.2 0 0 0 4 0"/></svg></span>
+        <span><b>התפנה מקום ב־16:00</b><small>היום · סטודיו גלי</small></span>
+        <span class="btn btn-ink">תופסים</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APPOINTMENTS ================= -->
+<section class="sec" id="appointments">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h-sec">הכול במקום אחד.</h2>
+      <p class="lede">התורים שלך, הסטטוס שלהם וכל מה שצריך לדעת.</p>
+    </div>
+    <div class="appts">
+      <article class="appt">
+        <span class="pill pill-ok"><i></i>אושר</span>
+        <header><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>תספורת + פן</small></span></header>
+        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום ה׳ 12.11 · 14:30</div>
+      </article>
+      <article class="appt">
+        <span class="pill pill-pend"><i></i>ממתין לאישור</span>
+        <header><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>לק ג׳ל</small></span></header>
+        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום א׳ 15.11 · 11:00</div>
+      </article>
+      <article class="appt">
+        <span class="pill pill-wait"><i></i>רשימת המתנה</span>
+        <header><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>אימון אישי</small></span></header>
+        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2" stroke-linecap="round"/></svg>16:00–18:00 · השבוע</div>
+      </article>
+      <article class="appt">
+        <span class="pill pill-no"><i></i>נדחה</span>
+        <header><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>תספורת גבר</small></span></header>
+        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום ו׳ 13.11 · 09:00</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NOTIFICATIONS ================= -->
+<section class="sec sec-wash" id="notifications">
+  <div class="wrap notif-grid">
+    <div class="sec-head" style="margin-bottom:0">
+      <h2 class="h-sec">לא מפספסים<br>כלום.</h2>
+      <p class="lede">אישורים, תזכורות ומקומות שמתפנים — בדיוק ברגע הנכון, בלי רעש מיותר.</p>
+    </div>
+    <div class="notifs">
+      <div class="notif">
+        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>התור אושר ✓</b><small>עכשיו</small></span><p>סטודיו גלי אישרו את התור — יום ה׳ 12.11 בשעה 14:30.</p></span>
+      </div>
+      <div class="notif">
+        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>התפנה מקום!</b><small>לפני 2 דק׳</small></span><p>מקום התפנה היום ב־16:00. פותחים ותופסים לפני כולם.</p></span>
+      </div>
+      <div class="notif">
+        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>תזכורת לתור</b><small>לפני שעה</small></span><p>התור שלך בלאק בר מחר ב־11:00. נתראה שם 💅</p></span>
+      </div>
+      <div class="notif">
+        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>עדכון מהעסק</b><small>אתמול</small></span><p>פיט האוס פתחו שעות חדשות בימי שישי בבוקר.</p></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUSINESS ================= -->
+<section class="sec sec-white" id="business">
+  <div class="wrap biz-grid">
+    <div class="biz-copy">
+      <h2 class="h-sec">יש לכם עסק?<br>PING עובד גם בשבילכם.</h2>
+      <p class="lede">יומן מלא, פחות טלפונים, ולקוחות שמגיעים בזמן.</p>
+      <div class="biz-feats">
+        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg></i><span><b>יומן וזמינות בשליטה מלאה</b><small>פותחים, חוסמים ומזיזים שעות בקלות.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></i><span><b>אישור תורים בקליק</b><small>מאשרים, דוחים או מציעים זמן אחר.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1.2-3.4 4-4.8 6.5-4.8s5.3 1.4 6.5 4.8M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 15.4c1.6.7 2.6 2 3 4.6" stroke-linecap="round"/></svg></i><span><b>לקוחות ותזכורות אוטומטיות</b><small>פחות הברזות, פחות הודעות ידניות.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></i><span><b>רשימות המתנה שממלאות את היומן</b><small>בוטל תור? השעה מוצעת אוטומטית לממתינים.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M10 9l5 2.5L10 14z" fill="currentColor" stroke="none"/></svg></i><span><b>פרופיל עסקי שמוכר בשבילכם</b><small>גלריה, שירותים וביקורות — הכרטיס ביקור החדש שלכם.</small></span></div>
+      </div>
+      <div class="biz-ctas">
+        <a class="btn btn-ink" href="#contact">מצטרפים כעסק</a>
+        <a class="btn-link" href="#faq">איך זה עובד לעסקים?</a>
+      </div>
+    </div>
+    <div class="dash" role="img" aria-label="מסך ניהול העסק ב-PING">
+      <div class="dash-top">
+        <span class="pc-ava">ג</span>
+        <span><b>סטודיו גלי</b><small>יום ה׳, 12 בנובמבר</small></span>
+        <span class="pill pill-ok"><i></i>פתוח</span>
+      </div>
+      <div class="dash-stats">
+        <div class="ds"><b class="num">12</b><small>תורים היום</small></div>
+        <div class="ds"><b class="num">3</b><small>ממתינים לאישור</small></div>
+        <div class="ds"><b class="num">5</b><small>ברשימת המתנה</small></div>
+      </div>
+      <div class="dash-sched">
+        <div class="dr"><time>09:00</time><i style="background:var(--tiffany)"></i><b>מאיה לוי</b><small>צבע שורש</small></div>
+        <div class="dr"><time>11:00</time><i style="background:var(--tiffany-deep)"></i><b>דנה אשכנזי</b><small>תספורת + פן</small></div>
+        <div class="dr"><time>14:30</time><i style="background:var(--tiffany)"></i><b>נועה כהן</b><small>תספורת + פן</small></div>
+        <div class="dr"><time>16:00</time><i style="background:var(--pend)"></i><b>שעה פנויה</b><small>הוצעה ל־5 ממתינים</small></div>
+      </div>
+      <div class="dash-req">
+        <span><b>בקשה חדשה: רוני פרץ</b><small>פן · יום א׳ 15.11 · 10:00</small></span>
+        <span class="dr-btns"><span class="dr-ok">אישור</span><span class="dr-no">דחייה</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALLERY MARQUEE ================= -->
+<section class="sec" id="community" style="padding-block:clamp(50px,7vw,90px)">
+  <div class="wrap sec-head">
+    <h2 class="h-sec">עסקים שכבר חיים על PING.</h2>
+    <span class="demo-tag">שמות וקטגוריות להמחשה — יוחלפו בעסקים אמיתיים</span>
+  </div>
+  <div class="gal">
+    <div class="gal-track">
+      <span class="gt"><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>שיער</small></span></span>
+      <span class="gt"><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-ava g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-ava g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+      <span class="gt"><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>שיער</small></span></span>
+      <span class="gt"><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-ava g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-ava g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+    </div>
+    <div class="gal-track rev">
+      <span class="gt"><span class="ap-ava g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-ava g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-ava g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-ava g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-ava g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-ava g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-ava g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-ava g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-ava g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-ava g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-ava g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-ava g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="sec sec-white" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h-sec">איך זה עובד?</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-col">
+        <h3>ללקוחות</h3>
+        <div class="how-steps">
+          <div class="hs"><em class="num">1</em><b>מוצאים</b><small>עסק קרוב, מדורג ופנוי</small></div>
+          <div class="hs"><em class="num">2</em><b>בוחרים</b><small>שירות, תאריך ושעה</small></div>
+          <div class="hs"><em class="num">3</em><b>קובעים</b><small>והתור בכיס</small></div>
+        </div>
+      </div>
+      <div class="how-col pro">
+        <h3>לעסקים</h3>
+        <div class="how-steps">
+          <div class="hs"><em class="num">1</em><b>מצטרפים</b><small>פרופיל עסקי בכמה דקות</small></div>
+          <div class="hs"><em class="num">2</em><b>מנהלים</b><small>יומן, לקוחות והמתנות</small></div>
+          <div class="hs"><em class="num">3</em><b>גדלים</b><small>לקוחות חדשים מוצאים אתכם</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="sec sec-ink" id="about" style="padding-block:clamp(54px,8vw,100px)">
+  <div class="wrap about-in">
+    <span class="logo" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#F6F4EF" stroke-width="2.6" stroke-linecap="round"/></svg>
+      PING
+    </span>
+    <p>נמאס לנו לרדוף אחרי תורים. אז בנינו את PING — דרך אחת פשוטה למצוא, לקבוע ולנהל כל תור. ללקוחות, ולעסקים שהם אוהבים.</p>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head" style="text-align:center;justify-items:center">
+      <h2 class="h-sec">שאלות נפוצות</h2>
+    </div>
+    <div class="faq-wrap">
+      <details class="faq">
+        <summary>איך קובעים תור?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <p class="faq-a">בוחרים עסק, שירות, תאריך ושעה — והתור שלכם. אם העסק מאשר תורים ידנית, תקבלו עדכון ברגע שהוא אושר.</p>
+      </details>
+      <details class="faq">
+        <summary>מה קורה אם אין שעה פנויה?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <p class="faq-a">נרשמים לרשימת ההמתנה ובוחרים את השעות שנוחות לכם. ברגע שמתפנה מקום, תקבלו התראה ותוכלו לתפוס אותו בלחיצה.</p>
+      </details>
+      <details class="faq">
+        <summary>אפשר לבטל או לשנות תור?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <p class="faq-a">כן. מבטלים או מזיזים את התור ישירות מהאפליקציה, בהתאם למדיניות של כל עסק. העסק מתעדכן אוטומטית.</p>
+      </details>
+      <details class="faq">
+        <summary>איך מצטרפים כעסק?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <p class="faq-a">לוחצים על ״מצטרפים כעסק״, ממלאים כמה פרטים — ואנחנו מלווים אתכם בהקמת הפרופיל והיומן.</p>
+      </details>
+      <details class="faq">
+        <summary>האם PING עולה כסף ללקוחות?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <p class="faq-a">לא. ההורדה והשימוש חינם לגמרי ללקוחות.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="sec sec-tiffany final" id="contact">
+  <div class="wrap final-grid">
+    <div class="final-copy">
+      <h2>התור הבא שלך<br>כבר מחכה ב־PING.</h2>
+      <div class="stores">
+        <a class="store" href="#download" aria-label="App Store — בקרוב">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
+          <span><small>בקרוב ב־</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="#download" aria-label="Google Play — בקרוב">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
+          <span><small>בקרוב ב־</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <a class="btn-link" href="#business">יש לכם עסק? מצטרפים כעסק ←</a>
+    </div>
+    <div class="final-phone">
+      <div class="phone" role="img" aria-label="אישור תור באפליקציית PING">
+        <div class="scr-area">
+          <div class="island"></div>
+          <div class="statusbar"><span class="num">9:41</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
+          <div class="confirm" style="padding-top:14cqi">
+            <span class="conf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <h4>התור נקבע!</h4>
+            <div class="conf-card"><b>סטודיו גלי · תספורת + פן</b><small>יום ה׳ 12.11 · 14:30</small></div>
+            <div class="conf-btns"><span class="cb1">הוספה ליומן</span><span class="cb2">שיתוף</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <span class="logo">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#F6F4EF" stroke-width="2.6" stroke-linecap="round"/></svg>
+          PING
+        </span>
+        <p>התור הבא שלך. בדיוק כשנוח לך.</p>
+        <div class="stores">
+          <a class="store" href="#download"><span><small>בקרוב ב־</small><b>App Store</b></span></a>
+          <a class="store" href="#download"><span><small>בקרוב ב־</small><b>Google Play</b></span></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>אפליקציה</h4>
+        <ul>
+          <li><a href="#discover">גילוי עסקים</a></li>
+          <li><a href="#book">קביעת תור</a></li>
+          <li><a href="#waitlist">רשימת המתנה</a></li>
+          <li><a href="#notifications">התראות</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>עסקים</h4>
+        <ul>
+          <li><a href="#business">הצטרפות כעסק</a></li>
+          <li><a href="#how">איך זה עובד</a></li>
+          <li><a href="#faq">שאלות נפוצות</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>מידע</h4>
+        <ul>
+          <li><a href="#faq">מדיניות פרטיות</a></li>
+          <li><a href="#faq">תנאי שימוש</a></li>
+          <li><a href="#faq">הצהרת נגישות</a></li>
+          <li><a href="#contact">יצירת קשר</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 PING. כל הזכויות שמורות.</span>
+      <span>אתר תדמית · שמות העסקים להמחשה</span>
+    </div>
+  </div>
+</footer>
+</main>
+
+<script>
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* header */
+  var hd = document.querySelector('.hd');
+  function hdState(){ hd.classList.toggle('is-solid', window.scrollY > 24 || document.body.classList.contains('menu-open')); }
+  window.addEventListener('scroll', hdState, {passive:true});
+  hdState();
+
+  /* mobile menu */
+  var mb = document.querySelector('.menu-btn');
+  var mm = document.getElementById('mmenu');
+  function closeMenu(){ document.body.classList.remove('menu-open'); mb.setAttribute('aria-expanded','false'); hdState(); }
+  mb.addEventListener('click', function(){
+    var open = document.body.classList.toggle('menu-open');
+    mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hdState();
+  });
+  mm.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenu(); });
+
+  /* scroll reveals — applied only via JS so no-JS users see everything */
+  if(!rm && 'IntersectionObserver' in window){
+    var targets = document.querySelectorAll('.sec-head, .biz, .appt, .notif, .bf, .pf, .profile-card, .dash, .how-col, .wait-card, .wait-stage, .faq, .about-in, .final-copy, .final-phone');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('revealed'); io.unobserve(en.target); }
+      });
+    }, {threshold:.15, rootMargin:'0px 0px -6% 0px'});
+    var i = 0;
+    targets.forEach(function(t){
+      var r = t.getBoundingClientRect();
+      if(r.top > window.innerHeight * .92){
+        t.classList.add('will-reveal');
+        t.style.setProperty('--d', ((i++ % 4) * .08) + 's');
+        io.observe(t);
+      }
+    });
+  }
+
+  /* booking journey — scroll-driven steps */
+  var rail = document.querySelector('.book-rail');
+  var steps = [
+    ['בוחרים עסק','לפי קרבה, דירוג או המלצות.'],
+    ['בוחרים שירות','עם משך ומחיר ברורים מראש.'],
+    ['בוחרים תאריך','רואים רק ימים עם זמינות אמיתית.'],
+    ['בוחרים שעה','השעות הפנויות — בלחיצה אחת.'],
+    ['וזהו. התור נקבע','אישור, תזכורת והוספה ליומן.']
+  ];
+  var bmB = document.querySelector('.bstep-mobile b');
+  var bmP = document.querySelector('.bstep-mobile p');
+  var cur = -1, ticking = false;
+  function updateBook(){
+    ticking = false;
+    var rect = rail.getBoundingClientRect();
+    var total = rail.offsetHeight - window.innerHeight;
+    if(total <= 0) return;
+    var p = Math.min(1, Math.max(0, -rect.top / total));
+    var s = Math.min(4, Math.floor(p * 5));
+    if(s !== cur){
+      cur = s;
+      rail.setAttribute('data-step', s);
+      if(bmB){ bmB.textContent = steps[s][0]; bmP.textContent = steps[s][1]; }
+    }
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(updateBook); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  updateBook();
+})();
+</script>
+</body>
+</html>
