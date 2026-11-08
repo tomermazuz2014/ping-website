@@ -816,6 +816,10 @@ body:not(.mode-b) .b-only{display:none!important}
 .mode-sw button:focus-visible{outline:2px solid var(--tiffany-deep);outline-offset:2px}
 .m-menu .mode-sw{align-self:flex-start;margin-bottom:10px}
 .m-menu .mode-sw button{font-size:17px;padding:10px 20px}
+.b-back{display:inline-flex;align-items:center;gap:8px;width:fit-content;background:var(--white);border:1px solid var(--line);
+  border-radius:999px;padding:8px 16px 8px 14px;font-weight:700;font-size:14.5px;color:var(--tiffany-deep);transition:transform .2s,box-shadow .2s}
+.b-back:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.b-back svg{width:16px;height:16px}
 .b-eyebrow{font-family:var(--serif);font-style:italic;color:var(--tiffany-deep);font-size:clamp(22px,2.6vw,30px);font-weight:400}
 .b-hl{background:linear-gradient(transparent 62%,rgba(129,216,208,.45) 62%);padding-inline:.06em}
 
@@ -989,7 +993,8 @@ body:not(.mode-b) .b-only{display:none!important}
   .b-stage.two .phone{--pw:min(44vw,240px)}
 }
 @media (max-width:560px){
-  .hd .mode-sw{display:none}
+  .hd .mode-sw{padding:3px}
+  .hd .mode-sw button{font-size:13px;padding:7px 11px}
   .b-stage.two .phone:last-child{display:none}
   .b-stage.two .phone{--pw:min(72vw,280px)}
   .b-num{grid-template-columns:1fr}
@@ -1085,6 +1090,7 @@ body:not(.mode-b) .b-only{display:none!important}
   <div class="hero-blob" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
+      <a class="b-back" href="#top" data-mode="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>חזרה לאתר הלקוחות</a>
       <span class="b-eyebrow">Ping. for business</span>
       <h1 class="h-display">היומן מתמלא.<br><span class="b-hl">אתם עובדים.</span></h1>
       <p class="lede">תורים, לקוחות, הודעות ורשימות המתנה — הכול באפליקציה אחת שעובדת בשבילכם.</p>
@@ -1244,7 +1250,7 @@ body:not(.mode-b) .b-only{display:none!important}
   <div class="wrap" style="display:grid;gap:22px;justify-items:center;text-align:center">
     <span class="b-eyebrow">Ping. for business</span>
     <h2 class="h-sec">היומן הבא שלכם<br>כבר מחכה ב־PING.</h2>
-    <div class="hero-ctas" style="justify-content:center"><a class="btn btn-ink" href="https://tomermazuz2014.github.io/ping-website/business/" target="_blank" rel="noopener">מצטרפים כעסק</a><a class="btn-link" href="#top" data-mode="c">אני לקוח/ה</a></div>
+    <div class="hero-ctas" style="justify-content:center"><a class="btn btn-ink" href="https://tomermazuz2014.github.io/ping-website/business/" target="_blank" rel="noopener">מצטרפים כעסק</a><a class="btn-link" href="#top" data-mode="c">לאתר הלקוחות</a></div>
   </div>
 </section>
 </div>
