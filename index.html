@@ -820,6 +820,18 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .wl-tg .sw.off::after{inset-inline-end:auto;inset-inline-start:1cqi}
 @media (prefers-reduced-motion:reduce){.bscr.is-on{animation:none}}
 
+
+/* overflow guards inside app screens */
+.qr-card{grid-template-columns:minmax(0,1fr);overflow:hidden}
+.qr-card > *{min-width:0}
+.qr-box svg{width:34cqi;height:34cqi}
+.qr-link{box-sizing:border-box;max-width:100%}
+.qr-link code{min-width:0}
+.qr-acts{min-width:0}
+.bl-row > span:not(.bava):not(.arr):not(.num){min-width:0;flex:1}
+.bl-row b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bpad > *{min-width:0}
+
 /* ================= MODE SWITCH (customers / business) ================= */
 body.mode-b .c-only{display:none!important}
 body:not(.mode-b) .b-only{display:none!important}
