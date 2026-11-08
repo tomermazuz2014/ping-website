@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "4RU6RHCK9H.co.pingitnow.customer",
+          "V3H322JDWV.co.pingitnow.customer.stg"
+        ],
+        "components": [
+          {
+            "/": "/b/*",
+            "comment": "Shared business links open the customer app."
+          }
+        ]
+      }
+    ]
+  }
+}
