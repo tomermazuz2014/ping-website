@@ -7,11 +7,12 @@
 <meta name="description" content="PING — מוצאים עסק, בוחרים שעה וקובעים תור. בלי טלפונים, בלי לחכות.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============ PING design tokens ============
    layout idea: editorial RTL split-compositions; the phone is a physical
-   object traveling down the page; sonar "ping" rings as the brand motif. */
+   object traveling down the page; sonar "ping" rings as the brand motif.
+   App UI recreated 1:1 from the real PING app screens. */
 :root{
   --tiffany:#81D8D0;
   --tiffany-deep:#17655E;
@@ -26,7 +27,12 @@
   --ok:#1F9E7E;
   --pend:#D9942B;
   --no:#D95A4E;
+  --tan1:#C09272;
+  --tan2:#6E4F3C;
   --font:'Ploni','Rubik',-apple-system,'Segoe UI',Arial,sans-serif;
+  --mono:'IBM Plex Mono','Rubik',monospace;
+  --serif:'Didot','Bodoni MT',Georgia,'Times New Roman',serif;
+  --grad-btn:linear-gradient(135deg,#9FE3DC,#81D8D0);
   --r-card:22px;
   --r-pill:999px;
   --shadow-soft:0 10px 34px -16px rgba(14,26,26,.22);
@@ -60,15 +66,17 @@ h1,h2,h3{line-height:1.08;font-weight:800;text-wrap:balance}
 .h-sec{font-size:clamp(32px,4.6vw,60px);font-weight:900;letter-spacing:-.01em}
 .lede{font-size:clamp(17px,1.8vw,21px);color:var(--ink-2);max-width:34ch}
 .sec-head{display:grid;gap:14px;margin-bottom:clamp(28px,5vw,54px)}
-.num{font-variant-numeric:tabular-nums}
+.num{font-family:var(--mono);font-weight:600;letter-spacing:-.02em}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:10px;border-radius:var(--r-pill);
   font-weight:700;font-size:17px;padding:15px 28px;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background .25s;white-space:nowrap}
-.btn-tiffany{background:var(--tiffany);color:var(--ink);box-shadow:0 10px 26px -12px rgba(129,216,208,.9)}
-.btn-tiffany:hover{transform:translateY(-2px);background:#8FE0D8}
-.btn-ink{background:var(--ink);color:var(--porcelain)}
+.btn-tiffany{background:var(--grad-btn);color:var(--ink);box-shadow:0 10px 26px -12px rgba(129,216,208,.9)}
+.btn-tiffany:hover{transform:translateY(-2px)}
+.btn-ink{background:var(--grad-btn);color:var(--ink);box-shadow:0 10px 26px -12px rgba(129,216,208,.9)}
 .btn-ink:hover{transform:translateY(-2px)}
+.btn-white{background:var(--white);color:var(--ink);box-shadow:0 10px 26px -14px rgba(14,26,26,.35)}
+.btn-white:hover{transform:translateY(-2px)}
 .btn-ghost{border:1.5px solid var(--line);background:var(--white);color:var(--ink)}
 .btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
 .btn-link{font-weight:700;color:var(--tiffany-deep);display:inline-flex;align-items:center;gap:6px}
@@ -76,13 +84,13 @@ h1,h2,h3{line-height:1.08;font-weight:800;text-wrap:balance}
 
 /* ---------- store pills ---------- */
 .stores{display:flex;gap:10px;flex-wrap:wrap}
-.store{display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--porcelain);
-  border-radius:14px;padding:9px 16px;line-height:1.15;transition:transform .25s}
+.store{display:flex;align-items:center;gap:10px;background:var(--grad-btn);color:var(--ink);
+  border-radius:14px;padding:9px 16px;line-height:1.15;transition:transform .25s;
+  box-shadow:0 10px 24px -14px rgba(129,216,208,.95)}
 .store:hover{transform:translateY(-2px)}
-.store small{display:block;font-size:11px;opacity:.72;font-weight:400}
+.store small{display:block;font-size:11px;opacity:.68;font-weight:500}
 .store b{font-size:15px;font-weight:700}
 .store svg{width:20px;height:20px;flex:none}
-.stores .soon{font-size:12px;color:var(--ink-3);align-self:center}
 
 /* ---------- demo tag ---------- */
 .demo-tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink-3);
@@ -95,7 +103,8 @@ h1,h2,h3{line-height:1.08;font-weight:800;text-wrap:balance}
 .hd-in{display:flex;align-items:center;gap:28px;width:100%}
 .logo{display:flex;align-items:center;gap:9px;font-weight:900;font-size:24px;letter-spacing:.02em}
 .logo svg{width:28px;height:28px}
-.hd-nav{display:flex;gap:26px;margin-inline-start:auto;font-weight:600;font-size:15.5px}
+.hd-nav{display:flex;gap:26px;font-weight:600;font-size:15.5px}
+.hd-login{margin-inline-start:auto}
 .hd-nav a{opacity:.85;transition:opacity .2s}
 .hd-nav a:hover{opacity:1;color:var(--tiffany-deep)}
 .hd-cta{margin-inline-start:6px}
@@ -130,79 +139,236 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   top:-18%;inset-inline-start:48%;filter:blur(8px);animation:drift 16s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translate(-4%,5%) scale(1.06)}}
 
-/* floating fragments */
-.frag{position:absolute;z-index:4;background:var(--white);border:1px solid var(--line);border-radius:18px;
+/* floating fragments — styled like the app's notification cards */
+.frag{position:absolute;z-index:4;background:var(--white);border:1px solid rgba(255,255,255,.9);border-radius:18px;
   box-shadow:var(--shadow-soft);padding:12px 16px;display:flex;gap:11px;align-items:center;
   animation:float 7s ease-in-out infinite}
-.frag .fi{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;background:var(--wash);color:var(--tiffany-deep)}
+.frag .fi{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--wash);color:var(--tiffany-deep)}
 .frag .fi svg{width:18px;height:18px}
 .frag b{font-size:14.5px;display:block;line-height:1.2}
 .frag small{font-size:12.5px;color:var(--ink-3)}
-.frag-ok .fi{background:var(--tiffany);color:var(--ink)}
+.frag-ok{background:#EAF7F4;border-color:rgba(129,216,208,.55)}
+.frag-ok .fi{background:var(--white)}
 .frag-chip{padding:10px 18px;font-weight:700;font-size:14.5px;border-radius:var(--r-pill)}
-.frag-time{padding:10px 16px;font-weight:800;font-size:16px;border-radius:14px;background:var(--ink);color:var(--tiffany);border:0}
+.frag-time{padding:10px 16px;font-weight:700;font-size:15px;border-radius:14px;background:var(--grad-btn);color:var(--ink);border:0;font-family:var(--mono)}
 @keyframes float{50%{transform:translateY(-9px)}}
-.f1{top:7%;inset-inline-end:-2%}
+.f1{top:7%;inset-inline-start:-7%}
 .f2{bottom:20%;inset-inline-end:-6%;animation-delay:1.3s}
-.f3{top:22%;inset-inline-start:-7%;animation-delay:2.1s}
+.f3{top:24%;inset-inline-end:-6%;animation-delay:2.1s}
 .f4{bottom:7%;inset-inline-start:0;animation-delay:3s}
 
-/* ---------- phone ---------- */
+/* ---------- phone shell ---------- */
 .phone{--pw:330px;width:var(--pw);aspect-ratio:390/826;position:relative;flex:none;
   background:linear-gradient(160deg,#2A3434,#0B1414 38%,#141F1F 80%);
-  border-radius:17.5cqi;border-radius:clamp(40px,calc(var(--pw)/7),58px);
+  border-radius:clamp(40px,calc(var(--pw)/7),58px);
   box-shadow:var(--shadow-deep),inset 0 0 0 2px rgba(255,255,255,.14),inset 0 0 0 6px #0B1414;
   padding:calc(var(--pw)/46);container-type:inline-size;z-index:2}
 .phone::before,.phone::after{content:"";position:absolute;background:#243030;border-radius:3px;z-index:0}
 .phone::before{width:3px;height:12%;inset-inline-end:-3px;top:22%}
 .phone::after{width:3px;height:7%;inset-inline-start:-3px;top:18%}
-.scr-area{position:absolute;inset:calc(var(--pw)/46);background:var(--porcelain);overflow:hidden;
-  border-radius:clamp(32px,calc(var(--pw)/8.6),48px)}
+.scr-area{position:absolute;inset:calc(var(--pw)/46);overflow:hidden;
+  border-radius:clamp(32px,calc(var(--pw)/8.6),48px);
+  background:
+    radial-gradient(70% 36% at 85% 0%,rgba(129,216,208,.38),transparent 70%),
+    radial-gradient(55% 30% at 8% 18%,rgba(129,216,208,.22),transparent 70%),
+    radial-gradient(60% 30% at 50% 105%,rgba(129,216,208,.18),transparent 70%),
+    #F4F2EC}
 .island{position:absolute;top:2.1%;left:50%;transform:translateX(-50%);width:27%;height:3%;background:#0B1414;border-radius:999px;z-index:9}
 .statusbar{display:flex;justify-content:space-between;align-items:center;padding:3.5cqi 7cqi 0;font-size:3.6cqi;font-weight:700}
+.statusbar .num{font-weight:700}
 .statusbar .sb-ic{display:flex;gap:1.4cqi;align-items:center}
 .statusbar svg{width:4.4cqi;height:4.4cqi}
 
-/* app UI inside phones (sizes in cqi = % of phone width) */
+/* ============ in-phone app UI (real PING design, cqi units) ============ */
 .app{position:absolute;inset:0;display:flex;flex-direction:column;font-size:3.7cqi}
-.app-body{flex:1;padding:4cqi 6cqi 0;display:flex;flex-direction:column;gap:4.4cqi;overflow:hidden}
-.a-greet b{font-size:5.6cqi;font-weight:800;display:block}
-.a-greet small{color:var(--ink-3);font-size:3.4cqi}
-.a-search{display:flex;align-items:center;gap:2.6cqi;background:var(--white);border:1px solid var(--line);
-  border-radius:999px;padding:3cqi 4.4cqi;color:var(--ink-3);font-size:3.6cqi}
-.a-search svg{width:4.2cqi;height:4.2cqi}
-.a-chips{display:flex;gap:2.2cqi;overflow:hidden}
-.a-chip{flex:none;background:var(--white);border:1px solid var(--line);border-radius:999px;
-  padding:2.2cqi 4.2cqi;font-size:3.4cqi;font-weight:600}
-.a-chip.on{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
-.a-label{font-weight:800;font-size:4.2cqi;display:flex;justify-content:space-between;align-items:baseline}
-.a-label small{font-weight:600;color:var(--tiffany-deep);font-size:3.2cqi}
-.a-cards{display:flex;gap:3cqi}
-.a-biz{flex:1;background:var(--white);border:1px solid var(--line);border-radius:4.6cqi;overflow:hidden}
-.a-thumb{height:17cqi;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:9cqi}
-.t1{background:linear-gradient(135deg,#17655E,#81D8D0)}
-.t2{background:linear-gradient(135deg,#0E1A1A,#3E6F6A)}
-.t3{background:linear-gradient(135deg,#2C8077,#BFE9E4)}
-.a-biz-in{padding:2.6cqi 3.4cqi 3.2cqi;display:grid;gap:.8cqi}
-.a-biz b{font-size:3.6cqi}
-.a-biz small{font-size:3cqi;color:var(--ink-3)}
-.a-next{background:var(--ink);color:var(--porcelain);border-radius:4.6cqi;padding:3.4cqi 4.4cqi;
-  display:flex;align-items:center;gap:3cqi}
-.a-next .ok{width:7cqi;height:7cqi;border-radius:50%;background:var(--tiffany);color:var(--ink);display:grid;place-items:center;flex:none}
-.a-next .ok svg{width:3.8cqi;height:3.8cqi}
-.a-next b{font-size:3.6cqi;display:block}
-.a-next small{font-size:3cqi;opacity:.75}
-.tabbar{display:flex;justify-content:space-around;align-items:center;padding:2.8cqi 6cqi 5cqi;
-  background:var(--white);border-top:1px solid var(--line);margin-top:auto}
-.tabbar span{display:grid;place-items:center;gap:.6cqi;color:var(--ink-3);font-size:2.7cqi;font-weight:600}
-.tabbar svg{width:5.4cqi;height:5.4cqi}
-.tabbar .on{color:var(--tiffany-deep)}
+.app-body{flex:1;padding:3.4cqi 6cqi 0;display:flex;flex-direction:column;gap:3.6cqi;overflow:hidden}
+.ap-ic{width:9.6cqi;height:9.6cqi;border-radius:50%;background:var(--white);display:grid;place-items:center;
+  box-shadow:0 2cqi 5cqi -2cqi rgba(14,26,26,.18);color:var(--ink);position:relative;flex:none}
+.ap-ic svg{width:4.6cqi;height:4.6cqi}
+.ap-ic .ndot{position:absolute;top:1.6cqi;inset-inline-start:1.8cqi;width:2cqi;height:2cqi;border-radius:50%;background:var(--tiffany-deep)}
+.ap-top{display:flex;align-items:center;gap:2.4cqi}
+.ap-top .sp{margin-inline-start:auto}
+.ap-ava{width:12cqi;height:12cqi;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#D9B394,#8A6450);
+  box-shadow:0 0 0 .6cqi var(--white),0 0 0 1.4cqi var(--tiffany)}
+.ap-ava svg{width:6cqi;height:6cqi;color:rgba(255,255,255,.95)}
+.ap-greet{text-align:end}
+.ap-greet b{font-size:4.6cqi;font-weight:800}
+.ap-h1{font-size:7.4cqi;font-weight:900;line-height:1.12;letter-spacing:-.01em;display:flex;align-items:center;gap:2cqi}
+.ap-h1 .spark{width:5cqi;height:5cqi;color:var(--tiffany);flex:none}
+.ap-sub{font-size:3.4cqi;color:var(--ink-2);line-height:1.5}
+/* category circle */
+.cat-hero{display:grid;place-items:center;margin-top:1cqi}
+.cat-circ{width:26cqi;height:26cqi;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 35% 30%,#4E6F6A,#17655E 70%);
+  box-shadow:0 0 0 .8cqi var(--white),0 0 0 1.8cqi var(--tiffany),0 6cqi 10cqi -5cqi rgba(14,26,26,.3);
+  display:grid;place-items:center;color:rgba(246,244,239,.95)}
+.cat-circ svg{width:10cqi;height:10cqi}
+.cat-circ .cc-tag{position:absolute;bottom:-3cqi;left:50%;transform:translateX(-50%);z-index:3;
+  background:var(--white);border:.4cqi solid var(--tiffany);border-radius:999px;
+  padding:1.2cqi 3.6cqi;font-size:3.2cqi;font-weight:700;white-space:nowrap;color:var(--ink)}
+/* section row */
+.ap-secrow{display:flex;align-items:center;justify-content:space-between;margin-top:2cqi}
+.ap-secrow b{font-size:4.4cqi;font-weight:800}
+.ap-secrow .hb{width:9cqi;height:9cqi;border-radius:3cqi;background:var(--wash);border:1px solid rgba(129,216,208,.6);
+  display:grid;place-items:center;color:var(--tiffany-deep)}
+.ap-secrow .hb svg{width:4.4cqi;height:4.4cqi}
+/* big business card */
+.bizcard{background:var(--white);border-radius:6cqi;overflow:hidden;box-shadow:0 4cqi 9cqi -4cqi rgba(14,26,26,.22)}
+.bz-media{height:26cqi;position:relative;display:grid;place-items:center;
+  background:linear-gradient(145deg,#C4997B,#6E4F3C 90%)}
+.bz-media::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 20% 0%,rgba(255,236,214,.35),transparent 60%)}
+.brandmark{position:relative;text-align:center;color:#F3E7D8;display:grid;justify-items:center;gap:.6cqi}
+.brandmark svg{width:7cqi;height:5cqi}
+.brandmark b{font-family:var(--serif);font-weight:400;font-size:5.4cqi;letter-spacing:.35em;text-indent:.35em;white-space:nowrap}
+.brandmark small{font-size:1.9cqi;letter-spacing:.55em;text-indent:.55em;opacity:.85;white-space:nowrap}
+.bz-heart{position:absolute;top:2.6cqi;inset-inline-start:2.6cqi;width:8.4cqi;height:8.4cqi;border-radius:50%;
+  background:var(--white);display:grid;place-items:center;color:var(--ink)}
+.bz-heart svg{width:4.2cqi;height:4.2cqi}
+.bz-body{display:flex;align-items:center;justify-content:space-between;gap:2cqi;padding:3cqi 3.6cqi 3.4cqi}
+.bz-body b{font-size:4.2cqi;display:block;line-height:1.25}
+.bz-meta{font-size:2.9cqi;color:var(--ink-3);display:flex;align-items:center;gap:1cqi}
+.bz-meta svg{width:3.2cqi;height:3.2cqi;color:var(--tiffany-deep)}
+.bz-cta{background:var(--grad-btn);color:var(--ink);border-radius:999px;padding:2.6cqi 4.6cqi;
+  font-weight:800;font-size:3.4cqi;display:flex;align-items:center;gap:1.8cqi;flex:none}
+.bz-cta svg{width:3.8cqi;height:3.8cqi}
+/* floating bottom nav */
+.fnav{position:absolute;bottom:3cqi;left:50%;transform:translateX(-50%);width:86%;
+  background:var(--white);border-radius:999px;box-shadow:0 5cqi 10cqi -4cqi rgba(14,26,26,.35);
+  display:flex;align-items:center;justify-content:space-between;padding:1.8cqi;z-index:8}
+.fnav span,.fnav button{display:flex;align-items:center;gap:1.6cqi;color:var(--ink-2);font-size:3.2cqi;font-weight:700;
+  padding:2cqi 4cqi;border-radius:999px}
+.fnav span svg,.fnav button svg{width:4.6cqi;height:4.6cqi}
+.fnav .on{background:var(--grad-btn);color:var(--ink)}
+/* ---------- interactive hero demo ---------- */
+.demo{position:absolute;inset:0;display:flex;flex-direction:column}
+.demo .statusbar{flex:none}
+.dstack{flex:1;position:relative;overflow:hidden;min-height:0}
+.dscr{position:absolute;inset:0;display:flex;flex-direction:column;gap:3.2cqi;padding:2.4cqi 6cqi 2cqi;
+  opacity:0;transform:translateX(-16px);transition:opacity .35s,transform .35s cubic-bezier(.2,.7,.2,1);pointer-events:none;overflow:hidden}
+.dscr.is-on{opacity:1;transform:none;pointer-events:auto}
+.demo .fnav{position:static;transform:none;width:92%;margin:1cqi auto 3cqi;flex:none}
+.demo [data-go],.demo [data-like]{cursor:pointer}
+.demo .slot[data-slot]:not(.tk),.demo .d[data-day]:not(.off){cursor:pointer}
+.demo .hb.liked,.demo .bz-heart.liked,.demo .ap-ic.liked{background:var(--tiffany);color:var(--ink)}
+.dscr .ap-head,.dscr .slots,.dscr .day-row,.dscr .legend{padding:0}
+.dscr .confirm{padding:3cqi 0 0}
+.demo-hint{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);z-index:6;background:var(--white);
+  border:1.5px solid var(--tiffany);border-radius:999px;padding:8px 18px;font-size:13.5px;font-weight:700;white-space:nowrap;
+  box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:7px}
+.demo-hint svg{width:14px;height:14px;color:var(--tiffany-deep)}
+.frag{pointer-events:none}
+.seg{display:flex;gap:1.6cqi;background:var(--white);border-radius:999px;padding:1.4cqi;box-shadow:0 2cqi 5cqi -2.6cqi rgba(14,26,26,.14)}
+.seg span{flex:1;text-align:center;padding:1.8cqi 0;border-radius:999px;font-size:3cqi;font-weight:700;color:var(--ink-2)}
+.seg .on{background:var(--grad-btn);color:var(--ink)}
+.pillbtn{background:var(--white);border-radius:999px;padding:1.8cqi 4cqi;font-size:3cqi;font-weight:700;width:fit-content;
+  box-shadow:0 2cqi 5cqi -2.6cqi rgba(14,26,26,.2);display:flex;align-items:center;gap:1.4cqi}
+.pillbtn svg{width:3.2cqi;height:3.2cqi;color:var(--tiffany-deep)}
+.dlabel{font-size:3cqi;color:var(--ink-3);font-weight:700;text-align:start}
+.date-badge{position:absolute;top:2.6cqi;inset-inline-end:2.6cqi;background:var(--white);border-radius:2.6cqi;overflow:hidden;text-align:center;width:11cqi}
+.date-badge small{display:block;background:var(--tiffany);font-size:2.2cqi;font-weight:700;padding:.5cqi 0}
+.date-badge b{display:block;font-size:4.4cqi;font-weight:900;line-height:1.25}
+.date-badge em{display:block;font-style:normal;font-size:2.2cqi;color:var(--ink-3);padding-bottom:.6cqi}
+.dmini{font-size:3.1cqi;color:var(--ink-3);text-align:center;margin-top:-1.6cqi}
+/* screen header (back + title) */
+.ap-head{display:flex;align-items:center;gap:3cqi;padding:3cqi 6cqi 0}
+.ap-head h4{font-size:4.6cqi;font-weight:800;flex:1;text-align:center;margin-inline-end:9.6cqi}
+/* app cards & rows */
+.acard{background:var(--white);border-radius:5cqi;box-shadow:0 2.5cqi 7cqi -3cqi rgba(14,26,26,.16)}
+.srow{display:flex;align-items:center;gap:2.6cqi;padding:3cqi 3.4cqi}
+.srow .sthumb{width:10cqi;height:10cqi;border-radius:3.4cqi;flex:none;display:grid;place-items:center;
+  background:linear-gradient(145deg,#C4997B,#6E4F3C);color:#F3E7D8}
+.srow .sthumb svg{width:4.6cqi;height:4.6cqi}
+.srow .sthumb.mint{background:var(--wash);color:var(--tiffany-deep)}
+.srow b{font-size:3.8cqi;display:block}
+.srow small{font-size:3cqi;color:var(--ink-3);display:flex;align-items:center;gap:1cqi}
+.srow small svg{width:3cqi;height:3cqi}
+.price-pill{margin-inline-start:auto;background:var(--wash);color:var(--tiffany-deep);
+  border-radius:999px;padding:1.4cqi 3.4cqi;font-family:var(--mono);font-weight:700;font-size:3.6cqi;flex:none}
+.srow .chev{color:var(--ink-3);flex:none}
+.srow .chev svg{width:3.6cqi;height:3.6cqi}
+.srow.sel{outline:.5cqi solid var(--tiffany);outline-offset:-.5cqi;background:#F2FAF8;border-radius:5cqi}
+.pick-list{display:grid;gap:2.6cqi;padding:3.4cqi 6cqi}
+/* calendar (real app style) */
+.cal{padding:0 6cqi;display:grid;gap:2.6cqi}
+.cal-card{background:var(--white);border-radius:6cqi;padding:3.6cqi 3.4cqi;box-shadow:0 2.5cqi 7cqi -3cqi rgba(14,26,26,.16);display:grid;gap:2cqi}
+.cal-top{display:flex;justify-content:space-between;align-items:center}
+.cal-top b{font-size:4cqi;font-weight:800}
+.cal-top .cnav{width:7.6cqi;height:7.6cqi;border-radius:50%;background:var(--porcelain);display:grid;place-items:center;color:var(--ink)}
+.cal-top .cnav svg{width:3.4cqi;height:3.4cqi}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1cqi;text-align:center;font-size:3.4cqi;font-family:var(--mono)}
+.cal-grid .dow{color:var(--ink-3);font-family:var(--font);font-size:2.9cqi;font-weight:600;padding:1cqi 0}
+.cal-grid .d{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;font-weight:600;position:relative}
+.cal-grid .d.off{color:rgba(14,26,26,.25)}
+.cal-grid .d.sel{background:var(--tiffany);color:var(--ink);font-weight:700;box-shadow:0 0 0 1cqi rgba(129,216,208,.35)}
+.cal-grid .d.sel::after{content:"";position:absolute;bottom:1cqi;width:1cqi;height:1cqi;border-radius:50%;background:var(--ink)}
+/* day summary + legend + slots */
+.day-row{display:flex;justify-content:space-between;align-items:baseline;padding:0 6cqi}
+.day-row b{font-size:3.9cqi;font-weight:800}
+.day-row small{color:var(--ink-3);font-size:3cqi}
+.legend{display:flex;gap:3.4cqi;justify-content:flex-start;padding:0 6cqi;font-size:2.8cqi;color:var(--ink-3)}
+.legend i{width:3cqi;height:3cqi;border-radius:1cqi;background:var(--white);border:1px solid var(--line);display:inline-block;vertical-align:-0.4cqi;margin-inline-end:1.2cqi}
+.legend .tk i{background:#ECE9E1}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2cqi;padding:1cqi 6cqi}
+.slot{background:var(--white);border-radius:3.6cqi;padding:2.2cqi 0 2cqi;text-align:center;
+  font-family:var(--mono);font-weight:700;font-size:3.7cqi;box-shadow:0 1.5cqi 4cqi -2cqi rgba(14,26,26,.12);display:grid;gap:.2cqi}
+.slot em{font-style:normal;font-family:var(--font);font-weight:600;font-size:2.4cqi;color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;gap:.8cqi}
+.slot em svg{width:2.6cqi;height:2.6cqi}
+.slot.tk{background:#ECE9E1;color:var(--ink-3);box-shadow:none}
+.slot.sel{background:var(--tiffany);color:var(--ink);box-shadow:0 2cqi 5cqi -2cqi rgba(129,216,208,.9)}
+/* bottom continue bar */
+.paybar{position:absolute;bottom:3cqi;inset-inline:5cqi;display:flex;align-items:center;gap:3cqi;z-index:8}
+.paybar .psum{text-align:end;line-height:1.3}
+.paybar .psum b{font-size:3.2cqi;display:block}
+.paybar .psum small{font-size:3cqi;color:var(--ink-2)}
+.paybar .pgo{margin-inline-start:auto;background:var(--grad-btn);color:var(--ink);font-weight:800;font-size:3.8cqi;
+  border-radius:999px;padding:3cqi 9cqi;box-shadow:0 3cqi 7cqi -3cqi rgba(129,216,208,.95)}
+.paybar.full .pgo{flex:1;text-align:center;margin:0}
+/* summary (סיכום הזמנה) */
+.sumwrap{display:grid;gap:3cqi;padding:3.4cqi 6cqi 0}
+.dt-card{display:flex;align-items:stretch;border-radius:5cqi;overflow:hidden;background:
+  linear-gradient(120deg,rgba(129,216,208,.25),rgba(129,216,208,.05)),var(--white);
+  box-shadow:0 2.5cqi 7cqi -3cqi rgba(14,26,26,.16)}
+.dt-card>div{flex:1;padding:3cqi;display:grid;gap:.4cqi;align-content:center;justify-items:center}
+.dt-card>div:first-child{border-inline-end:.5cqi solid var(--tiffany)}
+.dt-card small{font-size:3cqi;color:var(--ink-2)}
+.dt-card b{font-size:7cqi;font-weight:900;line-height:1}
+.dt-card .mono{font-family:var(--mono)}
+.sum-rows{padding:1cqi 4cqi}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:2.8cqi 0;border-bottom:1px solid var(--line);font-size:3.5cqi}
+.sum-row:last-child{border-bottom:0}
+.sum-row span{color:var(--ink-2)}
+.sum-row b{font-weight:700}
+.sum-row.hl{background:var(--wash);margin:0 -4cqi -0cqi;padding-inline:4cqi;border-radius:0 0 5cqi 5cqi;border-bottom:0}
+.sum-row.hl b{font-family:var(--mono);font-weight:700}
+/* confirmation */
+.confirm{display:grid;place-items:center;gap:3cqi;padding:7cqi 7cqi 0;text-align:center}
+.conf-ok{width:21cqi;height:21cqi;border-radius:50%;background:var(--tiffany);display:grid;place-items:center;color:var(--ink);position:relative;
+  box-shadow:0 0 0 2.4cqi rgba(129,216,208,.3)}
+.conf-ok svg{width:9cqi;height:9cqi}
+.conf-ok::after{content:"";position:absolute;inset:-3cqi;border-radius:50%;border:1.5px solid var(--tiffany);animation:ping 2.4s ease-out infinite}
+.confirm h4{font-size:5.2cqi;font-weight:900}
+.confirm .csub{font-size:3.3cqi;color:var(--ink-2);margin-top:-1.6cqi}
+.conf-card{background:var(--white);border-radius:5cqi;padding:1cqi 4cqi;width:100%;box-shadow:0 2.5cqi 7cqi -3cqi rgba(14,26,26,.14)}
+.conf-link{font-size:3.4cqi;font-weight:700;margin-top:-.6cqi}
+.conf-btn{background:var(--grad-btn);color:var(--ink);border-radius:999px;padding:3cqi 0;width:100%;
+  text-align:center;font-weight:800;font-size:3.8cqi}
+/* booking screens stack */
+.scr{position:absolute;inset:12cqi 0 0 0;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.book-rail[data-step="0"] .scr[data-s="0"],
+.book-rail[data-step="1"] .scr[data-s="1"],
+.book-rail[data-step="2"] .scr[data-s="2"],
+.book-rail[data-step="3"] .scr[data-s="3"],
+.book-rail[data-step="4"] .scr[data-s="4"]{opacity:1;transform:none}
+.scr-head{font-weight:800;font-size:4.8cqi;padding:2cqi 7cqi 0}
+.scr-sub{color:var(--ink-3);font-size:3.3cqi;padding:0 7cqi}
 
 /* ---------- ticker ---------- */
-.ticker{background:var(--ink);color:var(--porcelain);padding:16px 0;overflow:hidden;direction:ltr}
+.ticker{background:var(--tiffany);color:var(--ink);padding:16px 0;overflow:hidden;direction:ltr}
 .ticker-track{display:flex;gap:46px;width:max-content;animation:slide 36s linear infinite}
 .ticker span{direction:rtl;display:flex;align-items:center;gap:46px;font-weight:700;font-size:17px;white-space:nowrap}
-.ticker i{width:9px;height:9px;border-radius:50%;background:var(--tiffany);flex:none}
+.ticker i{width:9px;height:9px;border-radius:50%;background:var(--ink);flex:none}
 @keyframes slide{to{transform:translateX(-50%)}}
 
 /* ---------- sections base ---------- */
@@ -212,6 +378,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .sec-ink .lede{color:rgba(246,244,239,.75)}
 .sec-wash{background:var(--wash)}
 .sec-tiffany{background:var(--tiffany)}
+.sec-tiffany .lede{color:rgba(14,26,26,.72)}
 
 /* ---------- discover ---------- */
 .cat-marquee{overflow:hidden;direction:ltr;margin-bottom:26px;
@@ -231,57 +398,79 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .biz-thumb b{font-size:92px;font-weight:900;line-height:1}
 .biz-thumb .b-cat{position:absolute;top:12px;inset-inline-start:12px;background:rgba(14,26,26,.5);
   color:#fff;font-size:12.5px;font-weight:600;border-radius:var(--r-pill);padding:4px 12px;backdrop-filter:blur(6px)}
+.biz-thumb .bm{transform:scale(1.5)}
 .biz-in{padding:16px 18px 18px;display:grid;gap:6px}
 .biz-in b{font-size:18px}
 .biz-meta{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:14px}
-.biz-meta .star{color:var(--pend);display:inline-flex;align-items:center;gap:3px;font-weight:700;color:var(--ink)}
+.biz-meta .star{display:inline-flex;align-items:center;gap:3px;font-weight:700;color:var(--ink)}
 .biz-meta .star svg{width:14px;height:14px;fill:#EFB643;stroke:none}
-.g1{background:linear-gradient(140deg,#17655E,#81D8D0)}
+.gw{background:linear-gradient(145deg,#C4997B,#6E4F3C)}
 .g2{background:linear-gradient(140deg,#0E1A1A,#41736D)}
 .g3{background:linear-gradient(140deg,#2C8077,#BFE9E4)}
 .g4{background:linear-gradient(140deg,#123B38,#81D8D0)}
 .g5{background:linear-gradient(140deg,#355E5A,#D7EFEB)}
 .g6{background:linear-gradient(140deg,#0E1A1A,#17655E)}
+.g1{background:linear-gradient(140deg,#17655E,#81D8D0)}
 .discover-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
 
-/* ---------- profile ---------- */
+/* ---------- profile (recreated from the real app) ---------- */
 .profile-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:center}
 .profile-copy{display:grid;gap:18px}
 .profile-feats{display:grid;gap:12px;margin-top:6px}
 .pf{display:flex;gap:12px;align-items:center;font-weight:600;font-size:16.5px}
-.pf i{width:34px;height:34px;flex:none;border-radius:11px;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
+.pf i{width:34px;height:34px;flex:none;border-radius:50%;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
 .pf i svg{width:17px;height:17px}
-.profile-card{background:var(--porcelain);border:1px solid var(--line);border-radius:28px;overflow:hidden;
-  box-shadow:var(--shadow-deep);max-width:520px;justify-self:start}
-.pc-media{height:230px;position:relative;overflow:hidden;
-  background:linear-gradient(130deg,#0E1A1A 10%,#17655E 55%,#81D8D0 120%)}
-.pc-media::before{content:"";position:absolute;inset:-40%;
-  background:radial-gradient(circle at 30% 30%,rgba(191,233,228,.5),transparent 42%);
-  animation:drift 12s ease-in-out infinite alternate}
-.pc-media .b-cat{position:absolute;top:16px;inset-inline-start:16px;background:rgba(14,26,26,.45);color:#fff;
-  font-size:13px;font-weight:600;border-radius:var(--r-pill);padding:5px 14px;backdrop-filter:blur(6px)}
-.pc-media .demo-tag{position:absolute;bottom:14px;inset-inline-end:14px;background:rgba(246,244,239,.85);border-color:transparent}
-.pc-head{display:flex;gap:14px;align-items:center;padding:0 22px;margin-top:-30px;position:relative}
-.pc-ava{width:64px;height:64px;border-radius:20px;background:var(--ink);color:var(--tiffany);display:grid;place-items:center;
-  font-weight:900;font-size:26px;border:3px solid var(--porcelain);flex:none}
-.pc-tit{padding-top:30px}
-.pc-tit b{font-size:21px;display:block}
-.pc-tit small{color:var(--ink-3);font-size:14px}
-.pc-rate{margin-inline-start:auto;padding-top:30px;display:flex;align-items:center;gap:5px;font-weight:800;font-size:16px}
-.pc-rate svg{width:16px;height:16px;fill:#EFB643}
-.pc-rate small{color:var(--ink-3);font-weight:500}
-.pc-servs{padding:16px 22px 6px;display:grid;gap:0}
-.pc-serv{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.pc-serv:last-child{border-bottom:0}
-.pc-serv b{font-size:15.5px}
-.pc-serv small{display:block;color:var(--ink-3);font-size:13px}
-.pc-price{margin-inline-start:auto;font-weight:800;font-size:16px}
-.pc-foot{display:flex;gap:10px;padding:10px 22px 22px}
-.pc-foot .btn{flex:1;justify-content:center;padding:13px 10px;font-size:15.5px}
-.pc-foot .btn-ghost{flex:0 0 auto;width:50px;padding:13px 0;justify-content:center}
-.pc-foot .btn-ghost svg{width:18px;height:18px}
+.profile-card{border-radius:30px;overflow:hidden;box-shadow:var(--shadow-deep);max-width:480px;width:100%;justify-self:start;
+  background:
+    radial-gradient(70% 30% at 85% 10%,rgba(129,216,208,.35),transparent 70%),
+    radial-gradient(55% 25% at 10% 40%,rgba(129,216,208,.2),transparent 70%),
+    #F4F2EC;
+  position:relative;container-type:inline-size;font-size:3.7cqi}
+.pc-media{height:46cqi;position:relative;display:grid;place-items:center;
+  background:linear-gradient(145deg,#C4997B 10%,#6E4F3C 95%);
+  clip-path:ellipse(120% 100% at 50% 0%)}
+.pc-media .brandmark{opacity:.9}
+.pc-media .mb{position:absolute;top:3.4cqi;display:flex;gap:2cqi;inset-inline-start:3.4cqi}
+.pc-media .mb i{width:8.6cqi;height:8.6cqi;border-radius:50%;background:rgba(14,26,26,.45);backdrop-filter:blur(4px);
+  display:grid;place-items:center;color:#fff}
+.pc-media .mb i svg{width:4cqi;height:4cqi}
+.pc-ava{position:absolute;top:34cqi;inset-inline-end:6cqi;width:19cqi;height:19cqi;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#D9B394,#8A6450);display:grid;place-items:center;color:#F3E7D8;
+  box-shadow:0 0 0 .8cqi var(--white),0 0 0 1.8cqi var(--tiffany);z-index:3}
+.pc-ava svg{width:8cqi;height:6cqi}
+.pc-body{padding:3cqi 6cqi 5cqi;display:grid;gap:2.6cqi;justify-items:center;text-align:center}
+.pc-body .pname{font-size:6.6cqi;font-weight:900}
+.pc-cat{display:flex;align-items:center;gap:1.6cqi;font-size:3.4cqi;color:var(--ink-2);font-weight:600}
+.pc-cat svg{width:3.8cqi;height:3.8cqi;color:var(--tiffany-deep)}
+.pc-addr{display:flex;align-items:flex-start;gap:1.6cqi;font-size:3.1cqi;color:var(--ink-3);max-width:60cqi}
+.pc-addr svg{width:3.6cqi;height:3.6cqi;color:var(--tiffany-deep);flex:none;margin-top:.5cqi}
+.pc-actions{display:flex;gap:2.4cqi;width:100%;align-items:stretch;margin-top:1cqi}
+.pc-book{flex:1;background:var(--grad-btn);border-radius:999px;display:flex;align-items:center;justify-content:center;
+  gap:2cqi;font-weight:800;font-size:4cqi;color:var(--ink);box-shadow:0 3cqi 7cqi -3cqi rgba(129,216,208,.95)}
+.pc-book svg{width:4.4cqi;height:4.4cqi}
+.pc-sq{width:15cqi;border-radius:4.6cqi;background:var(--white);box-shadow:0 2cqi 5cqi -2cqi rgba(14,26,26,.15);
+  display:grid;place-items:center;gap:0;padding:1.8cqi 0;color:var(--tiffany-deep)}
+.pc-sq svg{width:4.6cqi;height:4.6cqi}
+.pc-sq small{font-size:2.6cqi;font-weight:700;color:var(--ink)}
+.pc-tabs{display:flex;gap:1.6cqi;background:var(--white);border-radius:999px;padding:1.4cqi;width:100%;
+  justify-content:space-between;box-shadow:0 2cqi 5cqi -2.6cqi rgba(14,26,26,.14)}
+.pc-tabs span{flex:1;text-align:center;padding:1.8cqi 0;border-radius:999px;font-size:3.1cqi;font-weight:700;color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;gap:1.2cqi}
+.pc-tabs span svg{width:3.4cqi;height:3.4cqi}
+.pc-tabs .on{background:var(--grad-btn);color:var(--ink)}
+.pc-servlabel{display:flex;align-items:center;gap:1.6cqi;font-size:4.2cqi;font-weight:800;justify-self:end;margin-top:1cqi}
+.pc-servlabel svg{width:4cqi;height:4cqi;color:var(--tiffany)}
+.pc-serv{width:100%}
+.pc-hours{display:flex;justify-content:space-between;width:100%;gap:2.4cqi}
+.hcard{flex:1;background:var(--white);border-radius:4.6cqi;padding:3cqi 3.4cqi;text-align:end;display:grid;gap:1cqi;
+  box-shadow:0 2cqi 5cqi -2.6cqi rgba(14,26,26,.14)}
+.hcard .hh{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:3.3cqi}
+.hcard .hh i{width:7cqi;height:7cqi;border-radius:50%;background:var(--wash);display:grid;place-items:center;color:var(--tiffany-deep)}
+.hcard .hh i svg{width:3.4cqi;height:3.4cqi}
+.hcard small{font-size:2.9cqi;color:var(--ink-2)}
+.hcard .num{display:block;font-weight:700;font-size:3.2cqi;color:var(--ink)}
 
-/* ---------- booking ---------- */
+/* ---------- booking section ---------- */
 .book-rail{position:relative;height:430vh}
 .book-sticky{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;overflow:clip}
 .book-grid{display:grid;grid-template-columns:auto auto;justify-content:center;gap:clamp(60px,12vw,180px);align-items:center;width:100%}
@@ -304,51 +493,6 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .book-rail[data-step="4"] .bstep:nth-child(5)::before{background:var(--tiffany);border-color:var(--tiffany-deep);box-shadow:0 0 0 6px rgba(129,216,208,.3)}
 .book-phone-wrap{position:relative;display:flex;justify-content:center}
 .book-phone-wrap .rings{position:absolute;width:520px;height:520px;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0}
-.scr{position:absolute;inset:12cqi 0 0 0;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
-.book-rail[data-step="0"] .scr[data-s="0"],
-.book-rail[data-step="1"] .scr[data-s="1"],
-.book-rail[data-step="2"] .scr[data-s="2"],
-.book-rail[data-step="3"] .scr[data-s="3"],
-.book-rail[data-step="4"] .scr[data-s="4"]{opacity:1;transform:none}
-.scr-head{font-weight:800;font-size:5cqi;padding:2cqi 7cqi 0}
-.scr-sub{color:var(--ink-3);font-size:3.3cqi;padding:0 7cqi}
-.pick-list{display:grid;gap:2.6cqi;padding:4cqi 6cqi}
-.pick{display:flex;align-items:center;gap:3cqi;background:var(--white);border:1.5px solid var(--line);
-  border-radius:4.4cqi;padding:3.2cqi 3.6cqi}
-.pick .pava{width:10cqi;height:10cqi;border-radius:3.4cqi;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:4.6cqi;flex:none}
-.pick b{font-size:3.7cqi;display:block}
-.pick small{font-size:3cqi;color:var(--ink-3)}
-.pick .pchk{margin-inline-start:auto;width:6cqi;height:6cqi;border-radius:50%;border:1.6px solid var(--line);flex:none;display:grid;place-items:center}
-.pick.sel{border-color:var(--tiffany-deep);background:#F0FAF8}
-.pick.sel .pchk{background:var(--tiffany);border-color:var(--tiffany);color:var(--ink)}
-.pick.sel .pchk svg{width:3.4cqi;height:3.4cqi}
-.cal{padding:4cqi 6cqi;display:grid;gap:2.4cqi}
-.cal-top{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:4cqi}
-.cal-top span{color:var(--ink-3);font-weight:600;font-size:3.2cqi}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2cqi;text-align:center;font-size:3.3cqi}
-.cal-grid .dow{color:var(--ink-3);font-size:2.9cqi;font-weight:600;padding:1cqi 0}
-.cal-grid .d{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;font-weight:600}
-.cal-grid .d.off{color:rgba(14,26,26,.28)}
-.cal-grid .d.sel{background:var(--ink);color:var(--tiffany);font-weight:800}
-.cal-grid .d.dot{position:relative}
-.cal-grid .d.dot::after{content:"";position:absolute;bottom:.8cqi;width:1.2cqi;height:1.2cqi;border-radius:50%;background:var(--tiffany-deep)}
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqi;padding:4cqi 6cqi}
-.slot{background:var(--white);border:1.5px solid var(--line);border-radius:999px;padding:2.6cqi 0;text-align:center;
-  font-weight:700;font-size:3.6cqi}
-.slot.sel{background:var(--ink);border-color:var(--ink);color:var(--tiffany)}
-.slot.dis{opacity:.35;text-decoration:line-through}
-.confirm{display:grid;place-items:center;gap:3.4cqi;padding:8cqi 7cqi;text-align:center}
-.conf-ok{width:20cqi;height:20cqi;border-radius:50%;background:var(--tiffany);display:grid;place-items:center;color:var(--ink);position:relative}
-.conf-ok svg{width:9cqi;height:9cqi}
-.conf-ok::after{content:"";position:absolute;inset:-3cqi;border-radius:50%;border:1.5px solid var(--tiffany);animation:ping 2.4s ease-out infinite}
-.confirm h4{font-size:5.4cqi;font-weight:900}
-.conf-card{background:var(--white);border:1px solid var(--line);border-radius:4.4cqi;padding:3.6cqi 5cqi;display:grid;gap:1cqi;width:100%}
-.conf-card b{font-size:3.8cqi}
-.conf-card small{color:var(--ink-3);font-size:3.2cqi}
-.conf-btns{display:flex;gap:2.4cqi;width:100%}
-.conf-btns span{flex:1;text-align:center;border-radius:999px;padding:2.8cqi 0;font-weight:700;font-size:3.4cqi}
-.conf-btns .cb1{background:var(--ink);color:var(--porcelain)}
-.conf-btns .cb2{border:1.5px solid var(--line);background:var(--white)}
 .book-dots{display:none;gap:8px;justify-content:center;margin-top:18px}
 .book-dots i{width:8px;height:8px;border-radius:50%;background:rgba(14,26,26,.2);transition:background .3s,width .3s}
 .book-rail[data-step="0"] .book-dots i:nth-child(1),
@@ -360,98 +504,147 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .bstep-mobile b{font-size:20px;display:block}
 .bstep-mobile p{color:var(--ink-2);font-size:15px}
 
-/* ---------- waitlist ---------- */
+/* ---------- waitlist (real app cards on ink) ---------- */
 .wait-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,80px);align-items:center}
 .wait-copy{display:grid;gap:18px}
 .wait-stage{position:relative;display:grid;gap:16px;max-width:440px;justify-self:center;width:100%}
-.wait-card{background:rgba(246,244,239,.06);border:1px solid rgba(246,244,239,.16);border-radius:24px;padding:24px;display:grid;gap:16px;backdrop-filter:blur(4px)}
+.wait-card{background:var(--white);color:var(--ink);border-radius:24px;padding:22px;display:grid;gap:16px;
+  box-shadow:0 24px 60px -24px rgba(14,26,26,.4)}
 .wait-card header{display:flex;align-items:center;gap:12px}
-.wc-ping{width:46px;height:46px;border-radius:50%;background:rgba(129,216,208,.15);display:grid;place-items:center;position:relative;flex:none}
+.wc-ping{width:46px;height:46px;border-radius:50%;background:var(--wash);display:grid;place-items:center;position:relative;flex:none;color:var(--tiffany-deep)}
 .wc-ping::before{content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--tiffany);animation:ping 3s ease-out infinite}
-.wc-dot{width:12px;height:12px;border-radius:50%;background:var(--tiffany)}
-.wait-card b{font-size:18px}
-.wait-card small{color:rgba(246,244,239,.6);font-size:14px}
+.wc-ping svg{width:20px;height:20px}
+.wait-card b{font-size:17px}
+.wait-card header small{color:var(--ink-3);font-size:13.5px;display:block}
 .wc-hours{display:flex;gap:8px;flex-wrap:wrap}
-.wc-hours span{border:1px solid rgba(246,244,239,.25);border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600}
-.wc-hours .on{background:var(--tiffany);color:var(--ink);border-color:var(--tiffany);font-weight:700}
-.wait-toast{background:var(--porcelain);color:var(--ink);border-radius:20px;padding:18px 20px;display:flex;gap:14px;align-items:center;
-  box-shadow:0 24px 60px -20px rgba(0,0,0,.55);animation:toast 7.5s cubic-bezier(.2,.7,.2,1) infinite}
-.wait-toast .fi{width:42px;height:42px;border-radius:14px;background:var(--tiffany);display:grid;place-items:center;flex:none}
+.wc-hours span{background:#ECE9E1;color:var(--ink-3);border-radius:14px;padding:8px 14px;font-size:13.5px;font-weight:600;
+  display:grid;gap:1px;text-align:center}
+.wc-hours span b{font-family:var(--mono);font-size:15px;color:inherit}
+.wc-hours .on{background:var(--tiffany);color:var(--ink)}
+.wc-hours .on b{color:var(--ink)}
+.wait-toast{background:var(--white);color:var(--ink);border-radius:20px;padding:16px 18px;display:flex;gap:13px;align-items:center;
+  box-shadow:0 24px 60px -20px rgba(14,26,26,.4);animation:toast 7.5s cubic-bezier(.2,.7,.2,1) infinite;
+  border:1.5px solid rgba(129,216,208,.6)}
+.wait-toast .fi{width:42px;height:42px;border-radius:50%;background:var(--wash);display:grid;place-items:center;flex:none;color:var(--tiffany-deep)}
 .wait-toast .fi svg{width:20px;height:20px}
 .wait-toast b{display:block;font-size:16px}
 .wait-toast small{color:var(--ink-3);font-size:13.5px}
 .wait-toast .btn{margin-inline-start:auto;padding:10px 20px;font-size:14.5px;flex:none}
 @keyframes toast{0%,42%{opacity:0;transform:translateY(18px) scale(.97)}54%,94%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
 
-/* ---------- appointments ---------- */
+/* ---------- appointments (real app card style) ---------- */
 .appts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.appt{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:20px;display:grid;gap:12px;
-  position:relative;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
-.appt:hover{transform:translateY(-6px) rotate(0deg)!important;box-shadow:var(--shadow-soft)}
-.appt:nth-child(1){transform:rotate(-1.2deg)}
-.appt:nth-child(2){transform:rotate(.8deg)}
-.appt:nth-child(3){transform:rotate(-.7deg)}
-.appt:nth-child(4){transform:rotate(1.1deg)}
-.appt header{display:flex;align-items:center;gap:10px}
-.ap-ava{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:rgba(246,244,239,.9);font-weight:900;font-size:18px;flex:none}
+.appt{background:var(--white);border-radius:24px;padding:20px;display:grid;gap:14px;
+  box-shadow:0 14px 34px -20px rgba(14,26,26,.25);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.appt:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft)}
+.appt header{display:flex;align-items:center;gap:11px}
+.ap-med{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:rgba(246,244,239,.92);flex:none;
+  box-shadow:0 0 0 2px var(--white),0 0 0 4px var(--tiffany-soft)}
+.ap-med svg{width:20px;height:20px}
 .appt header b{font-size:16.5px;display:block;line-height:1.2}
 .appt header small{color:var(--ink-3);font-size:13px}
-.ap-when{display:flex;gap:8px;align-items:center;color:var(--ink-2);font-size:14.5px;font-weight:600;border-top:1px dashed var(--line);padding-top:12px}
-.ap-when svg{width:15px;height:15px;color:var(--ink-3)}
-.pill{border-radius:999px;font-size:13px;font-weight:700;padding:5px 13px;width:fit-content;display:inline-flex;align-items:center;gap:6px}
+.ap-when{display:flex;gap:8px;align-items:center;color:var(--ink-2);font-size:14px;font-weight:600;
+  background:var(--porcelain);border-radius:14px;padding:9px 13px}
+.ap-when svg{width:15px;height:15px;color:var(--tiffany-deep);flex:none}
+.ap-when .num{font-size:13.5px}
+.pill{border-radius:999px;font-size:13px;font-weight:700;padding:6px 14px;width:fit-content;display:inline-flex;align-items:center;gap:6px}
 .pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
-.pill-ok{background:rgba(31,158,126,.13);color:#116A53}
-.pill-pend{background:rgba(217,148,43,.14);color:#92610F}
-.pill-no{background:rgba(217,90,78,.12);color:#A8352B}
-.pill-wait{background:rgba(129,216,208,.25);color:var(--tiffany-deep)}
+.pill-ok{background:rgba(129,216,208,.3);color:#116A53}
+.pill-pend{background:#F6E3C6;color:#8A5A1F}
+.pill-no{background:rgba(217,90,78,.14);color:#A8352B}
+.pill-wait{background:#EAE7DF;color:var(--ink-2)}
 
-/* ---------- notifications ---------- */
+/* ---------- notifications (real app style) ---------- */
 .notifs{display:grid;gap:14px;max-width:480px;margin-inline:auto;width:100%}
-.notif{background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);
-  border-radius:20px;padding:16px 18px;display:flex;gap:13px;box-shadow:0 14px 34px -18px rgba(14,26,26,.3)}
-.notif .ni{width:42px;height:42px;border-radius:13px;background:var(--ink);display:grid;place-items:center;flex:none}
-.notif .ni svg{width:22px;height:22px}
+.notif{background:var(--white);border:1.5px solid transparent;
+  border-radius:22px;padding:16px 18px;display:flex;gap:13px;box-shadow:0 14px 34px -20px rgba(14,26,26,.28)}
+.notif.hl{background:#EAF7F4;border-color:rgba(129,216,208,.7)}
+.notif .ni{width:44px;height:44px;border-radius:50%;background:var(--wash);display:grid;place-items:center;flex:none;color:var(--tiffany-deep)}
+.notif.hl .ni{background:var(--white)}
+.notif .ni svg{width:20px;height:20px}
 .notif-body{flex:1;min-width:0}
 .notif-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
 .notif-top b{font-size:15.5px}
-.notif-top small{color:var(--ink-3);font-size:12.5px;flex:none}
-.notif p{font-size:14.5px;color:var(--ink-2);line-height:1.4}
+.notif-top small{color:var(--ink-3);font-size:12px;flex:none;display:inline-flex;align-items:center;gap:5px}
+.notif-top small i{width:6px;height:6px;border-radius:50%;background:var(--tiffany-deep)}
+.notif p{font-size:14px;color:var(--ink-2);line-height:1.45}
 .notif-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:center}
 
-/* ---------- business ---------- */
+/* ---------- business dashboard (real app) ---------- */
 .biz-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(30px,5vw,80px);align-items:center}
 .biz-copy{display:grid;gap:20px}
 .biz-feats{display:grid;gap:14px}
 .bf{display:flex;gap:14px;align-items:flex-start}
-.bf i{width:40px;height:40px;flex:none;border-radius:13px;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
+.bf i{width:40px;height:40px;flex:none;border-radius:50%;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
 .bf i svg{width:19px;height:19px}
 .bf b{font-size:17px;display:block}
 .bf small{color:var(--ink-2);font-size:14.5px}
 .biz-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px}
-.dash{background:var(--porcelain);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow-deep);
-  padding:22px;display:grid;gap:16px;max-width:560px;width:100%;justify-self:start}
+.dash{border-radius:28px;box-shadow:var(--shadow-deep);
+  background:
+    radial-gradient(70% 30% at 85% 0%,rgba(129,216,208,.3),transparent 70%),
+    radial-gradient(50% 25% at 8% 55%,rgba(129,216,208,.16),transparent 70%),
+    #F4F2EC;
+  padding:22px;display:grid;gap:14px;max-width:560px;width:100%;justify-self:start}
 .dash-top{display:flex;align-items:center;gap:12px}
-.dash-top .pc-ava{width:46px;height:46px;font-size:19px;border:0;border-radius:15px}
+.dash-ava{width:50px;height:50px;border-radius:50%;flex:none;display:grid;place-items:center;color:#F3E7D8;
+  background:radial-gradient(circle at 35% 30%,#D9B394,#8A6450);box-shadow:0 0 0 2.5px var(--white),0 0 0 5px var(--tiffany)}
+.dash-ava svg{width:22px;height:16px}
 .dash-top b{display:block;font-size:17px}
 .dash-top small{color:var(--ink-3);font-size:13.5px}
-.dash-top .pill{margin-inline-start:auto}
+.dash-bell{margin-inline-start:auto;width:44px;height:44px;border-radius:50%;background:var(--white);display:grid;place-items:center;
+  box-shadow:0 8px 20px -10px rgba(14,26,26,.25);position:relative}
+.dash-bell svg{width:19px;height:19px}
+.dash-bell::after{content:"";position:absolute;top:9px;inset-inline-start:10px;width:8px;height:8px;border-radius:50%;background:var(--tiffany-deep)}
+.dash-banner{background:var(--white);border-radius:20px;padding:13px 16px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 10px 26px -16px rgba(14,26,26,.25)}
+.dash-banner .bi{width:42px;height:42px;border-radius:14px;background:var(--wash);display:grid;place-items:center;color:var(--tiffany-deep);flex:none}
+.dash-banner .bi svg{width:20px;height:20px}
+.dash-banner b{font-size:15px;display:block}
+.dash-banner small{color:var(--ink-3);font-size:13px}
+.dash-banner .bdg{margin-inline-start:auto;width:30px;height:30px;border-radius:50%;background:var(--tiffany);
+  display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:14px;flex:none}
+.dash-today{background:var(--white);border-radius:24px;padding:18px;display:grid;gap:14px;box-shadow:0 14px 34px -20px rgba(14,26,26,.3)}
+.dt-head{display:flex;justify-content:flex-start}
+.dt-datechip{background:var(--wash);color:var(--ink);border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:700;
+  display:inline-flex;align-items:center;gap:7px}
+.dt-datechip svg{width:14px;height:14px;color:var(--tiffany-deep)}
+.dt-mid{display:flex;align-items:center;gap:16px;justify-content:space-between}
+.dt-count{display:flex;align-items:center;gap:12px}
+.dt-count .ci{width:52px;height:52px;border-radius:16px;background:var(--wash);display:grid;place-items:center;color:var(--ink);flex:none}
+.dt-count .ci svg{width:24px;height:24px}
+.dt-count b{font-size:40px;font-weight:900;line-height:1;display:block}
+.dt-count small{font-size:14px;color:var(--ink-2);font-weight:700}
+.donut{width:88px;height:88px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:conic-gradient(var(--tiffany) 0 42%,#E8E4DB 42% 100%);position:relative}
+.donut::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--white)}
+.donut span{position:relative;text-align:center;line-height:1.15}
+.donut span b{font-family:var(--mono);font-size:17px;font-weight:700;display:block}
+.donut span small{font-size:11px;color:var(--ink-3);font-weight:600}
+.dt-next{display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:14px;border-top:1px solid var(--line);padding-top:12px}
+.dt-next svg{width:15px;height:15px;color:var(--tiffany-deep);flex:none}
 .dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.ds{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
-.ds b{font-size:22px;font-weight:900;display:block;line-height:1.1}
-.ds small{color:var(--ink-3);font-size:12.5px}
+.ds{background:var(--wash);border-radius:16px;padding:12px 12px;display:grid;gap:4px;justify-items:end;text-align:end}
+.ds svg{width:17px;height:17px;color:var(--ink)}
+.ds b{font-size:20px;font-weight:700;display:block;line-height:1.1;font-family:var(--mono)}
+.ds small{color:var(--ink-2);font-size:12px;font-weight:600}
+.dash-new{background:var(--grad-btn);border-radius:999px;padding:10px 12px;display:flex;align-items:center;gap:12px;
+  font-weight:800;font-size:17px;color:var(--ink);box-shadow:0 12px 28px -14px rgba(129,216,208,.95)}
+.dash-new .plus{width:38px;height:38px;border-radius:50%;background:var(--white);display:grid;place-items:center;flex:none}
+.dash-new .plus svg{width:18px;height:18px;color:var(--tiffany-deep)}
+.dash-new .arr{margin-inline-start:auto;opacity:.75}
+.dash-new .arr svg{width:18px;height:18px}
 .dash-sched{display:grid;gap:8px}
-.dr{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:14px}
-.dr time{font-weight:800;font-variant-numeric:tabular-nums;flex:none;width:44px}
-.dr i{width:4px;height:26px;border-radius:4px;flex:none}
-.dr b{font-weight:600}
-.dr small{color:var(--ink-3);margin-inline-start:auto;flex:none}
-.dash-req{background:var(--ink);color:var(--porcelain);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.dash-req b{font-size:14.5px;display:block}
-.dash-req small{opacity:.7;font-size:12.5px}
-.dash-req .dr-btns{margin-inline-start:auto;display:flex;gap:8px}
-.dr-btns span{border-radius:999px;padding:8px 18px;font-size:13.5px;font-weight:700}
-.dr-ok{background:var(--tiffany);color:var(--ink)}
-.dr-no{border:1px solid rgba(246,244,239,.3)}
+.dash-sched .shead{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;font-weight:800}
+.dash-sched .shead a{font-size:13px;color:var(--tiffany-deep);font-weight:700}
+.dr{display:flex;align-items:center;gap:12px;border-radius:16px;padding:11px 14px;font-size:14px;background:var(--white);
+  box-shadow:0 8px 20px -14px rgba(14,26,26,.22)}
+.dr.pend{background:#FBF3E4}
+.dr.ok{background:#EAF7F4}
+.dr time{font-family:var(--mono);font-weight:700;font-size:14px;flex:none;margin-inline-start:auto;color:var(--ink-2)}
+.dr .pill{font-size:11.5px;padding:4px 11px}
+.dr b{font-weight:700}
+.dr small{color:var(--ink-3)}
 
 /* ---------- marquee gallery ---------- */
 .gal{overflow:hidden;direction:ltr;display:grid;gap:14px;
@@ -461,30 +654,42 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .gal-track:hover{animation-play-state:paused}
 .gt{direction:rtl;display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);
   border-radius:18px;padding:12px 20px 12px 26px;white-space:nowrap}
-.gt .ap-ava{width:38px;height:38px;font-size:16px;border-radius:12px}
+.gt .ap-med{width:38px;height:38px;box-shadow:0 0 0 2px var(--white),0 0 0 3.5px var(--tiffany-soft);font-weight:900;font-size:16px}
 .gt b{font-size:15.5px;display:block;line-height:1.25}
 .gt small{color:var(--ink-3);font-size:13px}
 
 /* ---------- how ---------- */
 .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,54px)}
 .how-col{background:var(--porcelain);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,3.4vw,44px)}
-.how-col.pro{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
+.how-col.pro{background:var(--tiffany);color:var(--ink);border-color:var(--tiffany)}
 .how-col h3{font-size:19px;font-weight:700;color:var(--tiffany-deep);margin-bottom:22px}
-.how-col.pro h3{color:var(--tiffany)}
+.how-col.pro h3{color:var(--tiffany-deep)}
 .how-steps{display:grid;gap:4px}
 .hs{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
-.how-col.pro .hs{border-color:rgba(246,244,239,.14)}
+.how-col.pro .hs{border-color:rgba(14,26,26,.16)}
 .hs:last-child{border-bottom:0}
-.hs em{font-style:normal;font-weight:800;font-size:15px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.how-col.pro .hs em{color:rgba(246,244,239,.5)}
+.hs em{font-style:normal;font-weight:700;font-size:15px;color:var(--ink-3)}
+.how-col.pro .hs em{color:rgba(14,26,26,.5)}
 .hs b{font-size:clamp(30px,3.6vw,46px);font-weight:900;letter-spacing:-.01em}
 .hs small{font-size:15px;color:var(--ink-2);margin-inline-start:auto;text-align:start;max-width:18ch}
-.how-col.pro .hs small{color:rgba(246,244,239,.65)}
+.how-col.pro .hs small{color:rgba(14,26,26,.7)}
 
-/* ---------- about ---------- */
-.about-in{display:grid;gap:18px;max-width:880px}
-.about-in p{font-size:clamp(20px,2.6vw,30px);font-weight:600;line-height:1.5;color:rgba(246,244,239,.92)}
-.about-in .logo{color:var(--porcelain)}
+/* ---------- about (ping animation) ---------- */
+.about{overflow:clip}
+.about-in{display:grid;gap:22px;max-width:880px;margin-inline:auto;justify-items:center;text-align:center}
+.about-in p{font-size:clamp(20px,2.6vw,30px);font-weight:600;line-height:1.5;color:rgba(14,26,26,.88)}
+.ping-hero{position:relative;width:clamp(110px,16vw,150px);aspect-ratio:1;display:grid;place-items:center}
+.ping-rings i{position:absolute;inset:0;border:2px solid rgba(246,244,239,.95);border-radius:50%;opacity:0;
+  animation:ping2 3.8s cubic-bezier(.2,.6,.3,1) infinite}
+.ping-rings i:nth-child(2){animation-delay:.95s}
+.ping-rings i:nth-child(3){animation-delay:1.9s}
+.ping-rings i:nth-child(4){animation-delay:2.85s}
+@keyframes ping2{0%{transform:scale(.4);opacity:.95}100%{transform:scale(3.1);opacity:0}}
+.ping-logo{width:62%;position:relative;z-index:2;animation:plogo 3.8s ease-in-out infinite;filter:drop-shadow(0 14px 24px rgba(14,26,26,.25))}
+@keyframes plogo{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.ping-logo .pa{animation:parc 1.9s ease-in-out infinite}
+.ping-logo .pa2{animation-delay:.3s}
+@keyframes parc{0%,100%{opacity:.3}35%{opacity:1}}
 
 /* ---------- FAQ ---------- */
 .faq-wrap{max-width:760px;margin-inline:auto}
@@ -500,28 +705,27 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 
 /* ---------- final CTA ---------- */
 .final{overflow:clip;position:relative;padding-bottom:0}
-.final .rings i{border-color:var(--ink);opacity:0}
 .final-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(20px,4vw,60px);align-items:end}
 .final-copy{display:grid;gap:24px;padding-bottom:clamp(60px,9vw,120px)}
 .final h2{font-size:clamp(40px,6vw,84px);font-weight:900;letter-spacing:-.015em}
-.final .store{background:var(--ink)}
+.final .store{background:var(--white);box-shadow:0 10px 24px -14px rgba(14,26,26,.3)}
 .final-phone{display:flex;justify-content:center;align-items:flex-end;position:relative}
-.final-phone .phone{--pw:300px;margin-bottom:-26%;}
+.final-phone .phone{--pw:300px;margin-bottom:-26%}
 .final .btn-link{color:var(--ink);font-weight:800}
 
 /* ---------- footer ---------- */
-.ft{background:var(--ink);color:var(--porcelain);padding:clamp(54px,7vw,90px) 0 34px}
+.ft{background:var(--tiffany);color:var(--ink);padding:clamp(54px,7vw,90px) 0 34px;border-top:1px solid rgba(14,26,26,.12)}
 .ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:clamp(24px,4vw,60px);margin-bottom:46px}
 .ft-brand{display:grid;gap:16px;align-content:start}
-.ft-brand p{color:rgba(246,244,239,.6);font-size:15px;max-width:26ch}
-.ft h4{font-size:14.5px;font-weight:700;color:rgba(246,244,239,.5);margin-bottom:14px}
-.ft-col ul{display:grid;gap:10px;font-size:15.5px}
+.ft-brand p{color:rgba(14,26,26,.65);font-size:15px;max-width:26ch}
+.ft h4{font-size:14.5px;font-weight:700;color:rgba(14,26,26,.55);margin-bottom:14px}
+.ft-col ul{display:grid;gap:10px;font-size:15.5px;font-weight:600}
 .ft-col a{opacity:.9;transition:color .2s}
-.ft-col a:hover{color:var(--tiffany)}
-.ft-bottom{border-top:1px solid rgba(246,244,239,.12);padding-top:22px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;
-  color:rgba(246,244,239,.55);font-size:13.5px}
+.ft-col a:hover{color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:4px}
+.ft-bottom{border-top:1px solid rgba(14,26,26,.18);padding-top:22px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;
+  color:rgba(14,26,26,.6);font-size:13.5px}
 .ft .stores{margin-top:4px}
-.ft .store{background:rgba(246,244,239,.08);border:1px solid rgba(246,244,239,.16)}
+.ft .store{background:var(--white);box-shadow:0 10px 24px -14px rgba(14,26,26,.3)}
 
 /* ---------- reveal ---------- */
 .will-reveal{opacity:0;transform:translateY(26px)}
@@ -533,19 +737,19 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   .hero .phone{--pw:300px}
 }
 @media (max-width:920px){
-  .hd-nav,.hd-cta{display:none}
+  .hd-nav,.hd-cta,.hd-login{display:none}
   .menu-btn{display:block}
-  .hd-in{justify-content:space-between}
+  .hd-in{justify-content:space-between;flex-direction:row-reverse}
   .hero-grid{grid-template-columns:1fr;gap:34px}
   .hero-copy{text-align:center;justify-items:center}
   .lede{margin-inline:auto}
   .hero-stage{min-height:0;margin-top:10px}
-  .f1{inset-inline-end:2%}
-  .f3{inset-inline-start:0}
+  .f1{inset-inline-start:0}
+  .f3{inset-inline-end:2%}
   .f2{inset-inline-end:0;bottom:12%}
   .f4{display:none}
   .profile-grid,.wait-grid,.biz-grid,.notif-grid{grid-template-columns:1fr}
-  .profile-card,.dash{justify-self:center;max-width:520px}
+  .profile-card,.dash{justify-self:center;max-width:500px}
   .how-grid{grid-template-columns:1fr}
   .final-grid{grid-template-columns:1fr;gap:10px}
   .final-copy{text-align:center;justify-items:center;padding-bottom:40px}
@@ -568,20 +772,18 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   .frag{padding:9px 12px;border-radius:14px}
   .frag b{font-size:12.5px}
   .frag small{font-size:11px}
-  .frag .fi{width:28px;height:28px;border-radius:9px}
+  .frag .fi{width:28px;height:28px}
   .frag-chip{font-size:12.5px;padding:8px 14px}
   .appts{grid-template-columns:1fr}
-  .appt{transform:none!important}
-  .appt:hover{transform:translateY(-4px)!important}
   .biz-row{grid-auto-columns:76vw}
-  .dash-stats{grid-template-columns:repeat(3,1fr);gap:7px}
-  .ds b{font-size:18px}
+  .dash-stats{gap:7px}
+  .ds b{font-size:17px}
   .ft-grid{grid-template-columns:1fr}
   .hs small{display:none}
   .wait-toast .btn{margin-inline-start:0}
-  .pc-foot{flex-wrap:wrap}
   .final-phone .phone{--pw:min(58vw,230px)}
   .stores{justify-content:center}
+  .donut{width:74px;height:74px}
 }
 
 /* ---------- reduced motion ---------- */
@@ -597,9 +799,48 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 <body>
 <a class="skip" href="#main">דילוג לתוכן</a>
 
+<!-- ================= SVG LIB ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-bell"><path d="M12 4a6 6 0 0 1 6 6c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10a6 6 0 0 1 6-6zM10 20a2.2 2.2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-cal"><rect x="3" y="5" width="18" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-calok"><rect x="3" y="5" width="18" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8.5 14.5l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-clock"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-pin"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/></g>
+    <g id="i-heart"><path d="M12 20s-7.2-4.6-9.2-9A5.2 5.2 0 0 1 12 6.5 5.2 5.2 0 0 1 21.2 11c-2 4.4-9.2 9-9.2 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></g>
+    <g id="i-share"><path d="M12 3v12M12 3L7.5 7.5M12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-msg"><path d="M21 7a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h3v3.5L14 18h4a3 3 0 0 0 3-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></g>
+    <g id="i-check"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-chev"><path d="M14.5 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-chevd"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-home"><path d="M3 11l9-7 9 7v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></g>
+    <g id="i-user"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-plus"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></g>
+    <g id="i-qr"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2.5v2.5H14zM17.5 17.5H20V20h-2.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></g>
+    <g id="i-spark"><path d="M12 2.5l2.2 7.3 7.3 2.2-7.3 2.2L12 21.5l-2.2-7.3-7.3-2.2 7.3-2.2z" fill="currentColor"/></g>
+    <g id="i-leaf"><path d="M12 21C7 14 8 7 12 3c4 4 5 11 0 18zM12 9v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-store"><path d="M4 9.5L5.5 4h13L20 9.5M4 9.5a2.6 2.6 0 0 0 5.3 0 2.6 2.6 0 0 0 5.4 0 2.6 2.6 0 0 0 5.3 0M5.5 12v8h13v-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-sun"><path d="M5.5 16a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 5.5V3M6.8 7.8L5 6M17.2 7.8L19 6M4.5 12H2M22 12h-2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-ban"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 6l12 12" fill="none" stroke="currentColor" stroke-width="2"/></g>
+    <g id="i-link"><path d="M10.5 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7L12 6.3M13.5 10.5a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7L12 17.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-chart"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-uplus"><circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c1.2-3.4 4-4.8 7-4.8M17 8v6M20 11h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="i-arrl"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-star"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></g>
+  </defs>
+</svg>
+
 <!-- ================= HEADER ================= -->
 <header class="hd" id="top">
   <div class="wrap hd-in">
+    <nav class="hd-nav" aria-label="ניווט ראשי">
+      <a href="#how">איך זה עובד</a>
+      <a href="#business">לעסקים</a>
+      <a href="#about">עלינו</a>
+      <a href="#faq">שאלות נפוצות</a>
+    </nav>
+    <a class="btn btn-ghost hd-login" href="#" title="בקרוב — כניסה לחשבון PING">התחברות</a>
+    <a class="btn btn-tiffany hd-cta" href="#download">מורידים את PING</a>
     <a class="logo" href="#top" aria-label="PING — לראש העמוד">
       <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <circle cx="12" cy="20" r="5.5" fill="#81D8D0"/>
@@ -607,13 +848,6 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
       </svg>
       PING
     </a>
-    <nav class="hd-nav" aria-label="ניווט ראשי">
-      <a href="#how">איך זה עובד</a>
-      <a href="#business">לעסקים</a>
-      <a href="#about">עלינו</a>
-      <a href="#faq">שאלות נפוצות</a>
-    </nav>
-    <a class="btn btn-tiffany hd-cta" href="#download">מורידים את PING</a>
     <button class="menu-btn" aria-label="תפריט" aria-expanded="false" aria-controls="mmenu">
       <span></span><span></span>
     </button>
@@ -624,6 +858,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   <a href="#business">לעסקים</a>
   <a href="#about">עלינו</a>
   <a href="#faq">שאלות נפוצות</a>
+  <a href="#" title="בקרוב — כניסה לחשבון PING">התחברות</a>
   <a class="btn btn-tiffany" href="#download">מורידים את PING</a>
 </nav>
 
@@ -655,55 +890,219 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     <div class="hero-stage">
       <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
 
-      <div class="phone" role="img" aria-label="מסך הבית של אפליקציית PING">
+      <div class="phone" role="group" aria-label="דמו אינטראקטיבי של אפליקציית PING">
         <div class="scr-area">
           <div class="island"></div>
-          <div class="app">
-            <div class="statusbar"><span class="num">9:41</span>
+          <div class="demo" id="demo">
+            <div class="statusbar"><span class="num">10:04</span>
               <span class="sb-ic" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="17" height="9" rx="2.5"/><path d="M21 11v3" stroke-linecap="round"/><rect x="4" y="10" width="11" height="5" rx="1" fill="currentColor" stroke="none"/></svg>
               </span>
             </div>
-            <div class="app-body">
-              <div class="a-greet"><small>בוקר טוב 👋</small><b>נועה</b></div>
-              <div class="a-search">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                מה מחפשים היום?
-              </div>
-              <div class="a-chips">
-                <span class="a-chip on">הכול</span><span class="a-chip">שיער</span><span class="a-chip">ציפורניים</span><span class="a-chip">טיפוח</span><span class="a-chip">כושר</span>
-              </div>
-              <div class="a-label">קרוב אליך <small>הצגת הכול</small></div>
-              <div class="a-cards">
-                <div class="a-biz"><div class="a-thumb t1">ג</div><div class="a-biz-in"><b>סטודיו גלי</b><small>שיער · 4.9 ★ · 350 מ׳</small></div></div>
-                <div class="a-biz"><div class="a-thumb t3">ל</div><div class="a-biz-in"><b>לאק בר</b><small>ציפורניים · 4.8 ★ · 1.2 ק״מ</small></div></div>
-              </div>
-              <div class="a-next">
-                <span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-                <span><b>התור הקרוב שלך</b><small>מחר · 14:30 · סטודיו גלי</small></span>
-              </div>
+            <div class="dstack">
+
+              <section class="dscr is-on" data-screen="home">
+                <div class="ap-top">
+                  <span class="ap-ava"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span>
+                  <span class="ap-greet"><b>שלום, Tomer</b></span>
+                  <span class="sp"></span>
+                  <button class="ap-ic" data-go="notifs" aria-label="התראות"><span class="ndot"></span><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg></button>
+                  <button class="ap-ic" data-like aria-label="סריקת QR"><svg viewBox="0 0 24 24"><use href="#i-qr"/></svg></button>
+                </div>
+                <div class="ap-h1"><svg class="spark" viewBox="0 0 24 24"><use href="#i-spark"/></svg><span>התורים שלך<br>במקום אחד</span></div>
+                <div class="cat-hero">
+                  <button class="cat-circ" data-go="services" aria-label="כושר ואימונים">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12h2M19 12h2M7 8v8M17 8v8M7 12h10"/><rect x="5" y="9" width="2.4" height="6" rx="1" fill="currentColor" stroke="none"/><rect x="16.6" y="9" width="2.4" height="6" rx="1" fill="currentColor" stroke="none"/></svg>
+                    <span class="cc-tag">כושר ואימונים</span>
+                  </button>
+                </div>
+                <div class="ap-secrow">
+                  <b>העסקים שלך</b>
+                  <button class="hb" data-like aria-label="מועדפים"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+                </div>
+                <div class="bizcard">
+                  <div class="bz-media">
+                    <button class="bz-heart" data-like aria-label="הוספה למועדפים"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button>
+                    <span class="brandmark">
+                      <svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+                      <b>TOMER SUN</b><small>TANNING STUDIO</small>
+                    </span>
+                  </div>
+                  <div class="bz-body">
+                    <span><b>Tomer Sun</b>
+                      <span class="bz-meta"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>כושר ואימונים · תל אביב–יפו</span>
+                    </span>
+                    <button class="bz-cta" data-go="services"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>הזמן תור</button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="dscr" data-screen="notifs">
+                <div class="ap-head"><button class="ap-ic" data-go="back" aria-label="חזרה"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></button><h4>התראות</h4></div>
+                <button class="pillbtn" data-like><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>סמן הכל כנקרא</button>
+                <small class="dlabel">היום</small>
+                <div class="acard srow" style="background:#EAF7F4;outline:.4cqi solid rgba(129,216,208,.7);outline-offset:-.4cqi">
+                  <span class="sthumb mint" style="background:var(--white)"><svg viewBox="0 0 24 24"><use href="#i-calok"/></svg></span>
+                  <span><b>התור אושר</b><small>Tomer Sun · שיזוף · <span class="num">08/11 17:00</span></small></span>
+                  <small style="margin-inline-start:auto;color:var(--tiffany-deep);font-weight:700" class="num">10:03</small>
+                </div>
+                <div class="acard srow">
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+                  <span><b>התפנה מקום!</b><small>היום ב־<span class="num">16:00</span> · לתפוס לפני כולם</small></span>
+                </div>
+                <button class="acard srow" data-like>
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span>
+                  <span><b>הגדרות התראות</b></span>
+                  <span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+                </button>
+              </section>
+
+              <section class="dscr" data-screen="appts">
+                <div class="ap-head"><button class="ap-ic" data-go="notifs" aria-label="התראות"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg></button><h4>התורים שלי</h4></div>
+                <div class="seg"><span class="on">קרובים (4)</span><span>ממתינים (1)</span><span>היסטוריה (1)</span></div>
+                <button class="acard srow" data-go="waitl">
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+                  <span><b>רשימות ההמתנה שלי</b><small>שעה תפוסה? אפשר להצטרף</small></span>
+                  <span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+                </button>
+                <div class="bizcard">
+                  <div class="bz-media" style="height:22cqi">
+                    <span class="date-badge"><small>יום א׳</small><b class="num">8</b><em>נוב׳</em></span>
+                    <span class="brandmark">
+                      <svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+                      <b>TOMER SUN</b><small>TANNING STUDIO</small>
+                    </span>
+                  </div>
+                  <div class="bz-body">
+                    <span><b>שיזוף</b>
+                      <span class="bz-meta"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>Tomer Sun · <span class="num">11:15</span></span>
+                    </span>
+                    <button class="bz-cta" data-go="pending">פרטי התור</button>
+                  </div>
+                </div>
+                <button class="conf-btn" data-go="services" style="background:var(--white);box-shadow:0 2cqi 5cqi -2.6cqi rgba(14,26,26,.25)">הזמן שוב</button>
+              </section>
+
+              <section class="dscr" data-screen="profile">
+                <div class="ap-head"><span style="width:9.6cqi"></span><h4>פרופיל</h4></div>
+                <div style="display:grid;justify-items:center;gap:1.5cqi">
+                  <span class="ap-ava" style="width:18cqi;height:18cqi"><svg viewBox="0 0 24 24" style="width:9cqi;height:9cqi"><use href="#i-user"/></svg></span>
+                  <b style="font-size:4.6cqi">Tomer</b><small style="color:var(--ink-3);font-size:3cqi">חשבון אישי</small>
+                </div>
+                <button class="acard srow" data-like><span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg></span><b>פרטים אישיים</b><span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span></button>
+                <button class="acard srow" data-go="notifs"><span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg></span><b>ההתראות שלי</b><span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span></button>
+                <button class="acard srow" data-like><span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></span><b>העסקים שאהבתי</b><span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span></button>
+                <button class="acard srow" data-like><span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-msg"/></svg></span><b>תמיכה</b><span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span></button>
+              </section>
+
+              <section class="dscr" data-screen="services">
+                <div class="ap-head"><button class="ap-ic" data-go="back" aria-label="חזרה"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></button><h4>בוחרים שירות</h4></div>
+                <div class="dmini">Tomer Sun · השירותים שלנו</div>
+                <button class="acard srow sel" data-go="when">
+                  <span class="sthumb"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span>
+                  <span><b>שיזוף</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>45 דקות</small></span>
+                  <span class="price-pill">₪120</span>
+                </button>
+                <button class="acard srow" data-go="when">
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+                  <span><b>שיזוף אקספרס</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>20 דקות</small></span>
+                  <span class="price-pill">₪80</span>
+                </button>
+                <button class="acard srow" data-go="when">
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></span>
+                  <span><b>חבילת 5 מפגשים</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>45 דקות למפגש</small></span>
+                  <span class="price-pill">₪550</span>
+                </button>
+              </section>
+
+              <section class="dscr" data-screen="when">
+                <div class="ap-head"><button class="ap-ic" data-go="back" aria-label="חזרה"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></button><h4>בחירת מועד</h4></div>
+                <div class="cal-card" style="padding:3cqi;gap:1.6cqi">
+                  <div class="cal-top">
+                    <span class="cnav"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+                    <b>נובמבר 2026</b>
+                    <span class="cnav"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-chev"/></svg></span>
+                  </div>
+                  <div class="cal-grid">
+                    <span class="dow">א׳</span><span class="dow">ב׳</span><span class="dow">ג׳</span><span class="dow">ד׳</span><span class="dow">ה׳</span><span class="dow">ו׳</span><span class="dow">ש׳</span>
+                    <span class="d sel" data-day>8</span><span class="d" data-day>9</span><span class="d" data-day>10</span><span class="d" data-day>11</span><span class="d" data-day>12</span><span class="d" data-day>13</span><span class="d off">14</span>
+                    <span class="d" data-day>15</span><span class="d" data-day>16</span><span class="d" data-day>17</span><span class="d" data-day>18</span><span class="d" data-day>19</span><span class="d" data-day>20</span><span class="d off">21</span>
+                  </div>
+                </div>
+                <div class="day-row"><b>יום ראשון, 8 בנובמבר</b><small><span class="num">13</span> פנויים</small></div>
+                <div class="slots">
+                  <span class="slot sel" data-slot="10:15">10:15</span><span class="slot" data-slot="10:30">10:30</span><span class="slot tk">10:45<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span>
+                  <span class="slot" data-slot="12:00">12:00</span><span class="slot" data-slot="12:30">12:30</span><span class="slot tk">13:00<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span>
+                </div>
+                <button class="conf-btn" data-go="summary" style="margin-top:auto;margin-bottom:1cqi">המשך · <span class="num" data-time-sum>10:15</span></button>
+              </section>
+
+              <section class="dscr" data-screen="summary">
+                <div class="ap-head"><button class="ap-ic" data-go="back" aria-label="חזרה"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></button><h4>סיכום הזמנה</h4></div>
+                <div class="dt-card">
+                  <div><small>יום ראשון</small><b class="num">8</b><small>נובמבר</small></div>
+                  <div><small>שעה</small><b class="num" data-time-sum>10:15</b></div>
+                </div>
+                <div class="acard sum-rows" style="padding-inline:4cqi">
+                  <div class="sum-row"><span>טיפול</span><b>שיזוף</b></div>
+                  <div class="sum-row"><span>משך</span><b>45 דקות</b></div>
+                  <div class="sum-row"><span>סה״כ לתשלום</span><b class="num">₪120</b></div>
+                </div>
+                <small class="dlabel">הערה לבעל העסק</small>
+                <div class="acard" style="padding:3cqi 4cqi;font-size:3cqi;color:var(--ink-3);text-align:start">יש משהו שחשוב שנדע לפני התור?</div>
+                <button class="conf-btn" data-go="pending" style="margin-top:auto;margin-bottom:1cqi">אישור הזמנה · <span class="num">₪120</span></button>
+              </section>
+
+              <section class="dscr" data-screen="pending">
+                <div class="confirm">
+                  <span class="conf-ok"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <h4>התור שלך ממתין לאישור</h4>
+                  <p class="csub">נעדכן אותך ברגע שהעסק יאשר את התור</p>
+                  <div class="conf-card">
+                    <div class="sum-row"><span>טיפול</span><b>שיזוף</b></div>
+                    <div class="sum-row"><span>תאריך</span><b>יום ראשון, 8 בנובמבר</b></div>
+                    <div class="sum-row"><span>שעה</span><b class="num" data-time-sum>10:15</b></div>
+                  </div>
+                  <button class="conf-btn" data-go="home">חזרה לדף הבית</button>
+                  <button class="conf-link" data-go="appts">לתורים שלי</button>
+                </div>
+              </section>
+
+              <section class="dscr" data-screen="waitl">
+                <div class="ap-head"><button class="ap-ic" data-go="back" aria-label="חזרה"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></button><h4>רשימות ההמתנה שלי</h4></div>
+                <div style="display:grid;justify-items:center;gap:2cqi;text-align:center;padding-top:4cqi">
+                  <span class="wc-ping" style="width:16cqi;height:16cqi"><svg viewBox="0 0 24 24" style="width:7cqi;height:7cqi"><use href="#i-clock"/></svg></span>
+                  <b style="font-size:4.2cqi">אין לך בקשות המתנה פעילות</b>
+                  <small style="font-size:3.1cqi;color:var(--ink-2);max-width:56cqi">שעה שאהבת תפוסה? בלוח התורים אפשר ללחוץ עליה ולהצטרף לרשימת ההמתנה.</small>
+                </div>
+                <button class="acard srow" data-go="when" style="margin-top:auto;margin-bottom:1cqi">
+                  <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
+                  <span><b>חזרה ללוח התורים</b><small>שעות פנויות ותפוסות</small></span>
+                  <span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+                </button>
+              </section>
+
             </div>
-            <div class="tabbar" aria-hidden="true">
-              <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20z"/></svg>בית</span>
-              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>חיפוש</span>
-              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>התורים שלי</span>
-              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5" stroke-linecap="round"/></svg>פרופיל</span>
-            </div>
+            <nav class="fnav" aria-label="ניווט דמו">
+              <button class="on" data-go="home" data-tab="home"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg>בית</button>
+              <button data-go="appts" data-tab="appts"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>תורים</button>
+              <button data-go="profile" data-tab="profile"><svg viewBox="0 0 24 24"><use href="#i-user"/></svg>פרופיל</button>
+            </nav>
           </div>
         </div>
       </div>
+      <span class="demo-hint"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>דמו אינטראקטיבי — לחצו על המסך</span>
 
       <div class="frag frag-ok f1" aria-hidden="true">
-        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-        <span><b>התור אושר</b><small>יום ה׳ · 14:30</small></span>
+        <span class="fi"><svg viewBox="0 0 24 24"><use href="#i-calok"/></svg></span>
+        <span><b>התור אושר</b><small>Tomer Sun · <span class="num">10:15</span></small></span>
       </div>
       <div class="frag f2" aria-hidden="true">
-        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
-        <span><b>התפנה מקום!</b><small>היום · 16:00</small></span>
+        <span class="fi"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+        <span><b>התפנה מקום!</b><small>היום · <span class="num">16:00</span></small></span>
       </div>
-      <div class="frag frag-chip f3" aria-hidden="true">ציפורניים</div>
-      <div class="frag frag-time f4 num" aria-hidden="true">14:30</div>
+      <div class="frag frag-chip f3" aria-hidden="true">כושר ואימונים</div>
+      <div class="frag frag-time f4" aria-hidden="true">10:15</div>
     </div>
   </div>
 </section>
@@ -726,21 +1125,21 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   </div>
   <div class="cat-marquee">
     <div class="cat-track">
-      <span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>כושר</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
-      <span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>כושר</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
+      <span class="cat"><em></em>כושר ואימונים</span><span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
+      <span class="cat"><em></em>כושר ואימונים</span><span class="cat"><em></em>שיער</span><span class="cat"><em></em>ציפורניים</span><span class="cat"><em></em>טיפוח</span><span class="cat"><em></em>בריאות</span><span class="cat"><em></em>עיסוי</span><span class="cat"><em></em>קוסמטיקה</span><span class="cat"><em></em>ברברים</span><span class="cat"><em></em>איפור</span><span class="cat"><em></em>ספא</span>
     </div>
   </div>
   <div class="wrap">
     <div class="biz-row" aria-label="עסקים לדוגמה">
-      <article class="biz"><div class="biz-thumb g1"><b>ג</b><span class="b-cat">שיער</span></div><div class="biz-in"><b>סטודיו גלי</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9</span><span>רמת החייל · 350 מ׳</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g2"><b>ה</b><span class="b-cat">ברברים</span></div><div class="biz-in"><b>מספרת העיר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.7</span><span>פלורנטין · 900 מ׳</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g3"><b>ל</b><span class="b-cat">ציפורניים</span></div><div class="biz-in"><b>לאק בר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.8</span><span>דיזנגוף · 1.2 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g4"><b>פ</b><span class="b-cat">כושר</span></div><div class="biz-in"><b>פיט האוס</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>5.0</span><span>הצפון הישן · 2 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g5"><b>ג</b><span class="b-cat">טיפוח</span></div><div class="biz-in"><b>גלואו קליניק</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9</span><span>שרונה · 1.8 ק״מ</span></div></div></article>
-      <article class="biz"><div class="biz-thumb g6"><b>ס</b><span class="b-cat">ספא</span></div><div class="biz-in"><b>ספא הנמל</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.8</span><span>נמל ת״א · 3 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb gw"><span class="brandmark bm"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg><b style="font-size:16px">TOMER SUN</b><small style="font-size:7px">TANNING STUDIO</small></span><span class="b-cat">כושר ואימונים</span></div><div class="biz-in"><b>Tomer Sun</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>לב תל־אביב · 2.4 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g2"><b>ה</b><span class="b-cat">ברברים</span></div><div class="biz-in"><b>מספרת העיר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.7</span><span>פלורנטין · 900 מ׳</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g3"><b>ל</b><span class="b-cat">ציפורניים</span></div><div class="biz-in"><b>לאק בר</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>דיזנגוף · 1.2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g4"><b>פ</b><span class="b-cat">כושר</span></div><div class="biz-in"><b>פיט האוס</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>5.0</span><span>הצפון הישן · 2 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g5"><b>ג</b><span class="b-cat">טיפוח</span></div><div class="biz-in"><b>גלואו קליניק</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.9</span><span>שרונה · 1.8 ק״מ</span></div></div></article>
+      <article class="biz"><div class="biz-thumb g6"><b>ס</b><span class="b-cat">ספא</span></div><div class="biz-in"><b>ספא הנמל</b><div class="biz-meta"><span class="star"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>4.8</span><span>נמל ת״א · 3 ק״מ</span></div></div></article>
     </div>
     <div class="discover-foot">
-      <span class="demo-tag">שמות העסקים להמחשה בלבד</span>
+      <span class="demo-tag">חלק משמות העסקים להמחשה</span>
       <a class="btn-link" href="#book">איך קובעים תור?</a>
     </div>
   </div>
@@ -754,29 +1153,55 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
       <p class="lede">כל מה שצריך לדעת על העסק — במקום אחד.</p>
       <div class="profile-feats">
         <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M10 9l5 2.5L10 14z" fill="currentColor" stroke="none"/></svg></i>גלריה וסרטונים מתוך העסק</div>
-        <div class="pf"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></i>דירוגים וביקורות אמיתיות</div>
+        <div class="pf"><i><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-star"/></svg></i>דירוגים וביקורות אמיתיות</div>
         <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7" stroke-linecap="round"/></svg></i>שירותים, מחירים וזמנים ברורים</div>
-        <div class="pf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg></i>קביעת תור ישירות מהפרופיל</div>
+        <div class="pf"><i><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></i>קביעת תור ישירות מהפרופיל</div>
       </div>
     </div>
-    <div class="profile-card">
+
+    <div class="profile-card" role="img" aria-label="פרופיל העסק Tomer Sun באפליקציית PING">
       <div class="pc-media">
-        <span class="b-cat">שיער · רמת החייל</span>
-        <span class="demo-tag">תוכן להמחשה</span>
+        <span class="mb" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24"><use href="#i-share"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></i>
+        </span>
+        <span class="brandmark">
+          <svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+          <b>TOMER SUN</b><small>TANNING STUDIO</small>
+        </span>
       </div>
-      <div class="pc-head">
-        <span class="pc-ava">ג</span>
-        <span class="pc-tit"><b>סטודיו גלי</b><small>פתוח עכשיו · עד 19:00</small></span>
-        <span class="pc-rate"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>4.9 <small class="num">(312)</small></span>
-      </div>
-      <div class="pc-servs">
-        <div class="pc-serv"><span><b>תספורת + פן</b><small>45 דק׳</small></span><span class="pc-price num">₪120</span></div>
-        <div class="pc-serv"><span><b>צבע שורש</b><small>90 דק׳</small></span><span class="pc-price num">₪240</span></div>
-        <div class="pc-serv"><span><b>טיפול קרטין</b><small>120 דק׳</small></span><span class="pc-price num">₪450</span></div>
-      </div>
-      <div class="pc-foot">
-        <span class="btn btn-tiffany">קביעת תור</span>
-        <span class="btn btn-ghost" role="img" aria-label="שיתוף"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M12 3L7.5 7.5M12 3l4.5 4.5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></span>
+      <span class="pc-ava"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span>
+      <div class="pc-body">
+        <span class="pname">Tomer Sun</span>
+        <span class="pc-cat"><svg viewBox="0 0 24 24"><use href="#i-leaf"/></svg>כושר ואימונים</span>
+        <span class="pc-addr"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>30 הכרמל, לב תל־אביב, תל אביב–יפו · <span class="num">2.4</span> ק״מ</span>
+        <div class="pc-actions">
+          <span class="pc-sq"><svg viewBox="0 0 24 24"><use href="#i-share"/></svg><small>שיתוף</small></span>
+          <span class="pc-sq"><svg viewBox="0 0 24 24"><use href="#i-msg"/></svg><small>הודעה</small></span>
+          <span class="pc-book"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>קביעת תור</span>
+        </div>
+        <div class="pc-tabs">
+          <span class="on"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>שירותים</span>
+          <span>תמונות</span><span>אודות</span><span>ביקורות</span>
+        </div>
+        <span class="pc-servlabel">השירותים שלנו<svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></span>
+        <div class="acard srow pc-serv">
+          <span class="sthumb"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span>
+          <span><b>שיזוף</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>45 דקות</small></span>
+          <span class="price-pill">₪120</span>
+          <span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+        </div>
+        <div class="pc-hours">
+          <div class="hcard">
+            <span class="hh">יצירת קשר<i><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg></i></span>
+            <small>30 הכרמל, לב תל־אביב, תל אביב–יפו</small>
+          </div>
+          <div class="hcard">
+            <span class="hh">שעות פעילות<i><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></i></span>
+            <small>ראשון–חמישי<span class="num">10:00–19:00</span></small>
+            <small>יום שישי<span class="num">10:00–15:00</span></small>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -786,77 +1211,132 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 <section class="sec" id="book" style="padding-bottom:0">
   <div class="wrap sec-head" style="margin-bottom:0">
     <h2 class="h-sec">כמה שניות,<br>ויש לך תור.</h2>
-    <p class="lede">מסע הזמנה אחד רציף: גוללים — והתור נסגר.</p>
+    <p class="lede">מסע הזמנה אחד רציף: גוללים — והבקשה נשלחת.</p>
   </div>
   <div class="book-rail" data-step="0">
     <div class="book-sticky">
       <div class="wrap book-grid">
         <ol class="book-steps">
-          <li class="bstep"><b>בוחרים עסק</b><p>לפי קרבה, דירוג או המלצות.</p></li>
-          <li class="bstep"><b>בוחרים שירות</b><p>עם משך ומחיר ברורים מראש.</p></li>
-          <li class="bstep"><b>בוחרים תאריך</b><p>רואים רק ימים עם זמינות אמיתית.</p></li>
-          <li class="bstep"><b>בוחרים שעה</b><p>השעות הפנויות — בלחיצה אחת.</p></li>
-          <li class="bstep"><b>וזהו. התור נקבע</b><p>אישור, תזכורת והוספה ליומן.</p></li>
+          <li class="bstep"><b>בוחרים עסק</b><p>מהעסקים שלך, או מגלים חדשים.</p></li>
+          <li class="bstep"><b>בוחרים שירות</b><p>משך ומחיר ברורים מראש.</p></li>
+          <li class="bstep"><b>בוחרים תאריך</b><p>רואים זמינות אמיתית בלוח.</p></li>
+          <li class="bstep"><b>בוחרים שעה</b><p>פנוי, תפוס — או רשימת המתנה.</p></li>
+          <li class="bstep"><b>שולחים. העסק מאשר</b><p>ומתעדכנים ברגע שהתור אושר.</p></li>
         </ol>
         <div>
         <div class="book-phone-wrap">
           <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="phone phone--book" role="img" aria-label="תהליך קביעת תור באפליקציה">
+          <div class="phone phone--book" role="img" aria-label="תהליך קביעת תור באפליקציית PING">
             <div class="scr-area">
               <div class="island"></div>
-              <div class="statusbar"><span class="num">9:41</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
+              <div class="statusbar"><span class="num">10:04</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
 
+              <!-- step 1: business -->
               <div class="scr" data-s="0">
-                <div class="scr-head">בוחרים עסק</div>
-                <div class="scr-sub">קרוב אליך עכשיו</div>
+                <div class="ap-head"><span class="ap-ic"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></span><h4>העסקים שלך</h4></div>
                 <div class="pick-list">
-                  <div class="pick sel"><span class="pava t1">ג</span><span><b>סטודיו גלי</b><small>שיער · 4.9 ★ · 350 מ׳</small></span><span class="pchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></div>
-                  <div class="pick"><span class="pava t3">ל</span><span><b>לאק בר</b><small>ציפורניים · 4.8 ★</small></span><span class="pchk"></span></div>
-                  <div class="pick"><span class="pava t2">ה</span><span><b>מספרת העיר</b><small>ברברים · 4.7 ★</small></span><span class="pchk"></span></div>
-                </div>
-              </div>
-
-              <div class="scr" data-s="1">
-                <div class="scr-head">בוחרים שירות</div>
-                <div class="scr-sub">סטודיו גלי</div>
-                <div class="pick-list">
-                  <div class="pick sel"><span><b>תספורת + פן</b><small>45 דק׳ · ₪120</small></span><span class="pchk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span></div>
-                  <div class="pick"><span><b>צבע שורש</b><small>90 דק׳ · ₪240</small></span><span class="pchk"></span></div>
-                  <div class="pick"><span><b>טיפול קרטין</b><small>120 דק׳ · ₪450</small></span><span class="pchk"></span></div>
-                </div>
-              </div>
-
-              <div class="scr" data-s="2">
-                <div class="scr-head">בוחרים תאריך</div>
-                <div class="cal">
-                  <div class="cal-top">נובמבר 2026<span>תספורת + פן</span></div>
-                  <div class="cal-grid num">
-                    <span class="dow">א</span><span class="dow">ב</span><span class="dow">ג</span><span class="dow">ד</span><span class="dow">ה</span><span class="dow">ו</span><span class="dow">ש</span>
-                    <span class="d off">1</span><span class="d off">2</span><span class="d off">3</span><span class="d off">4</span><span class="d off">5</span><span class="d off">6</span><span class="d off">7</span>
-                    <span class="d off">8</span><span class="d dot">9</span><span class="d">10</span><span class="d">11</span><span class="d sel">12</span><span class="d">13</span><span class="d off">14</span>
-                    <span class="d">15</span><span class="d">16</span><span class="d dot">17</span><span class="d">18</span><span class="d">19</span><span class="d">20</span><span class="d off">21</span>
-                    <span class="d">22</span><span class="d">23</span><span class="d">24</span><span class="d dot">25</span><span class="d">26</span><span class="d">27</span><span class="d off">28</span>
-                    <span class="d">29</span><span class="d">30</span>
+                  <div class="bizcard">
+                    <div class="bz-media" style="height:22cqi">
+                      <span class="brandmark">
+                        <svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2M3.5 11H1M23 11h-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+                        <b>TOMER SUN</b><small>TANNING STUDIO</small>
+                      </span>
+                    </div>
+                    <div class="bz-body">
+                      <span><b>Tomer Sun</b>
+                        <span class="bz-meta"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>כושר ואימונים · תל אביב</span>
+                      </span>
+                      <span class="bz-cta"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>הזמן תור</span>
+                    </div>
+                  </div>
+                  <div class="acard srow">
+                    <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-store"/></svg></span>
+                    <span><b>לאק בר</b><small>ציפורניים · דיזנגוף</small></span>
+                    <span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
                   </div>
                 </div>
               </div>
 
-              <div class="scr" data-s="3">
-                <div class="scr-head">בוחרים שעה</div>
-                <div class="scr-sub">יום ה׳, 12 בנובמבר</div>
-                <div class="slots num">
-                  <span class="slot">09:30</span><span class="slot">10:15</span><span class="slot dis">11:00</span>
-                  <span class="slot">12:30</span><span class="slot sel">14:30</span><span class="slot">16:00</span>
-                  <span class="slot">17:45</span><span class="slot dis">19:00</span><span class="slot">19:45</span>
+              <!-- step 2: service -->
+              <div class="scr" data-s="1">
+                <div class="ap-head"><span class="ap-ic"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></span><h4>בוחרים שירות</h4></div>
+                <div class="scr-sub" style="text-align:center">Tomer Sun · השירותים שלנו</div>
+                <div class="pick-list">
+                  <div class="acard srow sel">
+                    <span class="sthumb"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span>
+                    <span><b>שיזוף</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>45 דקות</small></span>
+                    <span class="price-pill">₪120</span>
+                  </div>
+                  <div class="acard srow">
+                    <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+                    <span><b>שיזוף אקספרס</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>20 דקות</small></span>
+                    <span class="price-pill">₪80</span>
+                  </div>
+                  <div class="acard srow">
+                    <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></span>
+                    <span><b>חבילת 5 מפגשים</b><small><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>45 דקות למפגש</small></span>
+                    <span class="price-pill">₪550</span>
+                  </div>
                 </div>
               </div>
 
+              <!-- step 3: date -->
+              <div class="scr" data-s="2">
+                <div class="ap-head"><span class="ap-ic"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></span><h4>בחירת מועד</h4></div>
+                <div class="cal">
+                  <div class="acard srow" style="margin-top:2cqi">
+                    <span class="sthumb mint"><svg viewBox="0 0 24 24"><use href="#i-store"/></svg></span>
+                    <span><b>שיזוף</b><small>45 דקות</small></span>
+                    <span class="price-pill">₪120</span>
+                  </div>
+                  <div class="cal-card">
+                    <div class="cal-top">
+                      <span class="cnav"><svg viewBox="0 0 24 24"><use href="#i-chev"/></svg></span>
+                      <b>נובמבר 2026</b>
+                      <span class="cnav"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-chev"/></svg></span>
+                    </div>
+                    <div class="cal-grid">
+                      <span class="dow">א׳</span><span class="dow">ב׳</span><span class="dow">ג׳</span><span class="dow">ד׳</span><span class="dow">ה׳</span><span class="dow">ו׳</span><span class="dow">ש׳</span>
+                      <span class="d off">1</span><span class="d off">2</span><span class="d off">3</span><span class="d off">4</span><span class="d off">5</span><span class="d off">6</span><span class="d off">7</span>
+                      <span class="d sel">8</span><span class="d">9</span><span class="d">10</span><span class="d">11</span><span class="d">12</span><span class="d">13</span><span class="d off">14</span>
+                      <span class="d">15</span><span class="d">16</span><span class="d">17</span><span class="d">18</span><span class="d">19</span><span class="d">20</span><span class="d off">21</span>
+                      <span class="d">22</span><span class="d off">23</span><span class="d off">24</span><span class="d off">25</span><span class="d off">26</span><span class="d off">27</span><span class="d off">28</span>
+                      <span class="d off">29</span><span class="d off">30</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- step 4: time -->
+              <div class="scr" data-s="3">
+                <div class="ap-head"><span class="ap-ic"><svg viewBox="0 0 24 24" style="transform:scaleX(-1)"><use href="#i-arrl"/></svg></span><h4>בחירת שעה</h4></div>
+                <div class="day-row" style="margin-top:1cqi"><b>יום ראשון, 8 בנובמבר</b><small><span class="num">13</span> מועדים פנויים</small></div>
+                <div class="legend"><span><i></i>פנוי</span><span class="tk"><i></i>תפוס — אפשר להצטרף להמתנה</span></div>
+                <div class="slots">
+                  <span class="slot sel">10:15</span><span class="slot">10:30</span><span class="slot tk">10:45<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span>
+                  <span class="slot tk">11:00<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span><span class="slot tk">11:15<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span><span class="slot">12:00</span>
+                  <span class="slot">12:15</span><span class="slot">12:30</span><span class="slot">12:45</span>
+                  <span class="slot tk">13:00<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span><span class="slot tk">13:15<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span><span class="slot tk">13:30<em><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>רשימת המתנה</em></span>
+                </div>
+                <div class="paybar">
+                  <span class="psum"><b>יום ראשון, 8 בנובמבר</b><small><span class="num">10:15 · ₪120</span></small></span>
+                  <span class="pgo">המשך</span>
+                </div>
+              </div>
+
+              <!-- step 5: pending approval -->
               <div class="scr" data-s="4">
                 <div class="confirm">
-                  <span class="conf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-                  <h4>התור נקבע!</h4>
-                  <div class="conf-card"><b>סטודיו גלי · תספורת + פן</b><small>יום ה׳ 12.11 · 14:30</small></div>
-                  <div class="conf-btns"><span class="cb1">הוספה ליומן</span><span class="cb2">שיתוף</span></div>
+                  <span class="conf-ok"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+                  <h4>התור שלך ממתין לאישור</h4>
+                  <p class="csub">נעדכן אותך ברגע שהעסק יאשר את התור</p>
+                  <div class="conf-card">
+                    <div class="sum-row"><span>טיפול</span><b>שיזוף</b></div>
+                    <div class="sum-row"><span>תאריך</span><b>יום ראשון, 8 בנובמבר</b></div>
+                    <div class="sum-row"><span>שעה</span><b class="num">10:15</b></div>
+                  </div>
+                  <span class="conf-btn">חזרה לדף הבית</span>
+                  <span class="conf-link">לתורים שלי</span>
                 </div>
               </div>
 
@@ -864,8 +1344,8 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
           </div>
         </div>
         <div class="bstep-mobile" aria-live="polite">
-          <b data-bm="0">בוחרים עסק</b>
-          <p data-bm="0">לפי קרבה, דירוג או המלצות.</p>
+          <b>בוחרים עסק</b>
+          <p>מהעסקים שלך, או מגלים חדשים.</p>
         </div>
         <div class="book-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         </div>
@@ -875,27 +1355,29 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 </section>
 
 <!-- ================= WAITLIST ================= -->
-<section class="sec sec-ink" id="waitlist">
+<section class="sec sec-tiffany" id="waitlist">
   <div class="wrap wait-grid">
     <div class="wait-copy">
       <h2 class="h-sec">אין מקום?<br>PING מחכה בשבילך.</h2>
-      <p class="lede">נרשמים לשעות שנוחות לכם, וממשיכים בחיים. ברגע שמתפנה מקום — אתם הראשונים לדעת, ותופסים אותו בלחיצה.</p>
-      <a class="btn btn-tiffany" href="#download" style="width:fit-content">מורידים את PING</a>
+      <p class="lede">שעה תפוסה? מצטרפים לרשימת ההמתנה שלה. ברגע שמתפנה מקום — אתם הראשונים לדעת, ותופסים אותו בלחיצה.</p>
+      <a class="btn btn-white" href="#download" style="width:fit-content">מורידים את PING</a>
     </div>
     <div class="wait-stage">
       <div class="wait-card">
         <header>
-          <span class="wc-ping"><span class="wc-dot"></span></span>
-          <span><b>רשימת המתנה · סטודיו גלי</b><br><small>נעדכן ברגע שמתפנה מקום</small></span>
+          <span class="wc-ping"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+          <span><b>רשימות ההמתנה שלי</b><small>נעדכן ברגע שמתפנה מקום</small></span>
         </header>
-        <div class="wc-hours num">
-          <span>בוקר</span><span class="on">צהריים</span><span class="on">16:00–18:00</span><span>ערב</span>
+        <div class="wc-hours">
+          <span class="on"><b>16:00</b>ממתינים</span>
+          <span><b>16:45</b>רשימת המתנה</span>
+          <span><b>17:30</b>רשימת המתנה</span>
         </div>
       </div>
       <div class="wait-toast">
-        <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 4a6 6 0 0 1 6 6c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10a6 6 0 0 1 6-6zM10 20a2.2 2.2 0 0 0 4 0"/></svg></span>
-        <span><b>התפנה מקום ב־16:00</b><small>היום · סטודיו גלי</small></span>
-        <span class="btn btn-ink">תופסים</span>
+        <span class="fi"><svg viewBox="0 0 24 24"><use href="#i-calok"/></svg></span>
+        <span><b>התפנה מקום ב־<span class="num">16:00</span></b><small>שיזוף · Tomer Sun · היום</small></span>
+        <span class="btn btn-tiffany">תופסים</span>
       </div>
     </div>
   </div>
@@ -910,24 +1392,24 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     </div>
     <div class="appts">
       <article class="appt">
-        <span class="pill pill-ok"><i></i>אושר</span>
-        <header><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>תספורת + פן</small></span></header>
-        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום ה׳ 12.11 · 14:30</div>
+        <span class="pill pill-ok"><i></i>מאושר</span>
+        <header><span class="ap-med gw"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span><span><b>Tomer Sun</b><small>שיזוף · 45 דק׳</small></span></header>
+        <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום א׳ <span class="num">8.11 · 10:15</span></div>
       </article>
       <article class="appt">
         <span class="pill pill-pend"><i></i>ממתין לאישור</span>
-        <header><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>לק ג׳ל</small></span></header>
-        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום א׳ 15.11 · 11:00</div>
+        <header><span class="ap-med g3"><b style="font-weight:900;font-size:18px">ל</b></span><span><b>לאק בר</b><small>לק ג׳ל</small></span></header>
+        <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום א׳ <span class="num">15.11 · 11:00</span></div>
       </article>
       <article class="appt">
         <span class="pill pill-wait"><i></i>רשימת המתנה</span>
-        <header><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>אימון אישי</small></span></header>
-        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2" stroke-linecap="round"/></svg>16:00–18:00 · השבוע</div>
+        <header><span class="ap-med g4"><b style="font-weight:900;font-size:18px">פ</b></span><span><b>פיט האוס</b><small>אימון אישי</small></span></header>
+        <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg><span class="num">16:00–18:00</span> · השבוע</div>
       </article>
       <article class="appt">
         <span class="pill pill-no"><i></i>נדחה</span>
-        <header><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>תספורת גבר</small></span></header>
-        <div class="ap-when num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>יום ו׳ 13.11 · 09:00</div>
+        <header><span class="ap-med g2"><b style="font-weight:900;font-size:18px">ה</b></span><span><b>מספרת העיר</b><small>תספורת גבר</small></span></header>
+        <div class="ap-when"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום ו׳ <span class="num">13.11 · 09:00</span></div>
       </article>
     </div>
   </div>
@@ -941,21 +1423,21 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
       <p class="lede">אישורים, תזכורות ומקומות שמתפנים — בדיוק ברגע הנכון, בלי רעש מיותר.</p>
     </div>
     <div class="notifs">
-      <div class="notif">
-        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
-        <span class="notif-body"><span class="notif-top"><b>התור אושר ✓</b><small>עכשיו</small></span><p>סטודיו גלי אישרו את התור — יום ה׳ 12.11 בשעה 14:30.</p></span>
+      <div class="notif hl">
+        <span class="ni"><svg viewBox="0 0 24 24"><use href="#i-calok"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>התור אושר</b><small><i></i><span class="num">10:03</span></small></span><p>Tomer Sun · שיזוף · <span class="num">08/11 17:00</span></p></span>
       </div>
       <div class="notif">
-        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
-        <span class="notif-body"><span class="notif-top"><b>התפנה מקום!</b><small>לפני 2 דק׳</small></span><p>מקום התפנה היום ב־16:00. פותחים ותופסים לפני כולם.</p></span>
+        <span class="ni"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>התפנה מקום!</b><small>לפני 2 דק׳</small></span><p>מקום התפנה היום ב־<span class="num">16:00</span>. פותחים ותופסים לפני כולם.</p></span>
       </div>
       <div class="notif">
-        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
-        <span class="notif-body"><span class="notif-top"><b>תזכורת לתור</b><small>לפני שעה</small></span><p>התור שלך בלאק בר מחר ב־11:00. נתראה שם 💅</p></span>
+        <span class="ni"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>תזכורת לתור</b><small>לפני שעה</small></span><p>שיזוף ב־Tomer Sun מחר ב־<span class="num">10:15</span>. נתראה שם.</p></span>
       </div>
       <div class="notif">
-        <span class="ni"><svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#81D8D0" stroke-width="2.6" stroke-linecap="round"/></svg></span>
-        <span class="notif-body"><span class="notif-top"><b>עדכון מהעסק</b><small>אתמול</small></span><p>פיט האוס פתחו שעות חדשות בימי שישי בבוקר.</p></span>
+        <span class="ni"><svg viewBox="0 0 24 24"><use href="#i-msg"/></svg></span>
+        <span class="notif-body"><span class="notif-top"><b>עדכון מהעסק</b><small>אתמול</small></span><p>Tomer Sun פתחו שעות חדשות בימי שישי בבוקר.</p></span>
       </div>
     </div>
   </div>
@@ -968,37 +1450,50 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
       <h2 class="h-sec">יש לכם עסק?<br>PING עובד גם בשבילכם.</h2>
       <p class="lede">יומן מלא, פחות טלפונים, ולקוחות שמגיעים בזמן.</p>
       <div class="biz-feats">
-        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg></i><span><b>יומן וזמינות בשליטה מלאה</b><small>פותחים, חוסמים ומזיזים שעות בקלות.</small></span></div>
-        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></i><span><b>אישור תורים בקליק</b><small>מאשרים, דוחים או מציעים זמן אחר.</small></span></div>
-        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1.2-3.4 4-4.8 6.5-4.8s5.3 1.4 6.5 4.8M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 15.4c1.6.7 2.6 2 3 4.6" stroke-linecap="round"/></svg></i><span><b>לקוחות ותזכורות אוטומטיות</b><small>פחות הברזות, פחות הודעות ידניות.</small></span></div>
-        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></i><span><b>רשימות המתנה שממלאות את היומן</b><small>בוטל תור? השעה מוצעת אוטומטית לממתינים.</small></span></div>
-        <div class="bf"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M10 9l5 2.5L10 14z" fill="currentColor" stroke="none"/></svg></i><span><b>פרופיל עסקי שמוכר בשבילכם</b><small>גלריה, שירותים וביקורות — הכרטיס ביקור החדש שלכם.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></i><span><b>יומן וזמינות בשליטה מלאה</b><small>פותחים, חוסמים ומזיזים שעות בקלות.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i><span><b>אישור תורים בקליק</b><small>מאשרים, דוחים או מציעים זמן אחר.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24"><use href="#i-uplus"/></svg></i><span><b>לקוחות ותזכורות אוטומטיות</b><small>פחות הברזות, פחות הודעות ידניות.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg></i><span><b>רשימות המתנה שממלאות את היומן</b><small>בוטל תור? השעה מוצעת אוטומטית לממתינים.</small></span></div>
+        <div class="bf"><i><svg viewBox="0 0 24 24"><use href="#i-store"/></svg></i><span><b>פרופיל עסקי שמוכר בשבילכם</b><small>גלריה, שירותים וביקורות — כרטיס הביקור החדש שלכם.</small></span></div>
       </div>
       <div class="biz-ctas">
         <a class="btn btn-ink" href="#contact">מצטרפים כעסק</a>
         <a class="btn-link" href="#faq">איך זה עובד לעסקים?</a>
       </div>
     </div>
-    <div class="dash" role="img" aria-label="מסך ניהול העסק ב-PING">
+
+    <div class="dash" role="img" aria-label="מסך ניהול העסק באפליקציית PING">
       <div class="dash-top">
-        <span class="pc-ava">ג</span>
-        <span><b>סטודיו גלי</b><small>יום ה׳, 12 בנובמבר</small></span>
-        <span class="pill pill-ok"><i></i>פתוח</span>
+        <span class="dash-ava"><svg viewBox="0 0 24 18"><path d="M3 15a9 9 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 4V1M6 6L4 4M18 6l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></span>
+        <span><b>בוקר טוב, אור! ☀️</b><small>Tomer Sun</small></span>
+        <span class="dash-bell"><svg viewBox="0 0 24 24"><use href="#i-bell"/></svg></span>
       </div>
-      <div class="dash-stats">
-        <div class="ds"><b class="num">12</b><small>תורים היום</small></div>
-        <div class="ds"><b class="num">3</b><small>ממתינים לאישור</small></div>
-        <div class="ds"><b class="num">5</b><small>ברשימת המתנה</small></div>
+      <div class="dash-banner">
+        <span class="bi"><svg viewBox="0 0 24 24"><use href="#i-calok"/></svg></span>
+        <span><b>ממתין לך</b><small>תור אחד ממתין לאישור</small></span>
+        <span class="bdg">1</span>
       </div>
+      <div class="dash-today">
+        <div class="dt-head"><span class="dt-datechip"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg>יום ראשון, 8 בנובמבר</span></div>
+        <div class="dt-mid">
+          <span class="dt-count">
+            <span class="ci"><svg viewBox="0 0 24 24"><use href="#i-cal"/></svg></span>
+            <span><small>תורים היום</small><b class="num">5</b></span>
+          </span>
+          <span class="donut"><span><b>42%</b><small>תפוסה</small></span></span>
+        </div>
+        <div class="dt-next"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>הבא בתור: <span class="num">10:15</span> · Tomer Mazuz · שיזוף</div>
+        <div class="dash-stats">
+          <div class="ds"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg><b>1</b><small>ממתינים לאישור</small></div>
+          <div class="ds"><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg><b>0</b><small>ברשימת המתנה</small></div>
+          <div class="ds"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg><b>₪600</b><small>הכנסה צפויה</small></div>
+        </div>
+      </div>
+      <div class="dash-new"><span class="plus"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></span>תור חדש<span class="arr"><svg viewBox="0 0 24 24"><use href="#i-arrl"/></svg></span></div>
       <div class="dash-sched">
-        <div class="dr"><time>09:00</time><i style="background:var(--tiffany)"></i><b>מאיה לוי</b><small>צבע שורש</small></div>
-        <div class="dr"><time>11:00</time><i style="background:var(--tiffany-deep)"></i><b>דנה אשכנזי</b><small>תספורת + פן</small></div>
-        <div class="dr"><time>14:30</time><i style="background:var(--tiffany)"></i><b>נועה כהן</b><small>תספורת + פן</small></div>
-        <div class="dr"><time>16:00</time><i style="background:var(--pend)"></i><b>שעה פנויה</b><small>הוצעה ל־5 ממתינים</small></div>
-      </div>
-      <div class="dash-req">
-        <span><b>בקשה חדשה: רוני פרץ</b><small>פן · יום א׳ 15.11 · 10:00</small></span>
-        <span class="dr-btns"><span class="dr-ok">אישור</span><span class="dr-no">דחייה</span></span>
+        <div class="shead">היומן של היום<a>לכל היומן</a></div>
+        <div class="dr pend"><span class="pill pill-pend"><i></i>ממתין</span><span><b>Tomer Mazuz</b> <small>· שיזוף</small></span><time>10:15</time></div>
+        <div class="dr ok"><span class="pill pill-ok"><i></i>מאושר</span><span><b>Tomer Mazuz</b> <small>· שיזוף · 45 דק׳</small></span><time>11:15</time></div>
       </div>
     </div>
   </div>
@@ -1008,36 +1503,36 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 <section class="sec" id="community" style="padding-block:clamp(50px,7vw,90px)">
   <div class="wrap sec-head">
     <h2 class="h-sec">עסקים שכבר חיים על PING.</h2>
-    <span class="demo-tag">שמות וקטגוריות להמחשה — יוחלפו בעסקים אמיתיים</span>
+    <span class="demo-tag">חלק מהשמות להמחשה — יוחלפו בעסקים אמיתיים</span>
   </div>
   <div class="gal">
     <div class="gal-track">
-      <span class="gt"><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>שיער</small></span></span>
-      <span class="gt"><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-ava g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
-      <span class="gt"><span class="ap-ava g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
-      <span class="gt"><span class="ap-ava g1">ג</span><span><b>סטודיו גלי</b><small>שיער</small></span></span>
-      <span class="gt"><span class="ap-ava g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-ava g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-ava g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-ava g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
-      <span class="gt"><span class="ap-ava g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+      <span class="gt"><span class="ap-med gw" style="font-size:13px">☀</span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
+      <span class="gt"><span class="ap-med g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-med g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
+      <span class="gt"><span class="ap-med gw" style="font-size:13px">☀</span><span><b>Tomer Sun</b><small>כושר ואימונים</small></span></span>
+      <span class="gt"><span class="ap-med g3">ל</span><span><b>לאק בר</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med g2">ה</span><span><b>מספרת העיר</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med g4">פ</span><span><b>פיט האוס</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med g5">ג</span><span><b>גלואו קליניק</b><small>טיפוח</small></span></span>
+      <span class="gt"><span class="ap-med g6">ס</span><span><b>ספא הנמל</b><small>ספא</small></span></span>
     </div>
     <div class="gal-track rev">
-      <span class="gt"><span class="ap-ava g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-ava g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
-      <span class="gt"><span class="ap-ava g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
-      <span class="gt"><span class="ap-ava g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-ava g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
-      <span class="gt"><span class="ap-ava g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
-      <span class="gt"><span class="ap-ava g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
-      <span class="gt"><span class="ap-ava g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
-      <span class="gt"><span class="ap-ava g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
-      <span class="gt"><span class="ap-ava g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
-      <span class="gt"><span class="ap-ava g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
-      <span class="gt"><span class="ap-ava g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-med g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-med g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-med g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
+      <span class="gt"><span class="ap-med g5">מ</span><span><b>מניקור TLV</b><small>ציפורניים</small></span></span>
+      <span class="gt"><span class="ap-med g6">ב</span><span><b>בלאנס קליניק</b><small>בריאות</small></span></span>
+      <span class="gt"><span class="ap-med g1">ר</span><span><b>ריטריט עיסוי</b><small>עיסוי</small></span></span>
+      <span class="gt"><span class="ap-med g2">ק</span><span><b>קאט האוס</b><small>ברברים</small></span></span>
+      <span class="gt"><span class="ap-med g3">א</span><span><b>אור קוסמטיקה</b><small>קוסמטיקה</small></span></span>
+      <span class="gt"><span class="ap-med g4">ס</span><span><b>סטרונג ג׳ים</b><small>כושר</small></span></span>
     </div>
   </div>
 </section>
@@ -1070,12 +1565,16 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 </section>
 
 <!-- ================= ABOUT ================= -->
-<section class="sec sec-ink" id="about" style="padding-block:clamp(54px,8vw,100px)">
+<section class="sec sec-tiffany about" id="about" style="padding-block:clamp(64px,9vw,120px)">
   <div class="wrap about-in">
-    <span class="logo" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#F6F4EF" stroke-width="2.6" stroke-linecap="round"/></svg>
-      PING
-    </span>
+    <div class="ping-hero" aria-hidden="true">
+      <span class="ping-rings"><i></i><i></i><i></i><i></i></span>
+      <svg class="ping-logo" viewBox="0 0 32 32" fill="none">
+        <circle cx="12" cy="20" r="6" fill="#F6F4EF"/>
+        <path class="pa" d="M18.5 14a9 9 0 0 0-2.8-6.4" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/>
+        <path class="pa pa2" d="M23.5 12.5A14.5 14.5 0 0 0 19 2.4" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/>
+      </svg>
+    </div>
     <p>נמאס לנו לרדוף אחרי תורים. אז בנינו את PING — דרך אחת פשוטה למצוא, לקבוע ולנהל כל תור. ללקוחות, ולעסקים שהם אוהבים.</p>
   </div>
 </section>
@@ -1088,23 +1587,23 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     </div>
     <div class="faq-wrap">
       <details class="faq">
-        <summary>איך קובעים תור?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
-        <p class="faq-a">בוחרים עסק, שירות, תאריך ושעה — והתור שלכם. אם העסק מאשר תורים ידנית, תקבלו עדכון ברגע שהוא אושר.</p>
+        <summary>איך קובעים תור?<span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chevd"/></svg></span></summary>
+        <p class="faq-a">בוחרים עסק, שירות, תאריך ושעה — והבקשה נשלחת לעסק. ברגע שהעסק מאשר, תקבלו עדכון והתור שלכם.</p>
       </details>
       <details class="faq">
-        <summary>מה קורה אם אין שעה פנויה?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
-        <p class="faq-a">נרשמים לרשימת ההמתנה ובוחרים את השעות שנוחות לכם. ברגע שמתפנה מקום, תקבלו התראה ותוכלו לתפוס אותו בלחיצה.</p>
+        <summary>מה קורה אם אין שעה פנויה?<span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chevd"/></svg></span></summary>
+        <p class="faq-a">לוחצים על השעה התפוסה ומצטרפים לרשימת ההמתנה שלה. ברגע שמתפנה מקום, תקבלו התראה ונשמור לכם אותו לזמן קצר.</p>
       </details>
       <details class="faq">
-        <summary>אפשר לבטל או לשנות תור?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <summary>אפשר לבטל או לשנות תור?<span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chevd"/></svg></span></summary>
         <p class="faq-a">כן. מבטלים או מזיזים את התור ישירות מהאפליקציה, בהתאם למדיניות של כל עסק. העסק מתעדכן אוטומטית.</p>
       </details>
       <details class="faq">
-        <summary>איך מצטרפים כעסק?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <summary>איך מצטרפים כעסק?<span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chevd"/></svg></span></summary>
         <p class="faq-a">לוחצים על ״מצטרפים כעסק״, ממלאים כמה פרטים — ואנחנו מלווים אתכם בהקמת הפרופיל והיומן.</p>
       </details>
       <details class="faq">
-        <summary>האם PING עולה כסף ללקוחות?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></span></summary>
+        <summary>האם PING עולה כסף ללקוחות?<span class="chev"><svg viewBox="0 0 24 24"><use href="#i-chevd"/></svg></span></summary>
         <p class="faq-a">לא. ההורדה והשימוש חינם לגמרי ללקוחות.</p>
       </details>
     </div>
@@ -1132,12 +1631,17 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
       <div class="phone" role="img" aria-label="אישור תור באפליקציית PING">
         <div class="scr-area">
           <div class="island"></div>
-          <div class="statusbar"><span class="num">9:41</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
-          <div class="confirm" style="padding-top:14cqi">
-            <span class="conf-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
-            <h4>התור נקבע!</h4>
-            <div class="conf-card"><b>סטודיו גלי · תספורת + פן</b><small>יום ה׳ 12.11 · 14:30</small></div>
-            <div class="conf-btns"><span class="cb1">הוספה ליומן</span><span class="cb2">שיתוף</span></div>
+          <div class="statusbar"><span class="num">10:04</span><span class="sb-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 14h3v6H2zM7.5 11h3v9h-3zM13 7h3v13h-3zM18.5 3h3v17h-3z"/></svg></span></div>
+          <div class="confirm" style="padding-top:13cqi">
+            <span class="conf-ok"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+            <h4>התור אושר!</h4>
+            <p class="csub">נתראה ביום ראשון · Tomer Sun</p>
+            <div class="conf-card">
+              <div class="sum-row"><span>טיפול</span><b>שיזוף</b></div>
+              <div class="sum-row"><span>תאריך</span><b>יום ראשון, 8 בנובמבר</b></div>
+              <div class="sum-row"><span>שעה</span><b class="num">10:15</b></div>
+            </div>
+            <span class="conf-btn">הוספה ליומן</span>
           </div>
         </div>
       </div>
@@ -1151,7 +1655,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     <div class="ft-grid">
       <div class="ft-brand">
         <span class="logo">
-          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#F6F4EF" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#F6F4EF"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/></svg>
           PING
         </span>
         <p>התור הבא שלך. בדיוק כשנוח לך.</p>
@@ -1173,6 +1677,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
         <h4>עסקים</h4>
         <ul>
           <li><a href="#business">הצטרפות כעסק</a></li>
+          <li><a href="#" title="בקרוב">כניסה לעסקים</a></li>
           <li><a href="#how">איך זה עובד</a></li>
           <li><a href="#faq">שאלות נפוצות</a></li>
         </ul>
@@ -1189,7 +1694,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     </div>
     <div class="ft-bottom">
       <span>© 2026 PING. כל הזכויות שמורות.</span>
-      <span>אתר תדמית · שמות העסקים להמחשה</span>
+      <span>אתר תדמית · חלק מהתוכן להמחשה</span>
     </div>
   </div>
 </footer>
@@ -1236,14 +1741,48 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
     });
   }
 
+  /* interactive hero demo */
+  var demo = document.getElementById('demo');
+  if(demo){
+    var dh = ['home'];
+    function showScr(id){
+      demo.querySelectorAll('.dscr').forEach(function(s){ s.classList.toggle('is-on', s.dataset.screen === id); });
+      demo.querySelectorAll('[data-tab]').forEach(function(t){ t.classList.toggle('on', t.dataset.tab === id); });
+    }
+    demo.addEventListener('click', function(e){
+      var like = e.target.closest('[data-like]');
+      if(like){ like.classList.toggle('liked'); return; }
+      var slot = e.target.closest('.slot[data-slot]');
+      if(slot && !slot.classList.contains('tk')){
+        slot.parentElement.querySelectorAll('.slot').forEach(function(x){ x.classList.remove('sel'); });
+        slot.classList.add('sel');
+        var t = slot.getAttribute('data-slot');
+        demo.querySelectorAll('[data-time-sum]').forEach(function(x){ x.textContent = t; });
+        return;
+      }
+      var day = e.target.closest('.d[data-day]');
+      if(day && !day.classList.contains('off')){
+        day.parentElement.querySelectorAll('.d').forEach(function(x){ x.classList.remove('sel'); });
+        day.classList.add('sel');
+        return;
+      }
+      var go = e.target.closest('[data-go]');
+      if(!go) return;
+      var id = go.getAttribute('data-go');
+      if(id === 'back'){ dh.pop(); id = dh[dh.length-1] || 'home'; }
+      else { if(dh[dh.length-1] !== id) dh.push(id); }
+      showScr(id);
+    });
+  }
+
   /* booking journey — scroll-driven steps */
   var rail = document.querySelector('.book-rail');
   var steps = [
-    ['בוחרים עסק','לפי קרבה, דירוג או המלצות.'],
-    ['בוחרים שירות','עם משך ומחיר ברורים מראש.'],
-    ['בוחרים תאריך','רואים רק ימים עם זמינות אמיתית.'],
-    ['בוחרים שעה','השעות הפנויות — בלחיצה אחת.'],
-    ['וזהו. התור נקבע','אישור, תזכורת והוספה ליומן.']
+    ['בוחרים עסק','מהעסקים שלך, או מגלים חדשים.'],
+    ['בוחרים שירות','משך ומחיר ברורים מראש.'],
+    ['בוחרים תאריך','רואים זמינות אמיתית בלוח.'],
+    ['בוחרים שעה','פנוי, תפוס — או רשימת המתנה.'],
+    ['שולחים. העסק מאשר','ומתעדכנים ברגע שהתור אושר.']
   ];
   var bmB = document.querySelector('.bstep-mobile b');
   var bmP = document.querySelector('.bstep-mobile p');
