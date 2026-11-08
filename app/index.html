@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/ping-website/app/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Ping — find professionals near you. Search stylists, artists, therapists and more in your area.">
+  <meta name="theme-color" content="#66DFC0">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Ping">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png?v=3">
+
+  <!-- Open Graph / social link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ping">
+  <meta property="og:title" content="Ping">
+  <meta property="og:description" content="Find professionals near you. Search stylists, artists, therapists and more in your area.">
+  <meta property="og:url" content="https://app.pingitnow.co/">
+  <meta property="og:image" content="https://app.pingitnow.co/icons/Icon-512.png?v=3">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Ping">
+  <meta name="twitter:description" content="Find professionals near you. Search stylists, artists, therapists and more in your area.">
+  <meta name="twitter:image" content="https://app.pingitnow.co/icons/Icon-512.png?v=3">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png?v=3"/>
+
+  <title>Ping</title>
+  <link rel="manifest" href="manifest.json">
+  <!--
+    Must load synchronously, before flutter_bootstrap.js: the browser fires
+    `beforeinstallprompt` early and discards it if nothing claims it, which is
+    what makes the install banner show up only by luck.
+  -->
+  <script src="pwa_install.js?v=4"></script>
+  <script src="https://unpkg.com/@descope/web-component@3.70.3/dist/index.js"></script>
+</head>
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
