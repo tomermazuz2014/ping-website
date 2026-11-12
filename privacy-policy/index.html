@@ -95,7 +95,7 @@
   <main>
     <article>
       <h1>מדיניות פרטיות</h1>
-      <p>עדכון אחרון: 08.11.2026</p>
+      <p>עדכון אחרון: 12.11.2026</p>
       <p class="lang-note" dir="ltr" style="text-align:left"><a href="#en">English version below</a> &middot; <span dir="rtl">גרסה באנגלית בהמשך העמוד</span></p>
       <p>מדיניות פרטיות זו מתארת כיצד פינג ניהול דיגיטלי בע&quot;מ (Ping digital management LTD</p>
       <p>, ח.פ 517290961 – להלן &quot;פינג&quot; או &quot;אנחנו&quot;) נוהגת במידע אישי (&quot;המידע&quot;) הנאסף במסגרת השירותים הדיגיטליים שלה (&quot;השירותים&quot;), ובפרט מערכת Ping לניהול יומן, קביעת תורים וניהול לקוחות.</p>
@@ -111,7 +111,7 @@
       <h3>א. מידע על מבקרים (גם כאלה שלא נרשמו)</h3>
       <ul>
         <li>נתוני גלישה מהדפדפן (Cookies, IP, מזהה מכשיר, סוג דפדפן, אזור זמן, העדפות שפה).</li>
-        <li>מעקב על ביצוע פעולות שונות באתר וקישור למבקר במערכת, נתוני שגיאות ותקלות הנאספים אוטומטי (Log data), פרטי אימות זהות באמצעות SMS או חשבון Google (מעובד דרך Descope).</li>
+        <li>מעקב על ביצוע פעולות שונות באתר וקישור למבקר במערכת, נתוני שגיאות ותקלות הנאספים אוטומטי (Log data), פרטי אימות זהות באמצעות אימייל וסיסמה, חשבון Google או חשבון Apple (מעובד דרך Supabase Auth).</li>
       </ul>
       <h3>ב. מידע על משתמשים/לקוחות קצה של העסקים</h3>
       <ul>
@@ -156,10 +156,10 @@
         <li>ניתוח נתוני שימוש ושיפור חווית המשתמש.</li>
         <li>הצגת פרסום מותאם אישית.</li>
       </ul>
-      <p>בנוסף אנו משתמשים בכלי ניתוח כגון Google Analytics למדידת תנועת גולשים ושיפור חווית השימוש.</p>
+      <p>בנוסף אנו משתמשים בכלי ניתוח (Firebase Analytics) באפליקציות פינג למדידת שימוש ושיפור חווית השימוש, כמפורט בסעיף ספקי השירות. אתר זה אינו מפעיל כלי מעקב או ניתוח.</p>
       <h2>6. תקשורת ודיוור</h2>
       <ul>
-        <li>הודעות תפעול הודעות תפעול (תורים, תזכורות, סיסמאות וכו&#x27;) נשלחות כחלק אינטגרלי מהשירות באמצעות SMS והתראות Push.</li>
+        <li>הודעות תפעול הודעות תפעול (תורים, תזכורות, סיסמאות וכו&#x27;) נשלחות כחלק אינטגרלי מהשירות באמצעות התראות Push ודואר אלקטרוני. הזמנות שעסק שולח ללקוחותיו עשויות להישלח גם ב-SMS.</li>
         <li>דיוור שיווקי נשלח רק לאחר קבלת הסכמה. ניתן להסיר בכל עת בלחיצה על קישור הסרה או בפנייה דרך האתר.</li>
         <li>פינג לא מעבירה פרטי קשר לגורמים חיצוניים לצורכי פרסום ללא הסכמה מפורשת.</li>
         <li>פינג עשויה לפנות אליך לעדכונים חשובים, הודעות מערכת, ושינויים במדיניות.</li>
@@ -185,12 +185,14 @@
       <h2>8א. שירותי צד שלישי וטכנולוגיות באפליקציות</h2>
       <p>אפליקציות פינג (פינג ללקוחות ופינג לעסקים) ו"פינג בדפדפן" משתמשות בשירותים הבאים:</p>
       <ul>
-        <li><strong>Supabase:</strong> אחסון מסד הנתונים, אימות משתמשים (אימייל וסיסמה, Google, Apple, ואימות באמצעות SMS), אחסון קבצים (כגון תמונות עסק) והרצת פונקציות שרת. כל נתוני החשבון, התורים, ההודעות והביקורות נשמרים אצלו.</li>
+        <li><strong>Supabase:</strong> אחסון מסד הנתונים, אימות משתמשים (אימייל וסיסמה, Google ו-Apple; קודי אימות נשלחים לאימייל), אחסון קבצים (כגון תמונות עסק) והרצת פונקציות שרת. כל נתוני החשבון, התורים, ההודעות והביקורות נשמרים אצלו.</li>
         <li><strong>Firebase Cloud Messaging (Google):</strong> שליחת התראות Push. נשמר מזהה מכשיר (טוקן) המשויך לחשבון, וניתן להסירו במחיקת החשבון.</li>
         <li><strong>Firebase Analytics (Google):</strong> מדידת שימוש. נאספים מסכים שנצפו ופעולות באפליקציה (למשל בחירת קטגוריה, הצגת עסק, התחלת הזמנה והשלמתה), גרסת האפליקציה, מערכת ההפעלה והשפה, ומזהה החשבון בפינג המשמש כמזהה משתמש באנליטיקה. פינג אינה שולחת לאנליטיקה את שמך, הטלפון או האימייל שלך, ואינה שולחת מיקום מדויק. נתוני האנליטיקה אינם נמחקים אוטומטית עם מחיקת החשבון (ראו להלן).</li>
-        <li><strong>שליחת SMS:</strong> קודי אימות והודעות תפעוליות נשלחים דרך ספק SMS חיצוני, ולצורך זה מועבר אליו מספר הטלפון והתוכן.</li>
+        <li><strong>שליחת SMS:</strong> הזמנות שעסק שולח ללקוחותיו עשויות להישלח דרך ספק SMS חיצוני (TextMe), ולצורך זה מועברים אליו מספר הטלפון ותוכן ההודעה. מספר הטלפון אינו משמש להתחברות.</li>
         <li><strong>Google ו־Apple:</strong> התחברות באמצעות חשבון Google או Apple, לפי בחירתך. פינג מקבלת את הפרטים הנדרשים לזיהוי החשבון (כגון אימייל ושם).</li>
         <li><strong>חיפוש כתובות (Photon):</strong> באפליקציית העסקים, טקסט הכתובת שמוקלד בחיפוש נשלח לשירות חיפוש כתובות חיצוני (photon.komoot.io).</li>
+        <li><strong>חיפוש מיקום (OpenStreetMap Nominatim):</strong> באפליקציית הלקוחות, טקסט החיפוש של מיקום נשלח לשירות חיפוש מיקומים חיצוני (nominatim.openstreetmap.org).</li>
+        <li><strong>דף הזמנה (Vercel):</strong> קישורי הזמנה לעסק נפתחים בדף אינטרנט המאוחסן ב-Vercel. הדף מציג רק את שם העסק, העיר והקטגוריה, ואינו מציג או שומר פרטים אישיים של המוזמן.</li>
         <li><strong>מיקום:</strong> באפליקציית הלקוחות, אם אישרת הרשאת מיקום, המיקום משמש לחישוב מרחק מעסקים. ההרשאה רשות וניתן לבטלה בהגדרות המכשיר.</li>
         <li><strong>אנשי קשר:</strong> באפליקציית העסקים, אם בחרת לייבא לקוחות מאנשי הקשר, אנשי הקשר שבחרת נוספים לרשימת הלקוחות של העסק. ההרשאה רשות.</li>
       </ul>
@@ -229,7 +231,7 @@
 
       <section id="en" lang="en">
       <h1>Privacy Policy</h1>
-      <p>Last updated: 08.11.2026</p>
+      <p>Last updated: 12.11.2026</p>
       <p><em>The Hebrew version above is the binding original. This English translation is provided for convenience; in the event of any discrepancy, the Hebrew version prevails.</em></p>
       <p>This Privacy Policy describes how Ping Digital Management Ltd. (company no. 517290961 &mdash; "Ping" or "we") handles personal information ("the Information") collected through its digital services ("the Services"), and in particular the Ping system for calendar management, appointment booking and client management.</p>
       <p>This policy applies to the following people ("data subjects"):</p>
@@ -244,7 +246,7 @@
       <h3>a. Information about visitors (including those who have not registered)</h3>
       <ul>
         <li>Browsing data from the browser (cookies, IP, device identifier, browser type, time zone, language preferences).</li>
-        <li>Tracking of various actions on the site and their association with the visitor in the system, error and fault data collected automatically (log data), and identity verification details via SMS or a Google account (processed through Descope).</li>
+        <li>Tracking of various actions on the site and their association with the visitor in the system, error and fault data collected automatically (log data), and identity verification details via email and password, a Google account or an Apple account (processed through Supabase Auth).</li>
       </ul>
       <h3>b. Information about users / end clients of the businesses</h3>
       <ul>
@@ -293,11 +295,11 @@
         <li>Analyse usage data and improve the user experience.</li>
         <li>Display personalised advertising.</li>
       </ul>
-      <p>We also use analytics tools such as Google Analytics to measure traffic and improve the user experience.</p>
+      <p>We also use an analytics tool (Firebase Analytics) in the Ping apps to measure usage and improve the user experience, as described in the service providers section. This website does not run tracking or analytics tools.</p>
 
       <h2>6. Communications and mailings</h2>
       <ul>
-        <li>Operational messages (appointments, reminders, passwords, etc.) are sent as an integral part of the Service via SMS and push notifications.</li>
+        <li>Operational messages (appointments, reminders, passwords, etc.) are sent as an integral part of the Service via push notifications and email. Invitations a business sends to its customers may also be sent by SMS.</li>
         <li>Marketing messages are sent only after consent has been obtained. You can unsubscribe at any time by clicking an unsubscribe link or by contacting us through the website.</li>
         <li>Ping does not pass contact details to external parties for advertising purposes without explicit consent.</li>
         <li>Ping may contact you with important updates, system notices and changes to this policy.</li>
@@ -326,12 +328,14 @@
       <h2>8A. Third-party services and technologies in the apps</h2>
       <p>The Ping apps (Ping for customers and Ping for business) and "Ping in the browser" use the following services:</p>
       <ul>
-        <li><strong>Supabase:</strong> database hosting, user authentication (email and password, Google, Apple, and SMS verification), file storage (such as business photos) and server functions. Account data, appointments, messages and reviews are stored there.</li>
+        <li><strong>Supabase:</strong> database hosting, user authentication (email and password, Google and Apple; verification codes are sent by email), file storage (such as business photos) and server functions. Account data, appointments, messages and reviews are stored there.</li>
         <li><strong>Firebase Cloud Messaging (Google):</strong> push notifications. A device token linked to the account is stored and is removed when the account is deleted.</li>
         <li><strong>Firebase Analytics (Google):</strong> usage measurement. Screens viewed and in-app actions (for example selecting a category, viewing a business, starting and completing a booking), the app version, operating system and language, and the Ping account identifier used as the analytics user ID are collected. Ping does not send your name, phone number or email to analytics, and does not send precise location. Analytics data is not automatically deleted when the account is deleted (see below).</li>
-        <li><strong>SMS delivery:</strong> verification codes and operational messages are sent through an external SMS provider, which receives the phone number and message content.</li>
+        <li><strong>SMS delivery:</strong> invitations a business sends to its customers may be sent through an external SMS provider (TextMe), which receives the phone number and message content. The phone number is not used for sign-in.</li>
         <li><strong>Google and Apple:</strong> sign-in with a Google or Apple account, at your choice. Ping receives the details needed to identify the account (such as email and name).</li>
         <li><strong>Address search (Photon):</strong> in the business app, the address text typed in search is sent to an external address search service (photon.komoot.io).</li>
+        <li><strong>Location search (OpenStreetMap Nominatim):</strong> in the customer app, the location search text is sent to an external location search service (nominatim.openstreetmap.org).</li>
+        <li><strong>Invitation page (Vercel):</strong> business invitation links open a web page hosted on Vercel. The page shows only the business name, city and category, and does not show or store the invitee&#x27;s personal details.</li>
         <li><strong>Location:</strong> in the customer app, if you grant location permission, it is used to calculate distance from businesses. The permission is optional and can be revoked in the device settings.</li>
         <li><strong>Contacts:</strong> in the business app, if you choose to import clients from your contacts, the contacts you select are added to the business's client list. The permission is optional.</li>
       </ul>
