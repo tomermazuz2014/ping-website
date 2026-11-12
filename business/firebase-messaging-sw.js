@@ -8,6 +8,15 @@
 // packages/ping_shared/lib/src/core/config/web_firebase_config.dart.
 // A service worker can't read Dart --dart-define values, so it's hardcoded.
 // These are public web identifiers (they ship in the JS bundle anyway).
+// Web push is NOT configured on the new PING backend: the Firebase project
+// this worker used belonged to the previous developer and was removed.
+// The Supabase web path never initializes Firebase, so this worker only keeps
+// the notification-click routing below. To enable web push later, register a
+// Web app in Firebase project pingitnow-staging, put its config here and in
+// WebFirebaseConfig, and the handler below becomes active again.
+const FIREBASE_WEB_CONFIG = null;
+
+if (FIREBASE_WEB_CONFIG) {
 importScripts(
   'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
 );
@@ -15,18 +24,8 @@ importScripts(
   'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js',
 );
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyAtFyQ_6hgNp8QmzYUS3XqIjvf6XawGCbo',
-  authDomain: 'ping-7ca7e.firebaseapp.com',
-  projectId: 'ping-7ca7e',
-  storageBucket: 'ping-7ca7e.firebasestorage.app',
-  messagingSenderId: '551478371510',
-  appId: '1:551478371510:web:ab479cea721faed7a5f217',
-});
+firebase.initializeApp(FIREBASE_WEB_CONFIG);
 
-// Notifications sent by the backend include a `notification` block, so the
-// browser displays them automatically. Registering messaging is enough; the
-// handler below is a safety net for data-only messages.
 const messaging = firebase.messaging();
 
 // Data-only types the backend sends to make the app re-fetch, not to say
@@ -53,6 +52,7 @@ messaging.onBackgroundMessage((message) => {
   };
   self.registration.showNotification(title, options);
 });
+}
 
 // Pull the FCM data payload off a notification whether it was shown by
 // onBackgroundMessage (data set directly) or auto-displayed by the FCM SDK

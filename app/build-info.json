@@ -1,1 +1,1 @@
-{"commit": "e1bfc49a2906b58396a22bf44fa6436876119192", "branch": "feature/private-launch-network", "built_at": "2026-11-08T15:17:40Z", "base_href": "/ping-website/app/", "env": "supabase-staging"}
+{"commit": "791c3089c7800b8053d59e50f411b4c9c3c13cea", "branch": "release/ios-appstore-production", "built_at": "2026-11-12T04:33:44Z", "base_href": "/ping-website/app/", "env": "supabase-production", "supabase_ref": "gxwquzcmxatcjfwddnzv"}
