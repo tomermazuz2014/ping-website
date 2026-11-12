@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.pingitnow.co/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.pingitnow.co/support/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.pingitnow.co/privacy-policy/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.pingitnow.co/delete-account/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <priority>0.4</priority>
+  </url>
+</urlset>
