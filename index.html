@@ -106,6 +106,20 @@ h1,h2,h3{line-height:1.08;font-weight:800;text-wrap:balance}
 .store svg{width:20px;height:20px;flex:none}
 .store.live{background:var(--white);border:1.5px solid rgba(23,101,94,.4);box-shadow:0 10px 24px -14px rgba(14,26,26,.3)}
 .store.live small{display:flex;align-items:center;gap:5px;opacity:1;color:var(--tiffany-deep);font-weight:700}
+/* App Store: the primary, live download */
+.store.appstore,.final .store.appstore,.ft .store.appstore{background:linear-gradient(135deg,#1b2c2c,var(--ink));color:var(--white);
+  border:1px solid rgba(255,255,255,.08);box-shadow:0 16px 30px -16px rgba(14,26,26,.7),inset 0 1px 0 rgba(255,255,255,.12)}
+.store.appstore small{opacity:.74}
+.store.appstore svg{color:var(--tiffany)}
+/* not available yet */
+.store.soon,.final .store.soon,.ft .store.soon{background:transparent;border:1.5px dashed rgba(14,26,26,.24);box-shadow:none;
+  color:rgba(14,26,26,.58);cursor:default}
+.store.soon:hover{transform:none}
+/* launch note above the download buttons */
+.dl{display:grid;gap:11px;justify-items:start}
+.dl-note{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--tiffany-deep);background:rgba(255,255,255,.62);border:1px solid rgba(23,101,94,.18);
+  border-radius:999px;padding:6px 13px 6px 12px;line-height:1}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(31,158,126,.5);animation:livep 2s infinite;flex:none}
 @keyframes livep{70%{box-shadow:0 0 0 7px rgba(31,158,126,0)}100%{box-shadow:0 0 0 0 rgba(31,158,126,0)}}
 
@@ -807,6 +821,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   .wait-toast .btn{margin-inline-start:0}
   .final-phone .phone{--pw:min(58vw,230px)}
   .stores{justify-content:center}
+  .dl{justify-items:center}
   .donut{width:74px;height:74px}
 }
 
@@ -1091,7 +1106,7 @@ body:not(.mode-b) .b-only{display:none!important}
     <div class="mode-sw" role="group" aria-label="גרסת האתר"><button type="button" data-mode="c" aria-pressed="true">לקוחות</button><button type="button" data-mode="b" aria-pressed="false">עסקים</button></div>
     <a class="btn btn-ghost hd-login c-only" href="https://app2.pingitnow.co/" target="_blank" rel="noopener">התחברות</a>
     <a class="btn btn-ghost hd-login b-only" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">כניסה לעסקים</a>
-    <a class="btn btn-tiffany hd-cta c-only" href="#download">מורידים את PING</a>
+    <a class="btn btn-tiffany hd-cta c-only" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" data-dl>מורידים את PING</a>
     <a class="btn btn-tiffany hd-cta b-only" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">מצטרפים כעסק</a>
     <a class="logo" href="#top" aria-label="PING — לראש העמוד">
       <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -1112,7 +1127,7 @@ body:not(.mode-b) .b-only{display:none!important}
   <a class="c-only" href="#about">עלינו</a>
   <a class="c-only" href="#faq">שאלות נפוצות</a>
   <a class="c-only" href="https://app2.pingitnow.co/" target="_blank" rel="noopener">התחברות</a>
-  <a class="btn btn-tiffany c-only" href="#download">מורידים את PING</a>
+  <a class="btn btn-tiffany c-only" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" data-dl>מורידים את PING</a>
   <a class="b-only" href="#b-calendar">יומן ותורים</a>
   <a class="b-only" href="#b-clients">לקוחות</a>
   <a class="b-only" href="#b-waitlist">רשימת המתנה</a>
@@ -1137,13 +1152,17 @@ body:not(.mode-b) .b-only{display:none!important}
         <a class="btn btn-tiffany" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">מצטרפים כעסק — חינם</a>
         <a class="btn-link" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">כבר רשומים? התחברות</a>
       </div>
+      <div class="dl">
+      <p class="dl-note"><i class="live-dot"></i>PING Business עכשיו ב־App Store</p>
       <div class="stores">
+        <a class="store appstore" href="https://apps.apple.com/il/app/ping-business/id6757667186?l=he" target="_blank" rel="noopener" aria-label="הורדת PING Business מ־App Store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>להורדה ב־</small><b>App Store</b></span></a>
         <a class="store live" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">
           <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/></svg>
           <span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING Business בדפדפן</b></span>
         </a>
-        <a class="store" href="#biz-mode" aria-label="App Store — בקרוב"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>בקרוב ב־</small><b>App Store</b></span></a>
-        <a class="store" href="#biz-mode" aria-label="Google Play — בקרוב"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>בקרוב ב־</small><b>Google Play</b></span></a>
+        
+        <span class="store soon" aria-label="Google Play — בקרוב"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>בקרוב ב־</small><b>Google Play</b></span></span>
+      </div>
       </div>
     </div>
     <div class="hero-stage">
@@ -1364,22 +1383,19 @@ body:not(.mode-b) .b-only{display:none!important}
       <h1 class="h-display">התור הבא שלך.<br>בדיוק כשנוח לך.</h1>
       <p class="lede">מוצאים עסק, בוחרים שעה וקובעים.<br>בלי טלפונים, בלי לחכות.</p>
       <div class="hero-ctas">
-        <a class="btn btn-tiffany" href="#download">מורידים את PING</a>
+        <a class="btn btn-tiffany" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" data-dl>מורידים את PING</a>
         <a class="btn-link" href="#business">יש לכם עסק?</a>
       </div>
+      <div class="dl">
+      <p class="dl-note"><i class="live-dot"></i>PING עכשיו ב־App Store</p>
       <div class="stores" id="download">
+        <a class="store appstore" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" aria-label="הורדת PING מ־App Store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>להורדה ב־</small><b>App Store</b></span></a>
         <a class="store live" href="https://app2.pingitnow.co/" target="_blank" rel="noopener">
           <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/></svg>
           <span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING בדפדפן</b></span>
         </a>
-        <a class="store" href="#download" aria-label="App Store — בקרוב">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
-          <span><small>בקרוב ב־</small><b>App Store</b></span>
-        </a>
-        <a class="store" href="#download" aria-label="Google Play — בקרוב">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
-          <span><small>בקרוב ב־</small><b>Google Play</b></span>
-        </a>
+        <span class="store soon" aria-label="Google Play — בקרוב"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>בקרוב ב־</small><b>Google Play</b></span></span>
+      </div>
       </div>
     </div>
 
@@ -1856,7 +1872,7 @@ body:not(.mode-b) .b-only{display:none!important}
     <div class="wait-copy">
       <h2 class="h-sec">אין מקום?<br>PING מחכה בשבילך.</h2>
       <p class="lede">שעה תפוסה? מצטרפים לרשימת ההמתנה שלה. ברגע שמתפנה מקום — אתם הראשונים לדעת, ותופסים אותו בלחיצה.</p>
-      <a class="btn btn-white" href="#download" style="width:fit-content">מורידים את PING</a>
+      <a class="btn btn-white" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" data-dl style="width:fit-content">מורידים את PING</a>
     </div>
     <div class="wait-stage">
       <div class="wait-card">
@@ -2112,18 +2128,12 @@ body:not(.mode-b) .b-only{display:none!important}
     <div class="final-copy">
       <h2>התור הבא שלך<br>כבר מחכה ב־PING.</h2>
       <div class="stores">
+        <a class="store appstore" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" aria-label="הורדת PING מ־App Store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>להורדה ב־</small><b>App Store</b></span></a>
         <a class="store live" href="https://app2.pingitnow.co/" target="_blank" rel="noopener">
           <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="12" cy="20" r="5.5" fill="#81D8D0"/><path d="M18 14a8.5 8.5 0 0 0-2.6-6.1M23 12.5A14 14 0 0 0 18.6 2.7" stroke="#0E1A1A" stroke-width="2.6" stroke-linecap="round"/></svg>
           <span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING בדפדפן</b></span>
         </a>
-        <a class="store" href="#download" aria-label="App Store — בקרוב">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
-          <span><small>בקרוב ב־</small><b>App Store</b></span>
-        </a>
-        <a class="store" href="#download" aria-label="Google Play — בקרוב">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg>
-          <span><small>בקרוב ב־</small><b>Google Play</b></span>
-        </a>
+        <span class="store soon" aria-label="Google Play — בקרוב"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 21h16"/></svg><span><small>בקרוב ב־</small><b>Google Play</b></span></span>
       </div>
       <a class="btn-link" href="https://biz.pingitnow.co/" target="_blank" rel="noopener">יש לכם עסק? מצטרפים כעסק ←</a>
     </div>
@@ -2160,9 +2170,11 @@ body:not(.mode-b) .b-only{display:none!important}
         </span>
         <p>התור הבא שלך. בדיוק כשנוח לך.</p>
         <div class="stores">
-          <a class="store live" href="https://app2.pingitnow.co/" target="_blank" rel="noopener"><span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING בדפדפן</b></span></a>
-          <a class="store" href="#download"><span><small>בקרוב ב־</small><b>App Store</b></span></a>
-          <a class="store" href="#download"><span><small>בקרוב ב־</small><b>Google Play</b></span></a>
+          <a class="store appstore c-only" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" aria-label="הורדת PING מ־App Store"><span><small>להורדה ב־</small><b>App Store</b></span></a>
+          <a class="store appstore b-only" href="https://apps.apple.com/il/app/ping-business/id6757667186?l=he" target="_blank" rel="noopener" aria-label="הורדת PING Business מ־App Store"><span><small>להורדה ב־</small><b>App Store</b></span></a>
+          <a class="store live c-only" href="https://app2.pingitnow.co/" target="_blank" rel="noopener"><span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING בדפדפן</b></span></a>
+          <a class="store live b-only" href="https://biz.pingitnow.co/" target="_blank" rel="noopener"><span><small><i class="live-dot"></i>זמין עכשיו</small><b>PING Business בדפדפן</b></span></a>
+          <span class="store soon" aria-label="Google Play — בקרוב"><span><small>בקרוב ב־</small><b>Google Play</b></span></span>
         </div>
       </div>
       <div class="ft-col">
@@ -2240,6 +2252,14 @@ body:not(.mode-b) .b-only{display:none!important}
         t.style.setProperty('--d', ((i++ % 4) * .08) + 's');
         io.observe(t);
       }
+    });
+  }
+
+  /* "מורידים את PING": App Store by default. Android (Google Play not live
+     yet) stays on the page's download options, where the browser version is. */
+  if(/Android/i.test(navigator.userAgent)){
+    document.querySelectorAll('a[data-dl]').forEach(function(a){
+      a.setAttribute('href','#download'); a.removeAttribute('target'); a.removeAttribute('rel');
     });
   }
 

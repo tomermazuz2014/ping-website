@@ -11,6 +11,6 @@ Open `index.html` in a browser. No dependencies.
 
 ## Placeholders to replace before launch
 - Business names/ratings/prices (marked "להמחשה")
-- App Store / Google Play links
+- Google Play links (App Store links are live since 2026-11-15: customers `id6757672062`, business `id6757667186`)
 - Footer legal links (privacy, terms, accessibility, contact)
 - Ploni webfont files (currently falls back to Rubik)
