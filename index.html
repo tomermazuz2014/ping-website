@@ -751,6 +751,21 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .final .btn-link{color:var(--ink);font-weight:800}
 
 /* ---------- footer ---------- */
+.contact-sec{padding:clamp(54px,8vw,96px) 0;background:var(--porcelain)}
+.contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,22px)}
+.contact-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-card);padding:22px 22px 20px;display:grid;gap:8px;align-content:start}
+.contact-card .ci{width:44px;height:44px;border-radius:50%;background:var(--wash);color:var(--tiffany-deep);display:grid;place-items:center}
+.contact-card .ci svg{width:22px;height:22px}
+.contact-card h3{font-size:16px;font-weight:700;color:var(--ink-3)}
+.contact-card .cv{font-size:19px;font-weight:700;color:var(--ink);line-height:1.4}
+.contact-card a.cv{min-height:44px;display:inline-flex;align-items:center;width:fit-content}
+.contact-card a.cv:hover{color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:4px}
+.contact-card small{color:var(--ink-3);font-size:14px;line-height:1.5}
+.ft-contact{display:grid;gap:4px;font-size:15px;font-weight:600;justify-items:start}
+.ft-contact a{min-height:44px;display:inline-flex;align-items:center}
+.ft-contact a:hover{color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:4px}
+.ft-contact span{color:rgba(14,26,26,.65);font-weight:500}
+@media (max-width:920px){.contact-grid{grid-template-columns:1fr}}
 .ft{background:var(--tiffany);color:var(--ink);padding:clamp(54px,7vw,90px) 0 34px;border-top:1px solid rgba(14,26,26,.12)}
 .ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:clamp(24px,4vw,60px);margin-bottom:46px}
 .ft-brand{display:grid;gap:16px;align-content:start}
@@ -2159,6 +2174,35 @@ body:not(.mode-b) .b-only{display:none!important}
   </div>
 </section>
 
+<!-- ================= CONTACT (both modes) ================= -->
+<section class="contact-sec" id="contact-details" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="sec-head" style="text-align:center;justify-items:center">
+      <h2 class="h-sec" id="contact-title">יצירת קשר</h2>
+      <p class="lede" style="max-width:40ch">שאלה, בקשה או בעיה? אפשר לפנות אלינו בטלפון או דרך עמוד התמיכה.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <h3>טלפון</h3>
+        <a class="cv" href="tel:+972544481323" dir="ltr" aria-label="חיוג ל־PING: 054-448-1323">054-448-1323</a>
+      </div>
+      <div class="contact-card">
+        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
+        <h3>פרטי העסק</h3>
+        <p class="cv">פינג ניהול דיגיטלי בע״מ</p>
+        <small>ח.פ 517290961<br>דרך הים 16, גני תקווה</small>
+      </div>
+      <div class="contact-card">
+        <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+        <h3>תמיכה ומסמכים</h3>
+        <a class="cv" href="https://www.pingitnow.co/support/">עמוד התמיכה</a>
+        <small><a href="https://www.pingitnow.co/terms/">תנאי שימוש ורכישה</a> · <a href="https://www.pingitnow.co/privacy-policy/">מדיניות פרטיות</a></small>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= FOOTER ================= -->
 <footer class="ft">
   <div class="wrap">
@@ -2169,6 +2213,10 @@ body:not(.mode-b) .b-only{display:none!important}
           PING
         </span>
         <p>התור הבא שלך. בדיוק כשנוח לך.</p>
+        <div class="ft-contact">
+          <a href="tel:+972544481323" dir="ltr" aria-label="חיוג ל־PING: 054-448-1323">054-448-1323</a>
+          <span>פינג ניהול דיגיטלי בע״מ · דרך הים 16, גני תקווה</span>
+        </div>
         <div class="stores">
           <a class="store appstore c-only" href="https://apps.apple.com/il/app/ping/id6757672062?l=he" target="_blank" rel="noopener" aria-label="הורדת PING מ־App Store"><span><small>להורדה ב־</small><b>App Store</b></span></a>
           <a class="store appstore b-only" href="https://apps.apple.com/il/app/ping-business/id6757667186?l=he" target="_blank" rel="noopener" aria-label="הורדת PING Business מ־App Store"><span><small>להורדה ב־</small><b>App Store</b></span></a>
@@ -2200,9 +2248,9 @@ body:not(.mode-b) .b-only{display:none!important}
         <ul>
           <li><a href="https://www.pingitnow.co/privacy-policy/">מדיניות פרטיות</a></li>
           <li><a href="https://www.pingitnow.co/delete-account/">מחיקת חשבון</a></li>
-          <li><a href="#faq">תנאי שימוש</a></li>
+          <li><a href="https://www.pingitnow.co/terms/">תנאי שימוש</a></li>
           <li><a href="#faq">הצהרת נגישות</a></li>
-          <li><a href="#contact">יצירת קשר</a></li>
+          <li><a href="#contact-details">יצירת קשר</a></li>
         </ul>
       </div>
     </div>
