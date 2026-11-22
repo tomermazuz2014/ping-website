@@ -512,16 +512,26 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
 .book-grid{display:grid;grid-template-columns:auto auto;justify-content:center;gap:clamp(60px,12vw,180px);align-items:center;width:100%}
 .book-steps{display:grid;gap:clamp(14px,2.6vh,26px);position:relative;padding-inline-start:34px}
 .book-steps::before{content:"";position:absolute;inset-block:10px;inset-inline-start:11px;width:2px;background:var(--line)}
-.bstep{position:relative;opacity:.32;transition:opacity .45s;max-width:40ch}
+.bstep{position:relative;max-width:40ch}
 .bstep::before{content:"";position:absolute;inset-inline-start:-30px;top:8px;width:12px;height:12px;border-radius:50%;
-  background:var(--porcelain);border:2.5px solid var(--ink-3);transition:background .4s,border-color .4s,box-shadow .4s}
-.bstep b{font-size:clamp(19px,2.2vw,26px);font-weight:800;display:block;margin-bottom:2px}
-.bstep p{color:var(--ink-2);font-size:15.5px}
-.book-rail[data-step="0"] .bstep:nth-child(1),
-.book-rail[data-step="1"] .bstep:nth-child(2),
-.book-rail[data-step="2"] .bstep:nth-child(3),
-.book-rail[data-step="3"] .bstep:nth-child(4),
-.book-rail[data-step="4"] .bstep:nth-child(5){opacity:1}
+  background:var(--porcelain);border:2.5px solid var(--ink-3);opacity:.45;transition:background .4s,border-color .4s,box-shadow .4s,opacity .45s}
+.bstep b{font-size:clamp(19px,2.2vw,26px);font-weight:800;display:block;margin-bottom:2px;opacity:.62;transition:opacity .45s}
+.bstep p{color:var(--ink-3);font-size:15.5px;transition:color .45s}
+.book-rail[data-step="0"] .bstep:nth-child(1) b,
+.book-rail[data-step="1"] .bstep:nth-child(2) b,
+.book-rail[data-step="2"] .bstep:nth-child(3) b,
+.book-rail[data-step="3"] .bstep:nth-child(4) b,
+.book-rail[data-step="4"] .bstep:nth-child(5) b{opacity:1}
+.book-rail[data-step="0"] .bstep:nth-child(1) p,
+.book-rail[data-step="1"] .bstep:nth-child(2) p,
+.book-rail[data-step="2"] .bstep:nth-child(3) p,
+.book-rail[data-step="3"] .bstep:nth-child(4) p,
+.book-rail[data-step="4"] .bstep:nth-child(5) p{color:var(--ink-2)}
+.book-rail[data-step="0"] .bstep:nth-child(1)::before,
+.book-rail[data-step="1"] .bstep:nth-child(2)::before,
+.book-rail[data-step="2"] .bstep:nth-child(3)::before,
+.book-rail[data-step="3"] .bstep:nth-child(4)::before,
+.book-rail[data-step="4"] .bstep:nth-child(5)::before{opacity:1}
 .book-rail[data-step="0"] .bstep:nth-child(1)::before,
 .book-rail[data-step="1"] .bstep:nth-child(2)::before,
 .book-rail[data-step="2"] .bstep:nth-child(3)::before,
@@ -809,7 +819,7 @@ body.menu-open .hd{z-index:130;background:transparent;box-shadow:none;backdrop-f
   .final-phone .phone{margin-bottom:-34%}
   .ft-grid{grid-template-columns:1fr 1fr}
   .book-grid{grid-template-columns:1fr;justify-items:center;gap:0}
-  .book-steps{display:none}
+  .book-steps{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
   .bstep-mobile{display:block}
   .book-dots{display:flex}
   .book-rail{height:380vh}
@@ -1875,7 +1885,7 @@ body:not(.mode-b) .b-only{display:none!important}
             </div>
           </div>
         </div>
-        <div class="bstep-mobile" aria-live="polite">
+        <div class="bstep-mobile" aria-hidden="true">
           <b>בוחרים עסק</b>
           <p>מהעסקים שלך, או מגלים חדשים.</p>
         </div>
@@ -2184,13 +2194,14 @@ body:not(.mode-b) .b-only{display:none!important}
   <div class="wrap">
     <div class="sec-head" style="text-align:center;justify-items:center">
       <h2 class="h-sec" id="contact-title">יצירת קשר</h2>
-      <p class="lede" style="max-width:40ch">שאלה, בקשה או בעיה? אפשר לפנות אלינו בטלפון או דרך עמוד התמיכה.</p>
+      <p class="lede" style="max-width:40ch">שאלה, בקשה או בעיה? אפשר לפנות אלינו בטלפון, במייל או דרך עמוד התמיכה.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-card">
         <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
         <h3>טלפון</h3>
         <a class="cv" href="tel:+972544481323" dir="ltr" aria-label="חיוג ל־PING: 054-448-1323">054-448-1323</a>
+        <small>או במייל: <a href="mailto:support@pingitnow.co" dir="ltr">support@pingitnow.co</a></small>
       </div>
       <div class="contact-card">
         <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
@@ -2220,6 +2231,7 @@ body:not(.mode-b) .b-only{display:none!important}
         <p>התור הבא שלך. בדיוק כשנוח לך.</p>
         <div class="ft-contact">
           <a href="tel:+972544481323" dir="ltr" aria-label="חיוג ל־PING: 054-448-1323">054-448-1323</a>
+          <a href="mailto:support@pingitnow.co" dir="ltr">support@pingitnow.co</a>
           <span>פינג ניהול דיגיטלי בע״מ · דרך הים 16, גני תקווה</span>
         </div>
         <div class="stores">
@@ -2398,6 +2410,7 @@ body:not(.mode-b) .b-only{display:none!important}
     ['בוחרים שעה','פנוי, תפוס — או רשימת המתנה.'],
     ['שולחים. העסק מאשר','ומתעדכנים ברגע שהתור אושר.']
   ];
+  var stepItems = Array.prototype.slice.call(document.querySelectorAll('.book-steps .bstep'));
   var bmB = document.querySelector('.bstep-mobile b');
   var bmP = document.querySelector('.bstep-mobile p');
   var cur = -1, ticking = false;
@@ -2411,6 +2424,7 @@ body:not(.mode-b) .b-only{display:none!important}
     if(s !== cur){
       cur = s;
       rail.setAttribute('data-step', s);
+      stepItems.forEach(function(li, i){ if(i === s) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
       if(bmB){ bmB.textContent = steps[s][0]; bmP.textContent = steps[s][1]; }
     }
   }
